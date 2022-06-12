@@ -19,7 +19,7 @@
                 <div class=" login-group flex mx-2 lg:mx-4 custom-font-14 items-center leading-8">
                     <p @click="login()" v-show="!loginStatus"
                         class=" cursor-pointer select-none mx-1 px-3 md:px-5 text-white bg-blue-500 rounded-md ">
-                        登陆
+                        登录
                     </p>
                     <nuxt-link to="/user" v-show='loginStatus'
                         class="cursor-pointer select-none mx-1 px-3 md:px-5 bg-gray-100 rounded-md">

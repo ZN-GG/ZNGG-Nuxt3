@@ -199,13 +199,6 @@ const token = useCookie("token", {
 })
 
 function close() {
-    // if (this.$store.state.user.isLogin && this.$route.path == "/login") {
-    //     this.$router.push("/user");
-    // }
-    // if (!this.$store.state.user.isLogin && this.$route.path == "/login") {
-    //     this.$router.push("/");
-    // }
-    // this.$store.commit("user/closeLogin");
     store.$patch({
         showLogin: !store.showLogin
     })
@@ -251,17 +244,8 @@ async function login() {
         store.$patch({
             isLogin: true
         })
-        // this.$store.commit("localStorage/setToken", result.data.password);
-        // this.$store.commit("user/setLogin", true);
-        // this.$cookies.set("token", true, {
-        //     path: "/",
-        //     maxAge: 60 * 60 * 24 * 14,
-        // });
         close();
     } else {
-        // this.$store.commit("user/setLogin", false);
-        // this.$store.commit("localStorage/setToken", "");
-        // this.$cookies.remove("token");
         $toast.error(result.message);
     }
     console.log(result);
