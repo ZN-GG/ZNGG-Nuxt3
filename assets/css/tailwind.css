@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-normal {
+    @apply text-sm bg-blue-600 text-white px-3 py-2 rounded;
+  }
+
+  .btn-1 {
+    @apply bg-gray-100 custom-font-12 leading-5 py-1 px-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-blue-600 hover:text-white mx-1;
+  }
+
+  .btn-1 .active {
+    @apply bg-blue-600 text-white;
+  }
+
+  .btn-2 {
+    @apply bg-gray-100 custom-font-12 leading-5 py-1 px-4 rounded-md whitespace-nowrap cursor-pointer hover:bg-blue-600 hover:text-white mx-1;
+  }
+
+  .li-1 {
+    @apply hover:bg-gray-100 px-2 py-1;
+  }
+
+  .tool-box {
+    @apply bg-white rounded items-center flex flex-col w-full h-full justify-center;
+  }
+
+  .tool-icon {
+    @apply w-12 h-12;
+  }
+  .tool-title {
+    @apply text-center custom-font-14 leading-6 md:mt-2;
+  }
+  .tool-des {
+    @apply hidden mt-2 p-2 text-center text-white custom-font-14 leading-6;
+  }
+
+  .tool-box:hover {
+    @apply bg-blue-600 duration-200 shadow-2xl;
+    transform: translateY(-6px);
+  }
+
+  .tool-box:hover .tool-icon {
+    @apply hidden;
+  }
+
+  .tool-box:hover .tool-title {
+    @apply text-white custom-font-16;
+  }
+
+  .tool-box:hover .tool-des {
+    @apply text-white custom-font-12 block;
+  }
+}
+
+html {
+  background: #f1f1f1f1;
+}
+
+svg {
+  display: inline;
+}
+
+.min-h-20 {
+  min-height: 5rem;
+}
+
+.custom-font-12 {
+  font-size: 12px;
+}
+
+.custom-font-14 {
+  font-size: 14px;
+}
+
+.custom-font-16 {
+  font-size: 16px;
+}
+
+.custom-font-20 {
+  font-size: 20px;
+}
+
+.tool-item-cover {
+  padding-top: 58.82%;
+  background-color: #ccc;
+  background-repeat: no-repeat;
+}
+
+.tool-item-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+}
+
+.tool-border {
+  padding-bottom: 92%;
+}
+
+@media screen and (max-width: 640px) {
+  .tool-border {
+    padding-bottom: 120%;
+  }
+  .tool-title {
+    width: 80%;
+  }
+}
+
+.markdown-body ul {
+  list-style: disc;
+}
+
+.markdown-body ol {
+  list-style: decimal;
+}
