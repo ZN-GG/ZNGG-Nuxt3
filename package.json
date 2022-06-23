@@ -26,6 +26,7 @@
     "@tailwindcss/typography": "^0.5.2",
     "crypto-js": "^4.1.1",
     "marked": "^4.0.16",
+    "mpegts.js": "^1.6.10",
     "pinia": "^2.0.14",
     "vue-toastification": "^2.0.0-rc.5"
   }
