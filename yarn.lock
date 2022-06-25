@@ -3728,6 +3728,11 @@ highlight.js@^11.5.1:
   resolved "https://registry.npmmirror.com/highlight.js/-/highlight.js-11.5.1.tgz#027c24e4509e2f4dcd00b4a6dda542ce0a1f7aea"
   integrity sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==
 
+hls.js@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npmmirror.com/hls.js/-/hls.js-1.1.5.tgz#923a8a8cfdf09542578696d47c8ae435da981ffd"
+  integrity sha512-mQX5TSNtJEzGo5HPpvcQgCu+BWoKDQM6YYtg/KbgWkmVAcqOCvSTi0SuqG2ZJLXxIzdnFcKU2z7Mrw/YQWhPOA==
+
 hookable@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmmirror.com/hookable/-/hookable-5.1.1.tgz#8e4cf052da4382ee232138cd9425369b9d5b280e"
@@ -4829,6 +4834,11 @@ normalize-url@^6.0.1, normalize-url@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npmmirror.com/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
+
+nplayer@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.npmmirror.com/nplayer/-/nplayer-1.0.13.tgz#855f0a383974b13bfdf08e541356912346f1eced"
+  integrity sha512-NB87Sve6pV+RxMgWlbtZ4sa6FeexjwlL33HvtNwquWMvpPBtCvJb0YldRWMhvgm9l7l3k5cNq2+u+jentLdfbw==
 
 npm-bundled@^1.0.1:
   version "1.1.2"
