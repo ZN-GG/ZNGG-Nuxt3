@@ -23,9 +23,11 @@
                             <img src="/img/XGPlayer.png">
                         </div>
                         <div class="px-2 py-4 cursor-pointer">
-                            <p class="text-2xl text-white font-bold">
-                                NPlayer
-                            </p>
+                            <nuxt-link to="/tool/detail/FlvPlayer">
+                                <p class="text-2xl text-white font-bold">
+                                    FlvPlayer
+                                </p>
+                            </nuxt-link>
                         </div>
                     </div>
                 </div>
@@ -57,14 +59,16 @@
             <article class="prose lg:prose-xl" style="max-width: none;">
                 <h4>使用说明：</h4>
                 <blockquote>
-                    <p>专为Flv直播拉流测试而打造的播放器，同时支持mp4等视频格式的播放。（不支持m3u8）</p>
+                    <p>NPlayer 是由 Typescript 加 Sass 编写，无任何第三方运行时依赖，兼容 IE11，支持移动端、支持
+                        SSR、支持直播。高度可定制，所有图标、主题色等都可以替换，并且提供了内置组件方便二次开发。你可以自定义任意多个断点，不仅仅是兼容移动端，只要愿意，你可以非常轻松的兼容手机竖屏、手机横屏、平板等设备。它还拥有插件系统，弹幕功能就是使用插件形式提供，使用时按需引入即可。该播放器还可以接入任何流媒体，如
+                        hls、dash 和 flv 等。</p>
                 </blockquote>
                 <ul>
-                    <li>支持格式：'mse', 'mpegts', 'm2ts', 'flv' 和 'mp4'</li>
-                    <li>不支持m3u8!!!</li>
-                    <li>m3u8播放器正准备开发...</li>
-                    <li>基于mpegts：<a href="https://github.com/xqq/mpegts.js"
-                            target="_blank">https://github.com/xqq/mpegts.js</a></li>
+                    <li>支持格式：'m3u8' 和 'mp4'</li>
+                    <li>支持m3u8!!!</li>
+                    <li>flv、dash正准备开发...</li>
+                    <li>基于NPlayer：<a href="https://github.com/woopen/nplayer"
+                            target="_blank">https://github.com/woopen/nplayer</a></li>
                 </ul>
             </article>
         </section>
@@ -83,22 +87,23 @@ const { $toast } = useNuxtApp()
 const { $nplayer } = useNuxtApp()
 const { $hls } = useNuxtApp()
 
+let player;
 
 onMounted(() => {
     /**
      * Mp4
      */
-    const video = document.createElement('video')
-    video.src = ''
-    const player = new $nplayer({ video, videoAttrs: { autoplay: 'true' } })
-    player.mount(videoElement.value)
+    // const video = document.createElement('video')
+    // video.src = ''
+    // player = new $nplayer({ video, videoAttrs: { autoplay: 'true' } })
+    // player.mount(videoElement.value)
 
 
     /**
      * m3u8
      */
-    const hls = new $hls()
-    // const player = new $nplayer()
+    // const hls = new $hls()
+    // player = new $nplayer()
     // hls.attachMedia(player.video)
     // player.mount(videoElement.value)
     // hls.on($hls.Events.MEDIA_ATTACHED, function () {
@@ -108,6 +113,25 @@ onMounted(() => {
 })
 
 function load() {
+    destroy();
+    let type = 'mp4';
+    if (videoUrl.value.indexOf(".m3u8") != -1) {
+        type = 'm3u8'
+        const hls = new $hls()
+        player = new $nplayer()
+        hls.attachMedia(player.video)
+        player.mount(videoElement.value)
+        hls.on($hls.Events.MEDIA_ATTACHED, function () {
+            hls.loadSource(videoUrl.value)
+        })
+    } else {
+        const video = document.createElement('video')
+        video.src = videoUrl.value
+        player = new $nplayer({ video, videoAttrs: { autoplay: 'true' } })
+        player.mount(videoElement.value)
+    }
+
+
 }
 
 function clear() {
@@ -115,15 +139,24 @@ function clear() {
 }
 
 function play() {
-
+    if (typeof player !== "undefined") {
+        player.play();
+    }
 }
 
 function pause() {
-
+    if (typeof player !== "undefined") {
+        player.pause();
+    }
 }
 
 function destroy() {
-
+    if (typeof player !== "undefined") {
+        if (player != null) {
+            player.dispose();
+            player = null;
+        }
+    }
 }
 
 
@@ -133,7 +166,7 @@ useHead({
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     charset: 'utf-8',
     meta: [
-        { name: 'Keywords', content: 'NPlayer播放器,flv直播播放器,flv直播测试,mp4播放测试,m3u8播放测试,在线播放器' },
+        { name: 'Keywords', content: 'NPlayer播放器,m3u8直播测试,flv直播播放器,flv直播测试,mp4播放测试,m3u8播放测试,在线播放器' },
         { name: 'description', content: '' }
     ],
 })

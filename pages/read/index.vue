@@ -153,6 +153,7 @@ onUnmounted(() => {
 })
 
 async function selectCategoryId(id: string) {
+    page.value = 2;
     empty.value = false
     articleList.value = []
     loading.value = true

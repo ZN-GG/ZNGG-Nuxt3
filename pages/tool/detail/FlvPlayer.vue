@@ -23,9 +23,11 @@
                             <img src="/img/XGPlayer.png">
                         </div>
                         <div class="px-2 py-4 cursor-pointer">
-                            <p class="text-2xl text-white font-bold">
-                                NPlayer
-                            </p>
+                            <nuxt-link to="/tool/detail/NPlayer">
+                                <p class="text-2xl text-white font-bold">
+                                    NPlayer
+                                </p>
+                            </nuxt-link>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,8 @@
                     <li>支持格式：'mse', 'mpegts', 'm2ts', 'flv' 和 'mp4'</li>
                     <li>不支持m3u8!!!</li>
                     <li>m3u8播放器正准备开发...</li>
-                    <li>基于mpegts：<a href="https://github.com/xqq/mpegts.js" target="_blank">https://github.com/xqq/mpegts.js</a></li>
+                    <li>基于mpegts：<a href="https://github.com/xqq/mpegts.js"
+                            target="_blank">https://github.com/xqq/mpegts.js</a></li>
                 </ul>
             </article>
         </section>
@@ -92,8 +95,12 @@ function load() {
         }
     }
 
+    let type = 'mse';
+    if (videoUrl.value.indexOf(".mp4") != -1) {
+        type = 'mp4'
+    }
     player = $mpegts.createPlayer({
-        type: 'mse',
+        type: type,
         cors: true,
         hasVideo: true,
         url: videoUrl.value,

@@ -61,10 +61,10 @@ const dataList = ref([
         link: "read",
         name: "文章",
     },
-    // {
-    //   link: "friendlink",
-    //   name: "友链",
-    // },
+    {
+      link: "link",
+      name: "友链",
+    },
 ])
 
 

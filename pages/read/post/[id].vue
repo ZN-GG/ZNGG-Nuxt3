@@ -5,9 +5,9 @@
                 <div class="bg-white p-6 rounded-md mt-4 w-full lg:w-8/12">
                     <div v-if="isSuccess" class="">
                         <div class="">
-                            <p class="font-semibold w-full text-xl lg:text-3xl">
+                            <h1 class="font-semibold w-full text-xl lg:text-3xl">
                                 {{ article.title }}
-                            </p>
+                            </h1>
                             <div class="flex py-4 w-fll justify-between items-center">
                                 <div class="flex items-center">
                                     <img :src="article.user.avatar" class="w-10 h-10 rounded-full" />
@@ -25,7 +25,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div v-show="!isSuccessViewer && !isSpeader" class="block w-full animate-pulse"> 
+                            <div v-show="!isSuccessViewer && !isSpeader" class="block w-full animate-pulse">
                                 <div class="flex mt-6 mb-2">
                                     <div class="w-2/12"></div>
                                     <div class="w-10/12 h-6 bg-gray-200">
@@ -43,8 +43,10 @@
                             <div v-if="isSpeader" v-is="'style'">{{ themes.juejin.style }}</div>
                             <div v-show="isSpeader" class="markdown-body overflow-auto"
                                 v-bind:class="isSpeader ? '' : 'opacity-0'" v-html="mdHTMl"></div>
-                            <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
-                                :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
+                            <ClientOnly>
+                                <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
+                                    :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
+                            </ClientOnly>
                         </div>
                     </div>
                     <div class="h-80 relative" v-else>
@@ -132,7 +134,7 @@ import { themes } from '~/assets/theme';
 import { marked } from 'marked';
 
 import "highlight.js/styles/atom-one-dark.css";
-import "katex/dist/katex.css";
+import "~/assets/fonts/katex.min.css";
 
 const isSuccess = ref(false)
 const isSuccessViewer = ref(false)

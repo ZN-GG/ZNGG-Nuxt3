@@ -61,7 +61,6 @@
 </template>
 <script setup lang="ts">
 import { Editor } from '@bytemd/vue-next'
-import 'bytemd/dist/index.css'
 import breaks from '@bytemd/plugin-breaks'
 import frontmatter from '@bytemd/plugin-frontmatter'
 import gemoji from '@bytemd/plugin-gemoji'
@@ -75,7 +74,7 @@ import 'bytemd/dist/index.css'
 import { themes } from '~/assets/theme';
 
 import "highlight.js/styles/atom-one-dark.css";
-import "katex/dist/katex.css";
+import "~/assets/fonts/katex.min.css";
 import zhHans from 'bytemd/locales/zh_Hans.json';
 import { api } from '~/api/api';
 
