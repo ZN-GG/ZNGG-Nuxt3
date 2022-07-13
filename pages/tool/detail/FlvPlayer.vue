@@ -81,9 +81,12 @@ const videoUrl = ref("")
 const videoElement = ref<HTMLElement>(null)
 
 const { $toast } = useNuxtApp()
-const { $mpegts } = useNuxtApp()
-
+let $mpegts;
 let player;
+
+onMounted(async () => {
+    $mpegts = (await import('mpegts.js')).default
+})
 
 function load() {
     if (typeof player !== "undefined") {

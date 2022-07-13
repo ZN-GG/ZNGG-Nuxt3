@@ -66,15 +66,14 @@ import frontmatter from '@bytemd/plugin-frontmatter'
 import gemoji from '@bytemd/plugin-gemoji'
 import gfm from '@bytemd/plugin-gfm'
 import highlight from '@bytemd/plugin-highlight'
-import math from '@bytemd/plugin-math'
+import math from '@bytemd/plugin-math-ssr'
 import medium from '@bytemd/plugin-medium-zoom'
 import mermaid from '@bytemd/plugin-mermaid'
 
-import 'bytemd/dist/index.css'
+
 import { themes } from '~/assets/theme';
 
 import "highlight.js/styles/atom-one-dark.css";
-import "~/assets/fonts/katex.min.css";
 import zhHans from 'bytemd/locales/zh_Hans.json';
 import { api } from '~/api/api';
 
@@ -129,6 +128,21 @@ const plugins = [
 definePageMeta({
     layout: 'empty',
     middleware: ['auth']
+})
+
+useHead({
+    title: "写作",
+    titleTemplate: (title) => `${title} - ZNGG在线工具`,
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    charset: 'utf-8',
+    meta: [
+        { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
+        { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
+    ],
+    link: [
+      { rel: 'stylesheet', href: '/fonts/katex.min.css' },
+      { rel: 'stylesheet', href: '/css/bytemd.css' }
+    ],
 })
 
 let categoryResult = await api.article.getCategories();

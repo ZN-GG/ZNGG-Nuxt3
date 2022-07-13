@@ -125,16 +125,15 @@ import frontmatter from '@bytemd/plugin-frontmatter'
 import gemoji from '@bytemd/plugin-gemoji'
 import gfm from '@bytemd/plugin-gfm'
 import highlight from '@bytemd/plugin-highlight'
-import math from '@bytemd/plugin-math'
+import math from '@bytemd/plugin-math-ssr'
 import medium from '@bytemd/plugin-medium-zoom'
 import mermaid from '@bytemd/plugin-mermaid'
 
-import 'bytemd/dist/index.css'
 import { themes } from '~/assets/theme';
 import { marked } from 'marked';
 
 import "highlight.js/styles/atom-one-dark.css";
-import "~/assets/fonts/katex.min.css";
+//import "~/assets/fonts/katex.min.css";
 
 const isSuccess = ref(false)
 const isSuccessViewer = ref(false)
@@ -197,6 +196,7 @@ if (articleData.value.success) {
     }
 }
 onMounted(() => {
+
     if (articleData.value.success) {
         handleChange(article.value.content)
         isRender.value = true;
@@ -324,6 +324,10 @@ useHead({
     meta: [
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: isSuccess.value ? article.value.summary : 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
+    ],
+        link: [
+      { rel: 'stylesheet', href: '/fonts/katex.min.css' },
+      { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
 })
 </script>

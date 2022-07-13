@@ -78,18 +78,21 @@
 <script setup lang="ts">
 
 
-import src from 'nplayer';
-
 const videoUrl = ref("")
 const videoElement = ref<HTMLVideoElement>(null)
 
 const { $toast } = useNuxtApp()
-const { $nplayer } = useNuxtApp()
-const { $hls } = useNuxtApp()
+let $nplayer: any;
+let $hls: any;
+let player: any;
 
-let player;
+onMounted(async () => {
+    console.log("mount ==> ", useNuxtApp().$nplayer);
+    const nplayer = await import('nplayer')
+    $hls = await (await import('hls.js')).default;
+    $nplayer = nplayer.Player
 
-onMounted(() => {
+
     /**
      * Mp4
      */

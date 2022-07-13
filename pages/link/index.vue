@@ -20,19 +20,7 @@
                                         <div class="grow">
                                             <p class="text-gray-800 font-bold mb-1">杨青青博客</p>
                                             <p class="text-gray-500">
-                                                优秀女站长，高质量帝国模板创造者
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="hover:bg-gray-100 hover:text-gray-700 transition duration-300 ease-in-out p-3 ">
-                                <a href=" http://www.kjzo.cn/" target="_blank">
-                                    <div class="flex items-start">
-                                        <div class="grow">
-                                            <p class="text-gray-800 font-bold mb-1">跨境征程</p>
-                                            <p class="text-gray-500">
-                                                跨境电商都在用的电商综合网站。
+                                                优秀女站长，高质量帝国模板创造者。
                                             </p>
                                         </div>
                                     </div>
