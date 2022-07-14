@@ -87,9 +87,8 @@ let $hls: any;
 let player: any;
 
 onMounted(async () => {
-    console.log("mount ==> ", useNuxtApp().$nplayer);
     const nplayer = await import('nplayer')
-    $hls = await (await import('hls.js')).default;
+    $hls = (await import('hls.js')).default;
     $nplayer = nplayer.Player
 
 

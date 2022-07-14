@@ -30,36 +30,25 @@
                 </div>
             </div>
             <div class="w-full flex flex-wrap justify-between">
-                <NuxtLink to="/tool/detail/EnglistConvert" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                <NuxtLink to="/tool/detail/WeiBoGenerates" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
                     :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
                     <div class="w-full relative tool-border">
                         <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-e2E.svg);">
+                            <div class="tool-icon" style="background-image: url(/img/tool-WeiBoGenerates.svg);">
                             </div>
-                            <p class="tool-title">英文大小写转换</p>
-                            <p class="tool-des">大小写转换，首字母大写，首字母小写</p>
+                            <p class="tool-title">微博图片生成</p>
+                            <p class="tool-des">名人微博图片生成,生成微博图片</p>
                         </div>
                     </div>
                 </NuxtLink>
-                <NuxtLink to="/tool/detail/Timestamp" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                <NuxtLink to="/tool/detail/TextDistinct" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
                     :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
                     <div class="w-full relative tool-border">
                         <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-timestamp.svg);">
+                            <div class="tool-icon" style="background-image: url(/img/tool-TextDistinct.svg);">
                             </div>
-                            <p class="tool-title">时间戳在线转换</p>
-                            <p class="tool-des">时间戳转日期，日期转时间戳，获取时间戳</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/ImageToBase64" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-ImageToBase64.svg);">
-                            </div>
-                            <p class="tool-title">图片转Base64</p>
-                            <p class="tool-des">图片转Base64，Base64转图片</p>
+                            <p class="tool-title">文本去重</p>
+                            <p class="tool-des">文本去重工具，批量去重</p>
                         </div>
                     </div>
                 </NuxtLink>
@@ -85,7 +74,28 @@
                         </div>
                     </div>
                 </NuxtLink>
-
+                <NuxtLink to="/tool/detail/Timestamp" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
+                    <div class="w-full relative tool-border">
+                        <div class="tool-box absolute">
+                            <div class="tool-icon" style="background-image: url(/img/tool-timestamp.svg);">
+                            </div>
+                            <p class="tool-title">时间戳在线转换</p>
+                            <p class="tool-des">时间戳转日期，日期转时间戳，获取时间戳</p>
+                        </div>
+                    </div>
+                </NuxtLink>
+                <NuxtLink to="/tool/detail/ImageToBase64" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
+                    <div class="w-full relative tool-border">
+                        <div class="tool-box absolute">
+                            <div class="tool-icon" style="background-image: url(/img/tool-ImageToBase64.svg);">
+                            </div>
+                            <p class="tool-title">图片转Base64</p>
+                            <p class="tool-des">图片转Base64，Base64转图片</p>
+                        </div>
+                    </div>
+                </NuxtLink>
                 <div v-for="item in 11" class="w-4/12 md:w-2/12"></div>
             </div>
             <!-- 最新文章 -->

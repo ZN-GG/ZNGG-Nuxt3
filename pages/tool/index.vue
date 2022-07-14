@@ -69,6 +69,28 @@
                     </div>
                 </div>
             </NuxtLink>
+            <NuxtLink to="/tool/detail/TextDistinct" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
+                <div class="w-full relative tool-border">
+                    <div class="tool-box absolute">
+                        <div class="tool-icon" style="background-image: url(/img/tool-TextDistinct.svg);">
+                        </div>
+                        <p class="tool-title">文本去重</p>
+                        <p class="tool-des">文本去重工具，批量去重</p>
+                    </div>
+                </div>
+            </NuxtLink>
+            <NuxtLink to="/tool/detail/WeiBoGenerates" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
+                <div class="w-full relative tool-border">
+                    <div class="tool-box absolute">
+                        <div class="tool-icon" style="background-image: url(/img/tool-WeiBoGenerates.svg);">
+                        </div>
+                        <p class="tool-title">微博图片生成</p>
+                        <p class="tool-des">名人微博图片生成,生成微博图片</p>
+                    </div>
+                </div>
+            </NuxtLink>
             <div v-for="item in 11" class="w-4/12 md:w-2/12"></div>
         </div>
     </div>
