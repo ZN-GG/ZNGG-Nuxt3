@@ -36,6 +36,10 @@
                 focus:outline-none hover:bg-gray-900 hover:shadow-none" @click="toCopy()">
                     {{ copyText }}
                 </button>
+                <button class="flex m-2 py-2 px-4 font-medium tracking-widest text-white uppercase bg-red-800 shadow-lg
+                focus:outline-none hover:bg-red-900 hover:shadow-none" @click="text = ''">
+                    清空
+                </button>
             </div>
         </section>
         <section class="bg-white w-full container mx-auto  px-4 py-6">
