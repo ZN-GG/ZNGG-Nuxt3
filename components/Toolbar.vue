@@ -1,11 +1,11 @@
 <template>
-    <header class="shadow-xl">
+    <header class="shadow-xl sticky">
         <div class="flex px-1 md:px-6 py-4 justify-between items-center">
             <div class="flex items-center">
                 <div class="font-black inline text-xl cursor-pointer">
                     <a href="/"><img src="/logo-black.png" class="w-20 h-8" alt="" srcset="" /></a>
                 </div>
-                <ul class="menu ml-4 items-center hidden md:inline custom-font-16 pl-4">
+                <ul class="menu ml-4 items-center hidden md:inline text-lg font-semibold pl-4">
                     <li class="inline mx-2 cursor-pointer select-none">
                         <NuxtLink to="/" exact="">首页</NuxtLink>
                     </li>
