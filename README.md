@@ -10,36 +10,53 @@
 
 技术栈：springboot + redis + mysql + nuxt3 + tailwind
 
+![](https://img.shields.io/github/languages/count/ZN-GG/ZNGG-Nuxt3)
+![](https://img.shields.io/github/languages/top/ZN-GG/ZNGG-Nuxt3)
+
 > 目前后端没有开源的打算。
 
+## 工具列表
+- 英文大小写转换
+- 时间戳在线转换
+- 图片转Base64
+- flv直播播放器
+- NPlayer播放器（m3u8）
+- 文本去重
+- 微博图片生成
+- ...
 
-## Setup
 
-Make sure to install the dependencies:
+## 安装
+
+克隆项目后先安装依赖:
 
 ```bash
 # yarn
 yarn install
 ```
+安装完成之后就可以启动来看看效果了。
 
-## Development Server
-
-Start the development server on http://localhost:3000
+## 启动
 
 ```bash
 yarn dev
 ```
 
-## Production
+在浏览器中输入: http://localhost:3000 即可访问。
 
-Build the application for production:
+## 生产
+
+打包:
 
 ```bash
 yarn build
 ```
 
-Locally preview production build:
+预览:
 
 ```bash
 yarn preview
 ```
+
+## 依赖
+项目的package.json中有所有的依赖项目。
