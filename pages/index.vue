@@ -19,10 +19,6 @@
                         <p class="font-semibold text-2xl">在线工具</p>
                     </div>
                     <div class="flex">
-                        <div class="hidden md:flex">
-                            <div class="btn-1">原创工具</div>
-                            <div class="btn-1">程序员</div>
-                        </div>
                         <NuxtLink to="/tool">
                             <div class="btn-1">更多</div>
                         </NuxtLink>
@@ -30,69 +26,15 @@
                 </div>
             </div>
             <div class="w-full flex flex-wrap justify-between">
-                <NuxtLink to="/tool/detail/WeiBoGenerates" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
+                <NuxtLink :to="'/tool/detail/' + item.content" v-for="(item, index) in toolList"
+                    class="w-4/12 md:w-2/12 flex mb-4"
                     :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
                     <div class="w-full relative tool-border">
                         <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-WeiBoGenerates.svg);">
+                            <div class="tool-icon" :style="'background-image: url(/img/' + item.image + ');'">
                             </div>
-                            <p class="tool-title">微博图片生成</p>
-                            <p class="tool-des">名人微博图片生成,生成微博图片</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/TextDistinct" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-TextDistinct.svg);">
-                            </div>
-                            <p class="tool-title">文本去重</p>
-                            <p class="tool-des">文本去重工具，批量去重</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/FlvPlayer" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-FlvPlayer.svg);">
-                            </div>
-                            <p class="tool-title">flv直播播放器</p>
-                            <p class="tool-des">flv播放器，flv拉流测试</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/NPlayer" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-NPlayer.svg);">
-                            </div>
-                            <p class="tool-title">NPlayer播放器</p>
-                            <p class="tool-des">支持接入任何流媒体：hls、flv、dash</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/Timestamp" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-timestamp.svg);">
-                            </div>
-                            <p class="tool-title">时间戳在线转换</p>
-                            <p class="tool-des">时间戳转日期，日期转时间戳，获取时间戳</p>
-                        </div>
-                    </div>
-                </NuxtLink>
-                <NuxtLink to="/tool/detail/ImageToBase64" v-for="item in 1" class="w-4/12 md:w-2/12 flex mb-4"
-                    :class="(item + 5) % 6 == 0 ? 'md:pr-1 md:pl-0' : '', (item) % 6 == 0 ? 'md:pl-1 md:pr-0' : '', ((item + 6) % 6 != 0) && ((item) % 6 != 0) ? 'md:px-1' : '', (item + 1) % 3 == 0 ? 'px-1' : '', (item + 2) % 3 == 0 ? 'pr-2' : '', (item) % 3 == 0 ? 'pl-2' : ''">
-                    <div class="w-full relative tool-border">
-                        <div class="tool-box absolute">
-                            <div class="tool-icon" style="background-image: url(/img/tool-ImageToBase64.svg);">
-                            </div>
-                            <p class="tool-title">图片转Base64</p>
-                            <p class="tool-des">图片转Base64，Base64转图片</p>
+                            <p class="tool-title" v-text="item.title"></p>
+                            <p class="tool-des" v-text="item.summary"></p>
                         </div>
                     </div>
                 </NuxtLink>
@@ -184,19 +126,27 @@ import { ref } from 'vue';
 import { api } from '~/api/api';
 
 
-let isRightFixedContainer = ref(false), rightFixedContainerRight = ref(0), rightFixedContainerWidth = ref("100%"), articleList = ref([]);
+let isRightFixedContainer = ref(false), rightFixedContainerRight = ref(0), rightFixedContainerWidth = ref("100%");
 let rightNormalContainer = ref<HTMLInputElement>(null);
 let rightFixedContainer = ref<HTMLInputElement>(null)
 
+const toolList = ref([])
+const articleList = ref([])
 
-const { data: articleData, pending, refresh, error } = await useAsyncData("index_GetList", () => api.article.getList(1, 10, null));
+const { data: toolData, pending: toolPending, refresh: ToolRefresh, error: toolError } = await useAsyncData("index_GetToolList", () => api.tool.getList(1, 12, null));
+if (toolData.value.success) {
+    toolList.value = toolList.value.concat(toolData.value.data.content)
+}
+
+const { data: articleData, pending: articlePending, refresh: ArticleRefresh, error: articleError } = await useAsyncData("index_GetArticleList", () => api.article.getList(1, 10, null));
 if (articleData.value.success) {
     articleList.value = articleList.value.concat(articleData.value.data.content)
 }
 
-
 onMounted(async () => {
-    refresh()
+    await ToolRefresh()
+    await ArticleRefresh()
+    toolList.value = toolData.value.data.content
     articleList.value = articleData.value.data.content
     window.addEventListener("scroll", handleScroll, false);
 })

@@ -205,7 +205,7 @@ function selectTypeS2T(params: number) {
 
 async function strToTimestamp() {
     strToTimestampResult.value = ""
-    let str = await api.tool.stringToTimestamp(inputStr.value)
+    let str = await api.fun.stringToTimestamp(inputStr.value)
     if (str.code == 200) {
         strToTimestampResult.value = (Number.parseInt(str.data) / (typeT2S.value == 1 ? 1000 : 1)).toString()
         $toast.success("转换成功")

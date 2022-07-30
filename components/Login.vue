@@ -248,7 +248,6 @@ async function login() {
     } else {
         $toast.error(result.message);
     }
-    console.log(result);
 }
 async function sendCaptcha() {
     if (!TextUtils.checkEmail(registerParams.email)) {

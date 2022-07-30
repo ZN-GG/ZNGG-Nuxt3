@@ -86,7 +86,6 @@ function encode(file) {
 }
 
 async function selectFile(e) {
-    console.log("s");
 
     if (e.target.files.length > 0) {
         encode(e.target.files[0]).then(res => {
