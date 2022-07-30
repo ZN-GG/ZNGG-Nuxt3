@@ -1,5 +1,5 @@
 <template>
-    <header class="shadow-xl sticky">
+    <header class="shadow-xl" :class="store.showLogin ? '' : 'sticky'">
         <div class="flex px-1 md:px-6 py-4 justify-between items-center">
             <div class="flex items-center">
                 <div class="font-black inline text-xl cursor-pointer">
@@ -62,8 +62,8 @@ const dataList = ref([
         name: "文章",
     },
     {
-      link: "link",
-      name: "友链",
+        link: "link",
+        name: "友链",
     },
 ])
 
