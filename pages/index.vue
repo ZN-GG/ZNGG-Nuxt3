@@ -90,9 +90,12 @@
                 <!-- 广而告之 -->
                 <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
                     <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <div class="w-full h-40 bg-red-400"></div>
-                        <div class="w-full h-40 bg-red-400"></div>
+                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" alt="" srcset="">
+                        </nuxt-link>
+                        <nuxt-link to="/tool/detail/Nplayer" class="block mt-4"><img src="/ad/NplayerAD.jpg" alt=""
+                                srcset=""></nuxt-link>
                     </div>
+
                     <div class="pl-6 w-full" ref="rightNormalContainer">
                         <div class="w-full my-4 p-4 bg-white">
                             <p class="text-xl font-bold mb-4">关于我们</p>

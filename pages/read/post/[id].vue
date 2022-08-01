@@ -78,8 +78,8 @@
                 </div>
                 <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
                     <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <div class="w-full h-40 bg-red-400"></div>
-                        <div class="w-full h-40 bg-red-400"></div>
+                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto" alt="" srcset="">
+                        </nuxt-link>
                     </div>
                     <div v-bind:style="{
                         width: rightFixedContainerWidth,
@@ -325,9 +325,9 @@ useHead({
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: isSuccess.value ? article.value.summary : 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
     ],
-        link: [
-      { rel: 'stylesheet', href: '/fonts/katex.min.css' },
-      { rel: 'stylesheet', href: '/css/bytemd.css' }
+    link: [
+        { rel: 'stylesheet', href: '/fonts/katex.min.css' },
+        { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
 })
 </script>
