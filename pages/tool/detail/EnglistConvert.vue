@@ -4,7 +4,7 @@
             <div class="container px-4 mx-auto">
                 <div class="md:flex md:-mx-4 md:items-center py-8">
                     <div class="md:w-1/2 px-4">
-                        <p class="text-2xl text-black">英文大小写在线转换</p>
+                        <h1 class="text-2xl text-black">英文大小写在线转换</h1>
                     </div>
                 </div>
             </div>
