@@ -4,17 +4,22 @@
             <div class="container px-4 mx-auto">
                 <div class="md:flex md:-mx-4 md:items-center py-8">
                     <div class="md:w-1/2 px-4">
-                        <p class="text-2xl text-black">在线屏幕录制</p>
+                        <h1 class="text-2xl text-black">在线屏幕录制</h1>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="w-full container px-4 mx-auto py-12">
+        <div class="w-full container mx-auto h-72 md:hidden">
+            <h2 class="text-xl p-4">
+                该工具不支持手机使用！
+            </h2>
+        </div>
+        <section class="w-full container px-4 mx-auto py-12 hidden md:block">
             <div class="flex">
-                <div class="w-6/12 px-16">
-                    <video ref="videoNode" controls autoplay playsinline class="w-full h-72 bg-black"></video>
+                <div class="w-6/12 px-6">
+                    <video ref="videoNode" class="w-auto h-72 bg-black"></video>
                 </div>
-                <div class="w-6/12">
+                <div class="w-6/12 pl-4">
                     <div class="flex flex-wrap mb-4">
                         <h2 class="w-full font-semibold text-gray-900">请选择录制方式：</h2>
                         <button v-for="(item, index) in recordMediaList" @click="selectRecordMedia(item.value)"
@@ -31,7 +36,7 @@
                             {{ item.name }}
                         </button>
                     </div>
-                    <div class="flex flex-wrap mb-4">
+                    <div class="flex flex-wrap mb-6">
                         <h2 class="w-full font-semibold text-gray-900">请选择清晰度：</h2>
                         <button v-for="(item, index) in recordResolutionsList"
                             @click="selectRecordResolutions(item.value)"
@@ -56,6 +61,25 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <hr class="container mx-auto">
+        <section class="bg-white w-full container mx-auto  px-4 py-6">
+
+            <article class="prose lg:prose-xl" style="max-width: none;">
+                <h4>使用说明：</h4>
+                <blockquote>
+                    <p>无需下载就可以在线录屏的工具，可选择是否录制麦克风的声音，配置推荐使用默认配置。
+                    </p>
+                </blockquote>
+                <ul>
+                    <li>Mac用户建议使用Safari浏览器，实测Mac下Safari录制的清晰度更高。</li>
+                    <li>Windows推荐使用Chrome浏览器。</li>
+                    <li>手机用户暂不支持使用。</li>
+                    <li>更多功能等待添加：</li>
+                    <li>待开发：水印</li>
+                    <li>待开发：文字跑马灯</li>
+                </ul>
+            </article>
         </section>
     </div>
 </template>
@@ -136,6 +160,10 @@ async function start() {
     stream = await getStream();
     var options = {
         type: 'video',
+        canvas: {
+            width: 640,
+            height: 480
+        },
         mimeType: recordFormat.value,
         checkForInactiveTracks: false,
         disableLogs: false,
@@ -143,7 +171,7 @@ async function start() {
         ignoreMutedMedia: false,
         initCallback: null,
     };
-    videoNode.value.muted = true
+    setVideo(false)
     recorder = $recordrtc(stream, options);
     videoNode.value.srcObject = stream;
     recorder.startRecording();
@@ -154,11 +182,10 @@ async function getStream() {
         let res = recordResolutions.value.split("x");
 
         let tempStream = await navigator.mediaDevices.getDisplayMedia({
-            video: true,
-            // {
-            //     width: parseInt(res[0]),
-            //     height: parseInt(res[1])
-            // }
+            video: {
+                width: parseInt(res[0]),
+                height: parseInt(res[1])
+            },
             audio: true
         });
         return tempStream;
@@ -178,7 +205,7 @@ async function getStream() {
 
 function stop() {
     recorder.stopRecording(function () {
-        videoNode.value.muted = false
+        setVideo(true)
         blob = recorder.getBlob();
         videoNode.value.srcObject = null
         videoNode.value.src = URL.createObjectURL(blob);
@@ -186,6 +213,12 @@ function stop() {
     if (stream) {
         stream.stop();
     }
+}
+
+function setVideo(flag: boolean) {
+    videoNode.value.controls = flag;
+    videoNode.value.autoplay = true;
+    videoNode.value.muted = !flag;
 }
 
 function save() {
@@ -259,8 +292,8 @@ useHead({
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     charset: 'utf-8',
     meta: [
-        { name: 'Keywords', content: '在线录屏,在线屏幕录制工具,免下载录制屏幕' },
-        { name: 'description', content: '在线录屏工具，无需下载即可录制屏幕内容和麦克风的声音' }
+        { name: 'Keywords', content: '在线录屏,在线屏幕录制工具,免下载录制屏幕,不用下载就可以录屏的工具,RecordRTC,webrtc录屏' },
+        { name: 'description', content: '在线录屏工具，无需下载即可录制屏幕内容和麦克风的声音。4K免费在线录屏工具，不花钱不下载就能用的在线录屏工具。' }
     ],
 })
 </script>
