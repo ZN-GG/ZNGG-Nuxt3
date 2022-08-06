@@ -84,7 +84,7 @@
     </div>
 </template>
 <script setup lang="ts">
-
+const { $toast } = useNuxtApp()
 const videoNode = ref<HTMLVideoElement>(null)
 
 const recordMedia = ref("record-audio-plus-screen")
@@ -157,7 +157,11 @@ onMounted(async () => {
 })
 
 async function start() {
-    stream = await getStream();
+    try {
+        stream = await getStream();
+    } catch (e) {
+       $toast.error("无权限")
+    }
     var options = {
         type: 'video',
         canvas: {
@@ -178,21 +182,22 @@ async function start() {
 }
 
 async function getStream() {
-    if (recordMedia.value == 'record-screen') {
-        let res = recordResolutions.value.split("x");
+    let res = recordResolutions.value.split("x");
+    let videoConstraints = {
+        width: parseInt(res[0]),
+        height: parseInt(res[1])
+    };
 
+    if (recordMedia.value == 'record-screen') {
         let tempStream = await navigator.mediaDevices.getDisplayMedia({
-            video: {
-                width: parseInt(res[0]),
-                height: parseInt(res[1])
-            },
+            video: videoConstraints,
             audio: true
         });
         return tempStream;
 
     } else if (recordMedia.value == 'record-audio-plus-screen') {
         let tempStream = await navigator.mediaDevices.getDisplayMedia({
-            video: true,
+            video: videoConstraints,
             audio: true
         });
         let tempMic = await navigator.mediaDevices.getUserMedia({ audio: true })
