@@ -32,6 +32,7 @@
     "mpegts.js": "^1.6.10",
     "nplayer": "^1.0.13",
     "pinia": "^2.0.14",
+    "pinyin": "^3.0.0-alpha.4",
     "recordrtc": "^5.6.2",
     "vue-toastification": "^2.0.0-rc.5"
   }

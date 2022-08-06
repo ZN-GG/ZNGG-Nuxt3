@@ -71,7 +71,7 @@
                                             7月13日 12:00 来自 iPhone 13 Pro Max
                                         </div>
                                         <div class="content">
-                                            热烈庆祝ZNGG在线工具上线微博图片生成器工具。。
+                                            热烈庆祝ZNGG在线工具上线微博图片生成器工具。
                                         </div>
                                     </div>
                                 </div>
