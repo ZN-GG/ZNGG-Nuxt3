@@ -28,6 +28,7 @@
     "crypto-js": "^4.1.1",
     "dom-to-image": "^2.6.0",
     "hls.js": "^1.1.5",
+    "interactjs": "^1.10.17",
     "marked": "^4.0.16",
     "mpegts.js": "^1.6.10",
     "nplayer": "^1.0.13",

@@ -454,6 +454,11 @@
   resolved "https://registry.npmmirror.com/@icon-park/svg/-/svg-1.4.2.tgz#12838a2549ec8cfc3389089ad335da632bb6285f"
   integrity sha512-1X0DA+1e0R0liYvw+Nb2BQmF1oEo/wS3o/JYkQYifPJXCGYij2vN9sJf/NNhbzDsJWTg4W2bbzZjJvC7Q4w4oQ==
 
+"@interactjs/types@1.10.17":
+  version "1.10.17"
+  resolved "https://registry.npmmirror.com/@interactjs/types/-/types-1.10.17.tgz#1649de06d9ead790c81ecece76736b852bdfc77e"
+  integrity sha512-X2JpoM7xUw0p9Me0tMaI0HNfcF/Hd07ZZlzpnpEMpGerUZOLoyeThrV9P+CrBHxZrluWJrigJbcdqXliFd0YMA==
+
 "@ioredis/commands@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npmmirror.com/@ioredis/commands/-/commands-1.1.1.tgz#2ba4299ea624a6bfac15b35f6df90b0015691ec3"
@@ -4150,6 +4155,13 @@ inquirer@^8.2.2:
     strip-ansi "^6.0.0"
     through "^2.3.6"
     wrap-ansi "^7.0.0"
+
+interactjs@^1.10.17:
+  version "1.10.17"
+  resolved "https://registry.npmmirror.com/interactjs/-/interactjs-1.10.17.tgz#aed66a63020cd092236133f9149e6448dc405d72"
+  integrity sha512-grjHJgnWkCoQLmAlk2yalNd1r0ztUhXLJNVjSOfWn1wfNNgU2tx1cDEkro9WYerDNC9UG3MZTeD4O6zOM5gbIA==
+  dependencies:
+    "@interactjs/types" "1.10.17"
 
 "internmap@1 - 2":
   version "2.0.3"
