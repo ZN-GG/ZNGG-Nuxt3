@@ -3,16 +3,16 @@
         <header class="page-header header-app">
             <div class="header-app__background-transparent"></div>
             <div class="header-app__background-color js-header"
-                :style="'background-image: linear-gradient(' + customColor + ');'"></div>
+                :style="'background-image: ' + styleConfig.type + '-gradient(' + customColor + ');'"></div>
         </header>
         <main class="js-body-content">
             <section class="panel-app">
                 <section class="app-gradient">
                     <div class="app-gradient__color">
                         <div class="app-gradient__color-background js-background"
-                            :style="'background-image: linear-gradient(' + customColor + ');'">
+                            :style="'background-image: linear-gradient(' + customColor.replace('circle', '90deg') + ');'">
                         </div>
-                        <div class="app-gradient__points js-drag">
+                        <div class="app-gradient__points js-drag" @click="addPoint">
                             <div v-for="(item, index) in appGradientPointList" class="js-draggable app-gradient__point"
                                 :class="item.isActive ? 'is-active' : ''" touch-action="none" v-bind:data-x="item.tranX"
                                 v-bind:index="index" :style="'transform: translateX(' + item.tranX + 'px);'"
@@ -40,9 +40,9 @@
                                 <div class="controls-title">Color Code</div>
                                 <div class="extras">
                                     <div class="hex"><input class="" type="text" maxlength="7"
-                                            :value="appGradientPointList[selectPointConfig.index].hex"
-                                            id="colorPickerInput850"><label class=""
-                                            for="colorPickerInput850">hex</label></div>
+                                            v-model="appGradientPointList[selectPointConfig.index].hex"
+                                            @input="hexChange"><label class="">hex</label>
+                                    </div>
                                     <div class="colorFields">
                                         <div class="color r"><input class="" type="text" maxlength="15"
                                                 id="colorPickerInput683"
@@ -79,40 +79,20 @@
                                     </div>
                                 </div>
                                 <div class="js-stops">
-                                    <div class="app-color__stop">
+                                    <div v-for="(item, index) in tempSortList" class="app-color__stop"
+                                        :class="item.isActive ? 'is-active' : ''">
                                         <div class="app-color__stop-color">
                                             <div class="app-color__stop-color-bg">
                                                 <div class="app-color__stop-color-tile"
-                                                    style="background-color: rgb(131, 58, 180);"></div>
+                                                    :style="'background-color: rgb(' + item.rgb.r + ', ' + item.rgb.g + ', ' + item.rgb.b + ', ' + item.a + ');'">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="app-color__stop-hex"><input></div>
-                                        <div class="app-color__stop-position"><input></div>
-                                        <div class="app-color__stop-action"><button
-                                                class="app-color__stop-action-button">×</button></div>
-                                    </div>
-                                    <div class="app-color__stop is-active">
-                                        <div class="app-color__stop-color">
-                                            <div class="app-color__stop-color-bg">
-                                                <div class="app-color__stop-color-tile"
-                                                    style="background-color: rgb(162, 38, 38);"></div>
-                                            </div>
+                                        <div class="app-color__stop-hex"><input disabled :value="item.hex"></div>
+                                        <div class="app-color__stop-position"><input disabled :value="item.percent">
                                         </div>
-                                        <div class="app-color__stop-hex"><input></div>
-                                        <div class="app-color__stop-position"><input></div>
                                         <div class="app-color__stop-action"><button
-                                                class="app-color__stop-action-button">×</button></div>
-                                    </div>
-                                    <div class="app-color__stop">
-                                        <div class="app-color__stop-color">
-                                            <div class="app-color__stop-color-bg">
-                                                <div class="app-color__stop-color-tile"
-                                                    style="background-color: rgb(252, 176, 69);"></div>
-                                            </div>
-                                        </div>
-                                        <div class="app-color__stop-hex"><input></div>
-                                        <div class="app-color__stop-position"><input></div>
-                                        <div class="app-color__stop-action"><button
+                                                @click="clearPoint(item.percent, item.hex)"
                                                 class="app-color__stop-action-button">×</button></div>
                                     </div>
                                 </div>
@@ -124,13 +104,17 @@
                     <div class="row">
                         <div class="col-xs-24">
                             <div class="app-options__content">
-                                <div class="app-option"> <button
-                                        class="app-option__button app-option__button--linear js-button-linear is-active">
+                                <div class="app-option"> <button @click="selectStyleType('linear')"
+                                        class="app-option__button app-option__button--linear js-button-linear"
+                                        :class="styleConfig.type == 'linear' ? 'is-active' : ''">
                                         <span class="app-option__button-icon"></span> Linear </button> <button
-                                        class="app-option__button app-option__button--radial js-button-radial"> <span
+                                        @click="selectStyleType('radial')"
+                                        class="app-option__button app-option__button--radial js-button-radial"
+                                        :class="styleConfig.type == 'radial' ? 'is-active' : ''"> <span
                                             class="app-option__button-icon"></span> Radial </button>
                                 </div>
-                                <div class="app-option" style="display: block;">
+                                <div class="app-option"
+                                    :style="'display: ' + (styleConfig.type == 'linear' ? 'block' : 'none') + ';'">
                                     <div class="app-option__angles">
                                         <div class="app-option__angle js-angle">
                                             <div class="app-option__angle-center js-pointer"
@@ -208,7 +192,7 @@
                                     </div>
                                 </div>
                                 <div class="code-editor__input"> <code class="code-editor__input-code js-code"
-                                        id="code"><span class="blue">background</span>: rgb(131,58,180);<br><span class="blue">background</span>: linear-gradient({{ customColor }});</code>
+                                        id="code"><span class="blue">background</span>: rgb(131,58,180);<br><span class="blue">background</span>: {{ styleConfig.type }}-gradient({{ customColor }});</code>
                                 </div>
                             </div>
                         </section>
@@ -257,7 +241,7 @@ const selectPointConfig = ref({
 const appGradientPointList = ref([
     {
         "tranX": 0,
-        "percent": 0,
+        "percent": 10,
         rgb: {
             r: 0,
             g: 201,
@@ -268,13 +252,13 @@ const appGradientPointList = ref([
             s: 1,
             v: 1,
         },
-        "hex": "#00C9FF",
+        "hex": "#00c9ff",
         "a": 1.0,
         "isActive": true
     },
     {
-        "tranX": 921,
-        "percent": 100,
+        "tranX": 0,
+        "percent": 90,
         rgb: {
             r: 146,
             g: 254,
@@ -285,7 +269,7 @@ const appGradientPointList = ref([
             s: 0.42,
             v: 0.99,
         },
-        "hex": "#92FE9D",
+        "hex": "#92fe9e",
         "a": 1.0,
         "isActive": false
     }
@@ -297,6 +281,10 @@ const hsvaGroup = ref({
     sv: (null as HTMLDivElement),
     svPointer: (null as HTMLDivElement),
 })
+const styleConfig = ref({
+    type: 'linear',//linear，radial
+
+})
 const customDeg = ref('90deg')
 const customColor = ref(customDeg.value + ', rgb(131, 58, 180) 0%, rgb(252, 176, 69) 100%')
 
@@ -304,6 +292,7 @@ onMounted(async () => {
     dragUtil = (await import('~/utils/Drag'))
     colorUtil = (await import('~/utils/color'))
     interact = (await import('interactjs')).default;
+    setInitColor();
     // Gradient Pointer
     const point = interact('.app-gradient__point')
     point
@@ -362,7 +351,6 @@ onMounted(async () => {
                     appGradientPointList.value[selectPointConfig.value.index].hsv.h = Math.round(clamp(x, 0, 1) * 100) / 100;
                     appGradientPointList.value[selectPointConfig.value.index].rgb = rgb;
                     updateCustomColor()
-                    console.log()
                 }
             },
             end: () => {
@@ -425,6 +413,11 @@ onMounted(async () => {
     });
     hsvaGroup.value.sv = svSlider.background
     hsvaGroup.value.svPointer = svSlider.pointer
+
+
+    
+
+
     selectPoint(0);
     updateCustomColor();
 })
@@ -433,11 +426,17 @@ function clamp(a: number, min: number, max: number) {
     return Math.min(Math.max(a, min), max);
 }
 
+const tempSortList = ref([]);
 
 function updateCustomColor() {
     let deg = customDeg.value;
+    if (styleConfig.value.type == 'radial') {
+        deg = 'circle';
+    }
     let color = '';
-    appGradientPointList.value.forEach(item => {
+    tempSortList.value = JSON.parse(JSON.stringify(appGradientPointList.value));
+    tempSortList.value = tempSortList.value.sort(function (a, b) { return a.percent - b.percent });
+    tempSortList.value.forEach(item => {
         color = color + ', rgb(' + item.rgb.r + ', ' + item.rgb.g + ', ' + item.rgb.b + ', ' + item.a + ') ' + item.percent + '%'
     })
     customColor.value = deg + color;
@@ -452,15 +451,66 @@ function updateCustomColor() {
 
 // 设置三个滑块位置
 function setPosition() {
-    console.log(hsvaGroup.value.alpha);
     hsvaGroup.value.hue.style.left = appGradientPointList.value[selectPointConfig.value.index].hsv.h * 100 + '%';
     hsvaGroup.value.svPointer.style.left = appGradientPointList.value[selectPointConfig.value.index].hsv.s * 100 + '%';
     hsvaGroup.value.svPointer.style.top = (1 - appGradientPointList.value[selectPointConfig.value.index].hsv.v) * 100 + '%';
     hsvaGroup.value.alpha.style.left = (1 - appGradientPointList.value[selectPointConfig.value.index].a) * 100 + '%';
-
 }
 
-// 
+function setInitColor() {
+    let w = document.querySelector('.app-gradient__points').clientWidth
+    appGradientPointList.value.forEach(item => {
+        item.tranX = item.percent / 100 * w;
+    })
+}
+
+// 添加滑块
+function addPoint(e: PointerEvent) {
+    if (!(e.target as HTMLElement).classList.contains('app-gradient__points')) {
+        return
+    }
+    let percent = Math.round(e.offsetX / (e.target as HTMLElement).clientWidth * 100);
+    let hex = '';
+    if (percent < tempSortList.value[0].percent) {
+        hex = tempSortList.value[0].hex.toLowerCase()
+    } else if (percent > tempSortList.value[tempSortList.value.length - 1].percent) {
+        hex = tempSortList.value[tempSortList.value.length - 1].hex.toLowerCase()
+    } else {
+        let startP = {
+            percent: 0,
+            hex: ''
+        }
+        let endP = {
+            percent: 0,
+            hex: ''
+        }
+        for (let index = 0; index <= tempSortList.value.length - 1; index++) {
+            if (percent > tempSortList.value[index].percent && percent < tempSortList.value[index + 1].percent) {
+                startP.percent = tempSortList.value[index].percent;
+                startP.hex = tempSortList.value[index].hex;
+                endP.percent = tempSortList.value[index + 1].percent;
+                endP.hex = tempSortList.value[index + 1].hex;
+                let colorList = gradient(startP.hex, endP.hex, endP.percent - startP.percent)
+                hex = colorList[percent - startP.percent].toLowerCase()
+                break;
+            }
+        }
+    }
+
+    let rgb = colorUtil.hex2rgb(hex);
+    let hsv = colorUtil.rgb2hsv(rgb.r, rgb.g, rgb.b)
+    hsv.h = hsv.h / 360
+    appGradientPointList.value.push({
+        "tranX": e.offsetX - 18,
+        "percent": percent,
+        rgb: rgb,
+        hsv: hsv,
+        "hex": hex,
+        "a": 1.0,
+        "isActive": false
+    })
+    selectPoint(appGradientPointList.value.length - 1)
+}
 
 // 设置Point为active
 function selectPoint(index: number) {
@@ -470,7 +520,65 @@ function selectPoint(index: number) {
     selectPointConfig.value.index = index
     //selectPointConfig.value.a = appGradientPointList.value[index].a
     appGradientPointList.value[index].isActive = true;
-    setPosition()
+    setPosition();
+    updateCustomColor();
+}
+
+function selectStyleType(str: string) {
+    styleConfig.value.type = str;
+    updateCustomColor();
+}
+
+function hexChange() {
+    if (!/^#([a-f\d]{3}|[a-f\d]{6})$/i.test(appGradientPointList.value[selectPointConfig.value.index].hex)) {
+        return
+    }
+    appGradientPointList.value[selectPointConfig.value.index].rgb = colorUtil.hex2rgb(appGradientPointList.value[selectPointConfig.value.index].hex)
+    appGradientPointList.value[selectPointConfig.value.index].hsv = colorUtil.rgb2hsv(appGradientPointList.value[selectPointConfig.value.index].rgb.r, appGradientPointList.value[selectPointConfig.value.index].rgb.g, appGradientPointList.value[selectPointConfig.value.index].rgb.b)
+    setPosition();
+    updateCustomColor();
+
+}
+
+function clearPoint(percent: number, hex: string) {
+    if (appGradientPointList.value.length <= 2) {
+        return
+    }
+    let indexCut = 1;
+    for (let index = 0; index <= appGradientPointList.value.length - 1; index++) {
+        let temp = appGradientPointList.value[index];
+        if (temp.isActive) {
+            indexCut = 0;
+        }
+        if (temp.percent == percent && temp.hex.toLowerCase() == hex.toLowerCase()) {
+            if (temp.isActive) {
+                selectPoint(0)
+            } else {
+                selectPoint(selectPointConfig.value.index -= (indexCut + 1))
+            }
+            appGradientPointList.value.splice(index, 1)
+            break
+        }
+    }
+    updateCustomColor();
+}
+
+function gradient(startColor, endColor, step) {
+    // 将 hex 转换为rgb
+    let sColor = colorUtil.hex2rgb(startColor),
+        eColor = colorUtil.hex2rgb(endColor);
+
+    // 计算R\G\B每一步的差值
+    let rStep = (eColor.r - sColor.r) / step,
+        gStep = (eColor.g - sColor.g) / step,
+        bStep = (eColor.b - sColor.b) / step;
+
+    let gradientColorArr = [];
+    for (var i = 0; i < step; i++) {
+        // 计算每一步的hex值
+        gradientColorArr.push(colorUtil.rgb2hex(parseInt(rStep * i + sColor.r), parseInt(gStep * i + sColor.g), parseInt(bStep * i + sColor.b)));
+    }
+    return gradientColorArr;
 }
 
 watch(() => appGradientPointList.value, (n, o) => {
@@ -1324,7 +1432,7 @@ button:active {
 
 .app-color__stop-action-button {
     font-size: 32px;
-    margin-top: 2px;
+    margin-top: 6px;
     color: #dfe1e6;
     border: none;
     background: none;

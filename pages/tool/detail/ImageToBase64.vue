@@ -37,6 +37,10 @@
                     Base64转图片
                 </button>
                 <div class="flex flex-row flex-wrap">
+                    <button @click="addHeader()"
+                        class="flex m-2 py-2 px-4 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                        加头
+                    </button>
                     <button @click="clear()"
                         class="flex m-2 py-2 px-4 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                         清空
@@ -93,6 +97,10 @@ async function selectFile(e) {
         }).catch(e => {
         })
     }
+}
+
+function addHeader() {
+    base64Data.value = "data:image/*;base64," + base64Data.value
 }
 
 function clear() {
