@@ -11,6 +11,7 @@
     "nuxt": "3.0.0-rc.3"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@bytemd/plugin-breaks": "^1.15.0",
     "@bytemd/plugin-frontmatter": "^1.15.0",
     "@bytemd/plugin-gemoji": "^1.15.0",
@@ -27,6 +28,7 @@
     "@types/lodash": "^4.14.182",
     "crypto-js": "^4.1.1",
     "dom-to-image": "^2.6.0",
+    "fabric": "^5.2.4",
     "hls.js": "^1.1.5",
     "interactjs": "^1.10.17",
     "marked": "^4.0.16",
