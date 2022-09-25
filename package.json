@@ -28,7 +28,7 @@
     "@types/lodash": "^4.14.182",
     "crypto-js": "^4.1.1",
     "dom-to-image": "^2.6.0",
-    "fabric": "^5.2.4",
+    "fabric": "2.0.0-rc.3",
     "hls.js": "^1.1.5",
     "interactjs": "^1.10.17",
     "marked": "^4.0.16",

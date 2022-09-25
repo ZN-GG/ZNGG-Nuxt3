@@ -6,10 +6,13 @@
         <div class="mx-auto mt-8">
             <div class="flex items-center justify-center">
                 <a class="prev" @click="prevImg()"></a>
-                <div class="canvasAvatarBoxBorder p-1">
+                <div class="canvasAvatarBoxBorder p-1 relative">
                     <div class="canvasAvatarBox" ref="canvasAvatarBox">
                         <canvas class="canvasAvatar" id="canvasAvatar" ref="canvasAvatar"></canvas>
                     </div>
+                    <img v-show="isShowResult"
+                        style="width: 9.6rem; height: 9.6rem;top: 0.25rem;left: 0.25rem;position: absolute;"
+                        :src="resultData">
                 </div>
                 <a class="next" @click="nextImg()"></a>
             </div>
@@ -24,28 +27,30 @@
                         @change="selectFile">
                 </div>
                 <div v-show="uploaded" class="text-center relative pt-6 pb-6 mb-4 custom-font-14 rounded w-44 mx-auto"
-                    style="background: url(/img/NationalDayAvatar/save-btn.png);background-size: 11rem;"
-                    alt="保存头像"
+                    style="background: url(/img/NationalDayAvatar/save-btn.png);background-size: 11rem;" alt="保存头像"
                     @click="saveAvatar()">
+                </div>
+                <div class="w-full text-center">
+                    <p class="text-yellow-300">手机用户请点击保存头像后长按头像进行下载</p>
                 </div>
             </div>
             <div style="display: none">
-                <img v-for="index in sum" :id="'avatar-' + index" :src="'/img/NationalDayAvatar/avatar-'+index+'.png'"
-                    style="display: none;">
+                <img v-for="index in sum" :id="'avatar-' + index"
+                    :src="'/img/NationalDayAvatar/avatar-' + index + '.png'" style="display: none;">
             </div>
             <div class="container flex flex-wrap mx-auto justify-around">
-                <div v-for="index in sum" class="w-20 m-4 canvasAvatarBoxBorder"
-                    :class="index==activeIndex?'active':''">
-                    <img @click="changeAvatar(index);activeIndex=index;"
-                        :src="'/img/NationalDayAvatar/avatar-'+index+'.png'">
+                <div v-for="index in sum" class="w-16 md:w-20 m-3 md:m-4 canvasAvatarBoxBorder"
+                    :class="index == activeIndex ? 'active' : ''">
+                    <img @click="changeAvatar(index); activeIndex = index;"
+                        :src="'/img/NationalDayAvatar/avatar-' + index + '.png'">
                 </div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
-                <div class="w-20 mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
+                <div class="w-16 mx-3 md:w-20 md:mx-4"></div>
             </div>
             <div class="container mx-auto">
                 <img src="/img/NationalDayAvatar/message.png" alt="">
@@ -66,7 +71,10 @@ let canvasFabric;
 let avatarInstance;
 let activeIndex = ref(1);
 let uploaded = ref(false)
+let isShowResult = ref(false)
+let resultData = ref("")
 onMounted(async () => {
+    // 巨坑：最新版5.2.4生成的图片不够清晰，或者是原来的版本有bug，反正原来的版本生成的图片清晰度可以。
     fabric = (await import('fabric')).fabric;
     ctx = canvasAvatar.value.getContext('2d')
 })
@@ -112,8 +120,9 @@ function changeAvatar(index: number) {
     if (!uploaded.value) {
         return
     }
+    isShowResult.value = false;
     let boxW = canvasAvatarBox.value.clientWidth;
-    let boxH = canvasAvatarBox.value.clientHeight;
+    let boxH = canvasAvatarBox.value.scrollHeight;
     var avatarImage: HTMLImageElement = document.getElementById('avatar-' + index) as HTMLImageElement;
     if (avatarInstance) {
         canvasFabric.remove(avatarInstance);
@@ -127,7 +136,9 @@ function changeAvatar(index: number) {
         cornerStrokeColor: "#fff",
         cornerStyle: "circle",
         transparentCorners: false,
-        rotatingPointOffset: 30
+        rotatingPointOffset: 30,
+        lockMovementX: true,
+        lockMovementY: true,
     });
     avatarInstance.setControlVisible("bl", false);
     avatarInstance.setControlVisible("tr", false);
@@ -140,11 +151,17 @@ function changeAvatar(index: number) {
 function saveAvatar() {
     let boxW = canvasAvatarBox.value.clientWidth;
     let boxH = canvasAvatarBox.value.clientHeight;
-    var hyperlink = document.createElement("a");
-    hyperlink.href = canvasFabric.toDataURL({
-        width: boxW,
-        height: boxH
+
+    resultData.value = canvasFabric.toDataURL({
+      width: boxW,
+      height: boxH
     });
+    isShowResult.value = true;
+    if (IsPhone()) {
+        return
+    }
+    let hyperlink = document.createElement("a");
+    hyperlink.href = resultData.value;
     hyperlink.download = 'avatar.png';
     if (typeof hyperlink.click === "function") {
         hyperlink.click();
@@ -175,6 +192,14 @@ function nextImg() {
     changeAvatar(activeIndex.value);
 }
 
+function IsPhone() {
+    //获取浏览器navigator对象的userAgent属性（浏览器用于HTTP请求的用户代理头的值）
+    var info = navigator.userAgent.toString();
+    //通过正则表达式的test方法判断是否包含“Mobile”字符串
+    var isPhone = /mobile/i.test(info);
+    //如果包含“Mobile”（是手机设备）则返回true
+    return isPhone;
+}
 
 useHead({
     title: "国庆头像生成器",
