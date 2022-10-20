@@ -74,16 +74,10 @@
     </div>
 </template>
 <script setup lang="ts">
-
 const videoUrl = ref("")
-
-
 const videoElement = ref<HTMLElement>(null)
-
-const { $toast } = useNuxtApp()
 let $mpegts;
 let player;
-
 onMounted(async () => {
     $mpegts = (await import('mpegts.js')).default
 })

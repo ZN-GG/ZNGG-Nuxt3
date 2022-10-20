@@ -12,11 +12,11 @@
         <section class="w-full container px-4 mx-auto py-12">
             <div class="relative">
                 <p>原文本：</p>
-                <textarea v-model="text"  placeholder='aaa&#10;aaa&#10;bbb' autofocus
+                <textarea v-model="text" placeholder='aaa&#10;aaa&#10;bbb' autofocus
                     class="text-gray-600 w-full bg-gray-100 boder-left boder-bottom outline-none p-3"
                     rows="8"></textarea>
                 <span class="absolute px-2 py-1 text-xs text-white bg-blue-500 rounded right-4 bottom-6">{{
-                        text.split('\n').length
+                text.split('\n').length
                 }} 行</span>
             </div>
             <div class="relative">
@@ -25,7 +25,7 @@
                     class="text-gray-600 w-full bg-gray-100 boder-left boder-bottom outline-none p-3"
                     rows="8"></textarea>
                 <span class="absolute px-2 py-1 text-xs text-white bg-blue-500 rounded right-4 bottom-6">{{
-                        result.split('\n').length
+                result.split('\n').length
                 }} 行</span>
             </div>
             <div class="flex flex-row flex-wrap">
@@ -44,7 +44,8 @@
             <article class="prose lg:prose-xl" style="max-width: none;">
                 <h4>使用说明：</h4>
                 <blockquote>
-                    <p>文本去重工具在日常生活中真的很方便，记录人数时图方便进来一个人写一个人的名字，但是有人多次进来，就导致了一个人的名字写了两次，那么现在只需要将记录的所有人的名字都写入这个工具，则会自动去重，防止多次统计。</p>
+                    <p>文本去重工具在日常生活中真的很方便，记录人数时图方便进来一个人写一个人的名字，但是有人多次进来，就导致了一个人的名字写了两次，那么现在只需要将记录的所有人的名字都写入这个工具，则会自动去重，防止多次统计。
+                    </p>
                 </blockquote>
                 <ul>
                     <li>你只管录入，剩下的交给工具。</li>
@@ -61,20 +62,14 @@ const text = ref("")
 const result = ref("")
 const copyText = ref("一键复制")
 const { $toast } = useNuxtApp()
-let _;
+const uniq = (await import('lodash/uniq')).default;
+const join = (await import('lodash/join')).default;
 
-onMounted(async () => {
-    _ = await import('lodash')
-})
 
 watch(text, (count, prevCount) => {
-    if (typeof _ != 'undefined') {
-        result.value = _.chain(text.value.split('\n'))
-            .uniq()
-            .join('\n')
-            .value();
-    }
+    result.value = join(uniq(text.value.split('\n')), '\n')
 })
+
 
 function toClear() {
     text.value = "";

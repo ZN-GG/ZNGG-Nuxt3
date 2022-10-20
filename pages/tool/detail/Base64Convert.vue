@@ -76,10 +76,7 @@ const result = ref("")
 const copyText = ref("一键复制")
 const { $toast } = useNuxtApp()
 
-let CryptoJS;
-onMounted(async () => {
-    CryptoJS = (await import("crypto-js"));
-})
+const CryptoJS = await import("crypto-js");
 
 function encoder() {
     let str = CryptoJS.enc.Utf8.parse(text.value);

@@ -57,18 +57,9 @@
     </div>
 </template>
 <script setup lang="ts">
-let CryptoJS;
-
-
-
-const { $toast } = useNuxtApp()
-
-const base64Data = ref("")
-
-onMounted(async () => {
-    CryptoJS = (await import("crypto-js"));
-})
-
+let CryptoJS = await import("crypto-js");
+const { $toast } = useNuxtApp();
+const base64Data = ref("");
 function encode(file) {
     return new Promise((resolve, reject) => {
         try {

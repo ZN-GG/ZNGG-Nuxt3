@@ -43,10 +43,10 @@
                             <div v-if="isSpeader" v-is="'style'">{{ themes.juejin.style }}</div>
                             <div v-show="isSpeader" class="markdown-body overflow-auto"
                                 v-bind:class="isSpeader ? '' : 'opacity-0'" v-html="mdHTMl"></div>
-                            <ClientOnly>
-                                <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
-                                    :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
-                            </ClientOnly>
+
+                            <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
+                                :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
+
                         </div>
                     </div>
                     <div class="h-80 relative" v-else>
@@ -78,7 +78,8 @@
                 </div>
                 <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
                     <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto" alt="" srcset="">
+                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto"
+                                alt="" srcset="">
                         </nuxt-link>
                     </div>
                     <div v-bind:style="{
@@ -119,21 +120,24 @@
 
 <script setup lang="ts">
 import { api } from "../../../api/api";
-import { Viewer } from '@bytemd/vue-next';
-import breaks from '@bytemd/plugin-breaks'
-import frontmatter from '@bytemd/plugin-frontmatter'
-import gemoji from '@bytemd/plugin-gemoji'
-import gfm from '@bytemd/plugin-gfm'
-import highlight from '@bytemd/plugin-highlight'
-import math from '@bytemd/plugin-math-ssr'
-import medium from '@bytemd/plugin-medium-zoom'
-import mermaid from '@bytemd/plugin-mermaid'
 
-import { themes } from '~/assets/theme';
-import { marked } from 'marked';
 
 import "highlight.js/styles/atom-one-dark.css";
 //import "~/assets/fonts/katex.min.css";
+const { Viewer } = await import("@bytemd/vue-next");
+
+// import { Viewer } from '@bytemd/vue-next';
+const breaks = (await import('@bytemd/plugin-breaks')).default;
+const gemoji = (await import('@bytemd/plugin-gemoji')).default;
+const gfm = (await import('@bytemd/plugin-gfm')).default;
+const highlight = (await import('@bytemd/plugin-highlight')).default;
+const math = (await import('@bytemd/plugin-math-ssr')).default;
+const medium = (await import('@bytemd/plugin-medium-zoom')).default;
+const mermaid = (await import('@bytemd/plugin-mermaid')).default;
+const frontmatter = (await import('@bytemd/plugin-frontmatter')).default;
+const marked = (await import('marked'));
+
+const themes = (await import('~/assets/theme')).themes;
 
 const isSuccess = ref(false)
 const isSuccessViewer = ref(false)

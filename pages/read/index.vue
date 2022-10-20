@@ -119,7 +119,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { api } from "~/api/api";
 
 let isShowCategory = ref(true);

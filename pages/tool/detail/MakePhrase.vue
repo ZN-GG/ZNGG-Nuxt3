@@ -80,17 +80,12 @@ const meta = ref("意思是指薪水、工资很合适，而让自己觉得很�
 const img = ref('');
 const loading = ref(false);
 
-let domtoimage;
-let pinyinUtil;
-
-onMounted(async () => {
-    domtoimage = await import('dom-to-image')
-    pinyinUtil = (await import('pinyin/lib/pinyin'))
-})
+const domtoimage = await import('dom-to-image');
+const pinyinUtil = (await import('pinyin-pro/lib/pinyin')).pinyin;
 
 watch(() => word, (o, n) => {
     console.log(word.value);
-    pinyin.value = pinyinUtil.pinyin(word.value).join(' ')
+    pinyin.value = pinyinUtil(word.value)
 }, {
     deep: true
 })
@@ -99,11 +94,11 @@ function conversion() {
     img.value = '';
     loading.value = true;
     domtoimage
-        .toPng(nodeCore.value)
+        .toPng(nodeCore.value, {})
         .then(e => {
             img.value = e;
             loading.value = false;
-            domtoimage.toBlob(nodeCore.value).then(function (blob) {
+            domtoimage.toBlob(nodeCore.value, {}).then(function (blob) {
                 var hyperlink = document.createElement("a");
                 hyperlink.href = URL.createObjectURL(blob);
                 hyperlink.download = word.value + '.png';

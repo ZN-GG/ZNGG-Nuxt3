@@ -53,29 +53,28 @@
             <button @click="open()" class="btn-normal bg-blue-500 px-5 mx-4 h-9">发布</button>
         </div>
         <div>
-            <Editor :locale="zhHans" :uploadImages="uploadImage" :value="article.content" :plugins="plugins"
+            <LazyEditor :locale="zhHans" :uploadImages="uploadImage" :value="article.content" :plugins="plugins"
                 @change="handleChange" />
         </div>
 
     </div>
 </template>
 <script setup lang="ts">
-import { Editor } from '@bytemd/vue-next'
-import breaks from '@bytemd/plugin-breaks'
-import frontmatter from '@bytemd/plugin-frontmatter'
-import gemoji from '@bytemd/plugin-gemoji'
-import gfm from '@bytemd/plugin-gfm'
-import highlight from '@bytemd/plugin-highlight'
-import math from '@bytemd/plugin-math-ssr'
-import medium from '@bytemd/plugin-medium-zoom'
-import mermaid from '@bytemd/plugin-mermaid'
-
-
-import { themes } from '~/assets/theme';
+// import { Editor } from '@bytemd/vue-next'
 
 import "highlight.js/styles/atom-one-dark.css";
 import zhHans from 'bytemd/locales/zh_Hans.json';
 import { api } from '~/api/api';
+const { Editor } = await import("@bytemd/vue-next");
+const breaks = (await import('@bytemd/plugin-breaks')).default;
+const gemoji = (await import('@bytemd/plugin-gemoji')).default;
+const gfm = (await import('@bytemd/plugin-gfm')).default;
+const highlight = (await import('@bytemd/plugin-highlight')).default;
+const math = (await import('@bytemd/plugin-math-ssr')).default;
+const medium = (await import('@bytemd/plugin-medium-zoom')).default;
+const mermaid = (await import('@bytemd/plugin-mermaid')).default;
+const frontmatter = (await import('@bytemd/plugin-frontmatter')).default;
+const themes = (await import('~/assets/theme')).themes;
 
 
 const { $toast } = useNuxtApp();
@@ -140,8 +139,8 @@ useHead({
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
     ],
     link: [
-      { rel: 'stylesheet', href: '/fonts/katex.min.css' },
-      { rel: 'stylesheet', href: '/css/bytemd.css' }
+        { rel: 'stylesheet', href: '/fonts/katex.min.css' },
+        { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
 })
 

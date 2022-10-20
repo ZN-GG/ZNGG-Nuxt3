@@ -1,10 +1,9 @@
-import { defineNuxtConfig } from 'nuxt'
+// https://v3.nuxtjs.org/api/configuration/nuxt-config
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
 
     buildModules: ['@pinia/nuxt'],
-
+    modules: ['@nuxtjs/tailwindcss'],
     css: ["~/assets/css/tailwind.css"],
     build: {
         postcss: {
@@ -18,7 +17,11 @@ export default defineNuxtConfig({
     },
     vite: {
         build: {
-            chunkSizeWarningLimit: 4096
+            // chunkSizeWarningLimit: 4096
+            rollupOptions: {
+                output: {
+                }
+            }
         }
     }
 

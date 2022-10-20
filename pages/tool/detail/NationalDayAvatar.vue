@@ -153,8 +153,8 @@ function saveAvatar() {
     let boxH = canvasAvatarBox.value.clientHeight;
 
     resultData.value = canvasFabric.toDataURL({
-      width: boxW,
-      height: boxH
+        width: boxW,
+        height: boxH
     });
     isShowResult.value = true;
     if (IsPhone()) {
