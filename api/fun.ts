@@ -8,4 +8,8 @@ export const fun = {
         })
     },
 
+    getWhois(domain: string): Promise<ApiResponse> {
+        return http.get("/api/common/whois/" + domain)
+    }
+
 }

@@ -57,6 +57,7 @@
     </div>
 </template>
 <script setup lang="ts">
+
 let CryptoJS = await import("crypto-js");
 const { $toast } = useNuxtApp();
 const base64Data = ref("");
@@ -77,7 +78,7 @@ function encode(file) {
             }
             reader.readAsArrayBuffer(file)
         } catch (e) {
-            $toast.error("转换失败")
+            $toast.error("转换失败");
             return reject(e)
         }
     })
@@ -87,23 +88,10 @@ async function selectFile(e) {
 
     if (e.target.files.length > 0) {
         encode(e.target.files[0]).then(res => {
-            base64Data.value = res.toString()
+            base64Data.value = res.toString();
         }).catch(e => {
         })
     }
-}
-
-function addHeader() {
-    base64Data.value = "data:image/*;base64," + base64Data.value
-}
-
-function clear() {
-    base64Data.value = ""
-    $toast.success("清除成功")
-}
-function toCopy() {
-    navigator.clipboard.writeText(base64Data.value)
-    $toast.success("复制成功")
 }
 
 
@@ -117,4 +105,21 @@ useHead({
         { name: 'description', content: '一个可以将图片和Base64编码相互转换的工具，在图片格式转换时会用到。' }
     ],
 })
+
+function addHeader() {
+    base64Data.value = "data:image/*;base64," + base64Data.value;
+}
+
+function clear() {
+    base64Data.value = "";
+    $toast.success("清除成功");
+}
+
+function toCopy() {
+    navigator.clipboard.writeText(base64Data.value);
+    $toast.success("复制成功");
+}
+
+
+
 </script>
