@@ -36,10 +36,18 @@
         </div>
       </div>
       <button
+        v-if="state.videoUrl"
+        class="flex my-2 mr-2 py-2 px-4 font-medium tracking-widest text-white bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+        @click="downLoadUrl(state.videoUrl)"
+      >
+        保存视频
+      </button>
+      <button
+        v-else
         class="flex my-2 mr-2 py-2 px-4 font-medium tracking-widest text-white bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
         @click="startDownload"
       >
-        开始下载
+        下载视频
       </button>
     </section>
     <section class="bg-white w-full container mx-auto px-4 py-6">
@@ -57,25 +65,31 @@
   </div>
 </template>
 <script setup lang="ts">
-import m3u8tomp4, { setLogger } from '@zackdk/m3u8tomp4';
+// import m3u8tomp4, { setLogger } from '@zackdk/m3u8tomp4';
 import { reactive } from 'vue';
 
 const state = reactive({ videoUrl: '', logs: [] });
 const text = ref('');
 const { $toast } = useNuxtApp();
 
+const downLoadUrl = (url) => {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'output.mp4';
+  a.click();
+};
+
 const startDownload = async () => {
-  console.log(m3u8tomp4);
-  console.log(setLogger);
+  const m3u8tomp4 = await import('@zackdk/m3u8tomp4');
+  const { default: merge, setLogger } = m3u8tomp4;
   if (!text.value) {
     $toast.error('请输入有效的 M3U8 地址');
     return;
   }
-  //m3u8tomp4.setLogger((msg) => console.log(msg));
   setLogger((msg) => {
     state.logs.unshift(msg);
   });
-  const data = await m3u8tomp4(text.value);
+  const data = await merge(text.value);
   const url = URL.createObjectURL(
     new Blob([data.buffer], { type: 'video/mp4' }),
   );
