@@ -49,8 +49,7 @@
           <p>输入 m3u8 地址，点击下载就好了。</p>
         </blockquote>
         <ul>
-          <li>Base64加密</li>
-          <li>Base64解密</li>
+          <li>找不到 M3U8 链接，可以去 movie.zackdk.com 找</li>
           <li>相关工具：<a href="ImageToBase64">在线下载 M3U8 视频</a></li>
         </ul>
       </article>
