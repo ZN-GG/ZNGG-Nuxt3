@@ -26,6 +26,7 @@
     "@pinia/nuxt": "0.4.2",
     "@tailwindcss/typography": "^0.5.2",
     "@types/lodash": "^4.14.186",
+    "@zackdk/m3u8tomp4": "^1.0.4",
     "crypto-js": "^4.1.1",
     "dom-to-image": "^2.6.0",
     "fabric": "2.0.0-rc.3",
