@@ -6,3 +6,4 @@ node_modules
 .output
 .env
 .output.zip
+yarn.lock
