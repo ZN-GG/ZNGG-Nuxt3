@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
   buildModules: ['@pinia/nuxt'],
-  modules: ['@nuxtjs/tailwindcss'],
+  // modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/tailwind.css'],
 
   serverMiddleware: ['~/middleware/setSameOriginHeader.ts'],
