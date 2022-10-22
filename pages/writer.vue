@@ -53,7 +53,7 @@
             <button @click="open()" class="btn-normal bg-blue-500 px-5 mx-4 h-9">发布</button>
         </div>
         <div>
-            <LazyEditor :locale="zhHans" :uploadImages="uploadImage" :value="article.content" :plugins="plugins"
+            <Editor :locale="zhHans" :uploadImages="uploadImage" :value="article.content" :plugins="plugins"
                 @change="handleChange" />
         </div>
 
