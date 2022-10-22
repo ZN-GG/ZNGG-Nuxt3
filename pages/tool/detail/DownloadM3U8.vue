@@ -4,7 +4,7 @@
             <div class="container px-4 mx-auto">
                 <div class="md:flex md:-mx-4 md:items-center py-8">
                     <div class="md:w-1/2 px-4">
-                        <h1 class="text-2xl text-black">在线下载 M3U8 视频</h1>
+                        <h1 class="text-2xl text-black">M3U8视频在线下载</h1>
                     </div>
                 </div>
             </div>
@@ -44,11 +44,12 @@
             <article class="prose lg:prose-xl" style="max-width: none">
                 <h4>使用说明：</h4>
                 <blockquote>
-                    <p>输入 m3u8 地址，点击下载就好了。</p>
+                    <p>输入 m3u8 地址，点击下载后等待下载完成，随后会合并为一个mp4文件，合成完毕以后点击保存视频按钮即可下载。</p>
                 </blockquote>
                 <ul>
                     <li>找不到 M3U8 链接，可以去 <a href="https://movie.zackdk.com/" target="_blank">movie.zackdk.com</a> 找</li>
-                    <li>由于 WebAssembly 的限制,最大支持 2GB 文件的输入.</li>
+                    <li>由于 WebAssembly 的限制,最大支持 2GB 文件的输入。</li>
+                    <li>暂时不支持终止下载，请手动刷新网页。</li>
                 </ul>
             </article>
         </section>
@@ -95,7 +96,7 @@ useHead({
     meta: [
         {
             name: 'Keywords',
-            content: 'm3u8,download m3u8 online',
+            content: 'M3U8视频在线下载,M3U8在线合并MP4，m3u8,download m3u8 online',
         },
         {
             name: 'description',

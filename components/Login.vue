@@ -50,7 +50,7 @@
             mr-2
             flex-1
           " />
-                <img class="h-9 flex-1" @click="refreshCaptcha()" :src="captchaUrlPic" alt="" />
+                <img class="h-9 flex-1" @click="refreshCaptcha()" :src="captchaUrlPic" crossorigin="anonymous" />
             </div>
             <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 my-2" @click="login()">
                 登陆
@@ -147,7 +147,7 @@
             mr-2
             flex-1
           " />
-                <img class="h-9 flex-1" @click="refreshCaptcha()" :src="captchaUrlPic" alt="" />
+                <img class="h-9 flex-1" @click="refreshCaptcha()" :src="captchaUrlPic" crossorigin="anonymous" />
             </div>
             <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 my-2" @click="register()">
                 注册
