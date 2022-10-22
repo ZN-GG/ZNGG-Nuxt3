@@ -229,7 +229,7 @@ function clearData() {
     captchaEmail.value = "";
 }
 async function login() {
-    if (!this.checkLogin()) return;
+    if (!checkLogin()) return;
     let result = await api.user.login(
         loginParams.value,
         captcha.value,
@@ -254,7 +254,7 @@ async function sendCaptcha() {
         $toast.info("邮箱格式不正确");
         return false;
     }
-    let result = await api.user.sendEmailCaptcha(this.registerParams.email);
+    let result = await api.user.sendEmailCaptcha(registerParams.email);
     if (result.success) {
         $toast.success(result.message);
     } else {
