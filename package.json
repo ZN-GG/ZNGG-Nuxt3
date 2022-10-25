@@ -27,6 +27,7 @@
     "@tailwindcss/typography": "^0.5.2",
     "@types/lodash": "^4.14.186",
     "@zackdk/m3u8tomp4": "^1.0.4",
+    "copy-to-clipboard": "^3.3.2",
     "crypto-js": "^4.1.1",
     "dom-to-image": "^2.6.0",
     "fabric": "2.0.0-rc.3",
