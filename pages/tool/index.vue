@@ -63,7 +63,7 @@ let toolCategoryList = ref([])
 let toolCategoryResult = await api.tool.getCategories();
 toolCategoryList.value = toolCategoryResult.data;
 
-const toolParams = ref({})
+const toolParams = ref("")
 
 const toolList = ref([])
 const { data: toolData, pending: toolPending, refresh: ToolRefresh, error: toolError } = await useAsyncData("tool_GetToolList", () => api.tool.getList(1, 24, toolParams.value));
@@ -84,12 +84,9 @@ async function selectCategoryId(id: string) {
     loading.value = true
     categoryId.value = id
     if (id == "") {
-        toolParams.value = {
-        }
+        toolParams.value = "";
     } else {
-        toolParams.value = {
-            categoryId: categoryId.value
-        }
+        toolParams.value =  categoryId.value;
     }
     await ToolRefresh();
     toolList.value = toolData.value.data.content

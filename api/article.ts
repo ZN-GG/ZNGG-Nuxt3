@@ -6,8 +6,9 @@ export const article = {
         return http.get("/portal/article/" + id)
     },
 
-    getList(page: number, size: number, params: any): Promise<ApiResponse> {
-        return http.get("/portal/article/" + page + "/" + size, params)
+    getList(page: number, size: number, category: string): Promise<ApiResponse> {
+        let c = category ? category + "/" : "";
+        return http.get("/portal/article/" + c + page + "/" + size)
     },
 
     getCategories(): Promise<ApiResponse> {

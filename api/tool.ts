@@ -5,7 +5,8 @@ export const tool = {
         return http.get("/portal/tool_category")
     },
 
-    getList(page: number, size: number, params: any): Promise<ApiResponse> {
-        return http.get("/portal/tool/" + page + "/" + size, params)
+    getList(page: number, size: number, category: string): Promise<ApiResponse> {
+        let c = category ? category + "/" : "";
+        return http.get("/portal/tool/" + c + page + "/" + size)
     },
 }

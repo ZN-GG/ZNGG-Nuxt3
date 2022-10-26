@@ -93,7 +93,8 @@
                     <div class="pl-6 w-full" ref="rightNormalContainer">
                         <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" alt="" srcset="">
                         </nuxt-link>
-                        <nuxt-link to="/tool/detail/Nplayer" class="block mt-4"><img src="/ad/NplayerAD.jpg" alt="" srcset=""></nuxt-link>
+                        <nuxt-link to="/tool/detail/Nplayer" class="block mt-4"><img src="/ad/NplayerAD.jpg" alt=""
+                                srcset=""></nuxt-link>
                     </div>
                     <div v-bind:style="{
                         width: rightFixedContainerWidth,
@@ -128,7 +129,7 @@ let empty = ref(false);
 let page = ref(2);
 let size = ref(10);
 let categoryId = ref("")
-const articleParams = ref({})
+const articleParams = ref("")
 let articleList = ref([])
 let categoryList = ref([])
 let rightNormalContainer = ref<HTMLInputElement>(null);
@@ -159,12 +160,9 @@ async function selectCategoryId(id: string) {
     loading.value = true
     categoryId.value = id
     if (id == "") {
-        articleParams.value = {
-        }
+        articleParams.value = "";
     } else {
-        articleParams.value = {
-            categoryId: categoryId.value
-        }
+        articleParams.value = categoryId.value;
     }
     await refresh();
     articleList.value = articleData.value.data.content
