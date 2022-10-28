@@ -1,0 +1,16 @@
+{
+  "name": "png-to-svg-wasm",
+  "collaborators": [
+    "XuxinyuanCode"
+  ],
+  "description": "A binary library that can convert png to svg!",
+  "version": "0.1.0",
+  "files": [
+    "png_to_svg_wasm_bg.wasm",
+    "png_to_svg_wasm.js",
+    "png_to_svg_wasm.d.ts"
+  ],
+  "module": "png_to_svg_wasm.js",
+  "types": "png_to_svg_wasm.d.ts",
+  "sideEffects": false
+}
