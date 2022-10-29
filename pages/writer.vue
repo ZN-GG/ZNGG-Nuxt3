@@ -65,6 +65,8 @@
 import "highlight.js/styles/atom-one-dark.css";
 import zhHans from 'bytemd/locales/zh_Hans.json';
 import { api } from '~/api/api';
+import router from "~~/plugins/router";
+import { dataToEsm } from "@rollup/pluginutils";
 const { Editor } = await import("@bytemd/vue-next");
 const breaks = (await import('@bytemd/plugin-breaks')).default;
 const gemoji = (await import('@bytemd/plugin-gemoji')).default;
@@ -75,11 +77,11 @@ const medium = (await import('@bytemd/plugin-medium-zoom')).default;
 const mermaid = (await import('@bytemd/plugin-mermaid')).default;
 const frontmatter = (await import('@bytemd/plugin-frontmatter')).default;
 const themes = (await import('~/assets/theme')).themes;
-
-
+const route = useRoute()
 const { $toast } = useNuxtApp();
 const categoryList = ref([])
 const article = ref({
+    id: "",
     title: "",
     category_id: "",
     image: "",
@@ -88,6 +90,7 @@ const article = ref({
     summary: "",
     labels: ""
 })
+const edit = ref(false)
 const relaseCardShow = ref(false)
 const plugins = [
     breaks(),
@@ -122,6 +125,25 @@ const plugins = [
 
     // Add more plugins here
 ];
+
+
+if (route.query.id) {
+    const { data: articleData, pending, refresh, error } = await useAsyncData("editor_Detail", () => api.article.getDetail((route.query.id).toString()));
+    if (articleData.value.success) {
+        article.value.id = articleData.value.data.id
+        article.value.title = articleData.value.data.title
+        article.value.category_id = articleData.value.data.category_id
+        article.value.image = articleData.value.data.image
+        article.value.content = articleData.value.data.content
+        article.value.type = articleData.value.data.type
+        article.value.summary = articleData.value.data.summary
+        article.value.labels = articleData.value.data.labels
+        edit.value = true;
+    }
+
+} else {
+    edit.value = false;
+}
 
 
 definePageMeta({
@@ -168,7 +190,12 @@ async function postArticle() {
         $toast.error("请填写摘要")
         return
     }
-    const result = await api.article.postArticle(article.value)
+    let result: ApiResponse;
+    if (edit.value) {
+        result = await api.article.updateArticle(article.value)
+    } else {
+        result = await api.article.postArticle(article.value)
+    }
     if (result.success) {
         $toast.success("发布成功")
         navigateTo("/user/create")

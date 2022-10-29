@@ -19,4 +19,13 @@ export const article = {
         return http.post("/user/article", params)
     },
 
+    updateArticle(params: any): Promise<ApiResponse> {
+        return http.put("/user/article", params)
+    },
+
+    getUserList(page: number, size: number, category: string): Promise<ApiResponse> {
+        let c = category ? category + "/" : "";
+        return http.get("/user/article/list/" + c + page + "/" + size)
+    },
+
 }
