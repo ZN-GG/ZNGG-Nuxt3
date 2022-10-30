@@ -59,6 +59,10 @@ html {
   background: #F3F4F6;
 }
 
+body{
+  overflow-y: scroll;
+}
+
 svg {
   display: inline;
 }
