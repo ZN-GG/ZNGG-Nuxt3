@@ -25,7 +25,8 @@
                             class="text-gray-600 w-full bg-gray-100 boder-left boder-bottom outline-none p-3 h-full"
                             rows="8" placeholder="输入有效的M3U8地址"></textarea>
                         <span class="absolute px-2 py-1 text-xs text-white bg-blue-500 rounded right-4 bottom-6">{{
-                        text.length }}</span>
+                                text.length
+                        }}</span>
                     </div>
                 </div>
             </div>
@@ -73,12 +74,22 @@ const downLoadUrl = (url) => {
 const startDownload = async () => {
     const m3u8tomp4 = await import('@zackdk/m3u8tomp4');
     const { default: merge, setLogger } = m3u8tomp4;
+
     if (!text.value) {
         $toast.error('请输入有效的 M3U8 地址');
         return;
     }
-    setLogger((msg) => {
-        state.logs.unshift(msg);
+    setLogger((msg: string) => {
+        if (msg.indexOf("合并进度") != -1) {
+            let temStr: string = msg;
+            let num = temStr.match(/\d{2}/);
+            if (num) {
+                state.logs.unshift("合并进度: " + num + "%");
+            }
+        } else {
+            state.logs.unshift(msg);
+        }
+
     });
     const data = await merge(text.value);
     const url = URL.createObjectURL(
