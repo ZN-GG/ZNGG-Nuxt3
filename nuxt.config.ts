@@ -17,8 +17,16 @@ export default defineNuxtConfig({
         },
       },
     },
+    transpile: [
+      'png-to-svg-wasm'
+    ]
   },
   vite: {
+    optimizeDeps: {
+      exclude: [
+        'png-to-svg-wasm'
+      ]
+    },
     plugins: [
       wasm(),
       topLevelAwait()

@@ -45,7 +45,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import init, { get_svg } from '~/utils/wasm/png-to-svg-wasm';
+// import init, { get_svg } from '~/utils/wasm/png-to-svg-wasm';
+const init = (await import("png-to-svg-wasm")).default;
+const get_svg = (await import("png-to-svg-wasm")).get_svg;
 const optimize = (await import('~/utils/svgo.browser.mjs')).optimize;
 const copy = (await import('copy-to-clipboard')).default;
 onMounted(() => {
@@ -87,10 +89,6 @@ async function selectFile(e) {
 
     }
 }
-
-definePageMeta({
-    layout: 'empty'
-})
 
 useHead({
     title: "Png转SVG",

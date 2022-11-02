@@ -6329,6 +6329,11 @@ pkg-types@^0.3.2, pkg-types@^0.3.5:
     mlly "^0.5.14"
     pathe "^0.3.7"
 
+png-to-svg-wasm@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmmirror.com/png-to-svg-wasm/-/png-to-svg-wasm-0.1.2.tgz#5c50ade5d86ba11b302401f214a4d6713ac877ae"
+  integrity sha512-Hm4ksEJnfEj1yOUQRWsWpheg0jWkLLtTasL+h4trqBwQ8X/Pj+LNa51rCKU1uTPvwGMOQ+B5W9O0VBWxTAqHag==
+
 portfinder@^1.0.26:
   version "1.0.32"
   resolved "https://registry.npmmirror.com/portfinder/-/portfinder-1.0.32.tgz#2fe1b9e58389712429dc2bea5beb2146146c7f81"
