@@ -36,7 +36,7 @@ const { $toast } = useNuxtApp();
 const page = ref(1)
 const articleList = ref([])
 const totalPages = ref(0)
-const { data: articleData, pending: articlePending, refresh: ArticleRefresh, error: articleError } = await useAsyncData("index_GetArticleList", () => api.article.getUserList(1, 10, null));
+const { data: articleData, pending: articlePending, refresh: ArticleRefresh, error: articleError } = await useAsyncData("index_GetUserArticleList", () => api.article.getUserList(1, 10, null));
 if (articleData.value.success) {
     totalPages.value = articleData.value.data.totalPages
     articleList.value = articleList.value.concat(articleData.value.data.content)
@@ -53,7 +53,7 @@ async function pageFn(type: boolean) {
     } else {
         page.value = page.value + 1;
     }
-    const result = (await api.article.getList(page.value, 10, null));
+    const result = (await api.article.getUserList(page.value, 10, null));
 
     if (result.success) {
         articleList.value.length = 0;

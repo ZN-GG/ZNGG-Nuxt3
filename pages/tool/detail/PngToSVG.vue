@@ -19,6 +19,12 @@
                         @change="selectFile">
                 </div>
             </div>
+            <div class="flex items-center pl-3">
+                <input id="react-checkbox-list" type="checkbox" v-model="isZip"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <label for="react-checkbox-list"
+                    class="py-3 ml-2 w-full text-sm font-medium text-gray-900">压缩SVG（开启压缩后请勿上传过大的Png，会卡死。）</label>
+            </div>
             <div class="flex flex-wrap">
                 <div class="w-full md:w-6/12 md:pr-2">
                     <div class="w-full h-72 object-contain border-2" v-html="svgData == '' ? emptyData : svgData"></div>
@@ -38,8 +44,20 @@
                         复制
                     </button>
                 </div>
-
             </div>
+
+            <section class="w-full container px-4 mx-auto py-12 bg-white rounded-l mb-12">
+                <div class="text-xl md:text-2xl font-black my-3">Q：为什么要做一个Png转SVG的工具？
+                </div>
+                <div class="text-base md:text-xl mt-3 mb-12">A：不知道，做完才发现<span
+                        class="inline-block bg-orange-400 px-1 mx-1">没啥用</span>。
+                </div>
+                <div class="text-xl md:text-2xl font-black my-3">Q：<span class="inline-block bg-yellow-300">不要</span>
+                    做的事情有哪些？
+                </div>
+                <div class="text-base md:text-xl my-12">A：千万别转换太大的png图，否则就等着卡死吧。转换一个小图标就得了。
+                </div>
+            </section>
 
         </div>
     </div>
@@ -50,6 +68,7 @@ const init = (await import("png-to-svg-wasm")).default;
 const get_svg = (await import("png-to-svg-wasm")).get_svg;
 const optimize = (await import('~/utils/svgo.browser.mjs')).optimize;
 const copy = (await import('copy-to-clipboard')).default;
+const isZip = ref(false)
 onMounted(() => {
     init();
 })
@@ -65,6 +84,10 @@ async function selectFile(e) {
         reader.onloadend = async (evt: any) => {
             const u8buffer = new Uint8Array(evt.target.result);
             let data = await get_svg(u8buffer);
+            if (!isZip.value) {
+                svgData.value = data;
+                return
+            }
             console.log(data)
             const result = optimize(data, {
                 multipass: true,
