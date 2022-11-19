@@ -58,6 +58,9 @@
                                         :src="item.image" alt="" srcset="" />
                                 </div>
                             </div>
+                            <ins v-if="index == 5" class="adsbygoogle" style="display:block" data-ad-format="fluid"
+                                data-ad-layout-key="-h8-2h-1d-6s+z6" data-ad-client="ca-pub-6667301035180632"
+                                data-ad-slot="6020177581"></ins>
                         </li>
                         <li v-show="empty" class="mt-4 text-center">
                             <p>到底了</p>
@@ -147,6 +150,9 @@ onMounted(async () => {
     await refresh()
     articleList.value = articleData.value.data.content
     window.addEventListener("scroll", handleScroll, false);
+
+    //@ts-ignore
+    (adsbygoogle = window.adsbygoogle || []).push({});
 })
 
 onUnmounted(() => {
@@ -228,6 +234,9 @@ useHead({
         { name: 'Keywords', content: 'ZNGG在线工具文章,IT文章分享,高质量内容输出,高质量文章分享' },
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
     ],
+    script: [
+        { async: "async", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
+    ]
 })
 </script>
 

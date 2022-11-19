@@ -81,7 +81,11 @@
                         <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto"
                                 alt="" srcset="">
                         </nuxt-link>
+
+                        <ins class="adsbygoogle mt-6" style="display:block" data-ad-client="ca-pub-6667301035180632"
+                        data-ad-slot="8157000731" data-ad-format="auto" data-full-width-responsive="true"></ins>
                     </div>
+                    
                     <div v-bind:style="{
                         width: rightFixedContainerWidth,
                     }" class="h-20 pl-6 my-4 hidden lg:block w-full" ref="rightFixedContainer">
@@ -211,6 +215,9 @@ onMounted(() => {
         initTop();
     }, 1);
 
+    //@ts-ignore
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
 })
 onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
@@ -333,6 +340,9 @@ useHead({
         { rel: 'stylesheet', href: '/fonts/katex.min.css' },
         { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
+    script: [
+        { async: "async", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
+    ]
 })
 </script>
 
