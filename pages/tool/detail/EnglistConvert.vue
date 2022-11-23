@@ -117,8 +117,6 @@ function toCopy() {
 useHead({
     title: "英文字母大小写转换",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '英文字母大小写转换工具,英文字母转大写,英文字母转小写,英文首字母大写' },
         { name: 'description', content: '这是一个英文大小写转换的工具，可以一键将英文句子或标题的单词首字母转换成大写，跨境电商商品名必备在线工具之一。' }

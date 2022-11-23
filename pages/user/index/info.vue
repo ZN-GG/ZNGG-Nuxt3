@@ -4,8 +4,8 @@
             <p class="font-bold text-2xl">个人信息</p>
         </div>
 
-        <div v-if="userInfo.success">
-            <img :src="userInfo.data.avatar" class="w-12 h-12 rounded-full border-spacing-1">
+        <div v-if="userInfo!.success">
+            <img :src="userInfo!.data.avatar" class="w-12 h-12 rounded-full border-spacing-1">
         </div>
 
 

@@ -133,22 +133,22 @@ let page = ref(2);
 let size = ref(10);
 let categoryId = ref("")
 const articleParams = ref("")
-let articleList = ref([])
-let categoryList = ref([])
-let rightNormalContainer = ref<HTMLInputElement>(null);
-let rightFixedContainer = ref<HTMLInputElement>(null)
+let articleList = ref<any[]>([])
+let categoryList = ref<any[]>([])
+let rightNormalContainer = ref<HTMLInputElement>();
+let rightFixedContainer = ref<HTMLInputElement>()
 
 let categoryResult = await api.article.getCategories();
 categoryList.value = categoryResult.data;
 
 const { data: articleData, pending, refresh, error } = await useAsyncData("read_GetList", () => api.article.getList(1, 10, articleParams.value));
-if (articleData.value.success) {
-    articleList.value = articleList.value.concat(articleData.value.data.content)
+if (articleData.value!.success) {
+    articleList.value = articleList.value.concat(articleData.value!.data.content)
 }
 
 onMounted(async () => {
     await refresh()
-    articleList.value = articleData.value.data.content
+    articleList.value = articleData.value!.data.content
     window.addEventListener("scroll", handleScroll, false);
 
     //@ts-ignore
@@ -171,19 +171,19 @@ async function selectCategoryId(id: string) {
         articleParams.value = categoryId.value;
     }
     await refresh();
-    articleList.value = articleData.value.data.content
+    articleList.value = articleData.value!.data.content
     loading.value = false
 }
 
 function setFloatContainer() {
-    if (rightNormalContainer.value.getBoundingClientRect().bottom <= 0) {
-        rightFixedContainer.value.style.position = "fixed";
-        rightFixedContainer.value.style.top = "0.5rem";
-        rightFixedContainerWidth.value = rightNormalContainer.value.offsetWidth + "px";
-    } else if (rightNormalContainer.value.getBoundingClientRect().bottom > 0) {
+    if (rightNormalContainer.value!.getBoundingClientRect().bottom <= 0) {
+        rightFixedContainer.value!.style.position = "fixed";
+        rightFixedContainer.value!.style.top = "0.5rem";
+        rightFixedContainerWidth.value = rightNormalContainer.value!.offsetWidth + "px";
+    } else if (rightNormalContainer.value!.getBoundingClientRect().bottom > 0) {
         rightFixedContainerWidth.value = "100%";
-        rightFixedContainer.value.style.top = "";
-        rightFixedContainer.value.style.position = "absolute";
+        rightFixedContainer.value!.style.top = "";
+        rightFixedContainer.value!.style.position = "absolute";
     }
 }
 function handleScroll() {
@@ -213,7 +213,7 @@ async function loadMore() {
         return;
     }
     loading.value = true;
-    const result = (await api.article.getList(page.value, 10, null));
+    const result = (await api.article.getList(page.value, 10, ""));
     if (result.success) {
         if (result.data.content.length == 0) {
             empty.value = true;
@@ -228,14 +228,12 @@ async function loadMore() {
 useHead({
     title: "文章",
     titleTemplate: (title) => `${title} - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'ZNGG在线工具文章,IT文章分享,高质量内容输出,高质量文章分享' },
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
     ],
     script: [
-        { async: "async", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
+        { async: "true", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
     ]
 })
 </script>

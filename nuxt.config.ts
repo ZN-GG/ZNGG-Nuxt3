@@ -4,19 +4,24 @@ import topLevelAwait from "vite-plugin-top-level-await";
 
 
 export default defineNuxtConfig({
-  buildModules: ['@pinia/nuxt'],
-  // modules: ['@nuxtjs/tailwindcss'],
+  app: {
+    head: {
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+      charset: 'utf-8',
+    }
+  },
+  typescript: {
+    shim: false
+  },
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   css: ['~/assets/css/tailwind.css'],
-  serverMiddleware: ['~/middleware/setSameOriginHeader.ts'],
-  build: {
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
     },
+  },
+  build: {
     transpile: [
       'png-to-svg-wasm'
     ]
@@ -39,13 +44,13 @@ export default defineNuxtConfig({
     },
 
   },
-  render: {
-    static: {
-      //@ts-ignore
-      setHeaders(res: any) {
-        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-      },
-    },
-  },
+  // render: {
+  //   static: {
+  //     //@ts-ignore
+  //     setHeaders(res: any) {
+  //       res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  //       res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  //     },
+  //   },
+  // },
 });

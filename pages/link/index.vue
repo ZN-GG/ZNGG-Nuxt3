@@ -77,8 +77,6 @@
 useHead({
     title: "友链",
     titleTemplate: (title) => `${title} - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '友情链接，优质网站推荐' },
         { name: 'description', content: '友情链接页面，高质量网站推荐。' }

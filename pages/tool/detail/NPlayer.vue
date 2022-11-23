@@ -79,7 +79,7 @@
 
 
 const videoUrl = ref("")
-const videoElement = ref<HTMLVideoElement>(null)
+const videoElement = ref<HTMLVideoElement>()
 
 const { $toast } = useNuxtApp()
 let $nplayer: any;
@@ -165,8 +165,6 @@ function destroy() {
 useHead({
     title: "NPlayer在线播放器",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'NPlayer播放器,m3u8直播测试,flv直播播放器,flv直播测试,mp4播放测试,m3u8播放测试,在线播放器' },
         { name: 'description', content: '' }

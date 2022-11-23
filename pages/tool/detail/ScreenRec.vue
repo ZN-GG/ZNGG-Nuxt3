@@ -85,7 +85,7 @@
 </template>
 <script setup lang="ts">
 const { $toast } = useNuxtApp()
-const videoNode = ref<HTMLVideoElement>(null)
+const videoNode = ref<HTMLVideoElement>()
 
 const recordMedia = ref("record-audio-plus-screen")
 const recordMediaList = ref([
@@ -149,8 +149,8 @@ const recordResolutionsList = ref([
 
 let $recordrtc: any;
 let recorder: any;
-let stream;
-let blob;
+let stream: MediaProvider | null | undefined;
+let blob: Blob | MediaSource;
 onMounted(async () => {
     const RecordRTC = (await import('recordrtc')).default
     $recordrtc = RecordRTC
@@ -160,7 +160,7 @@ async function start() {
     try {
         stream = await getStream();
     } catch (e) {
-       $toast.error("无权限")
+        $toast.error("无权限")
     }
     var options = {
         type: 'video',
@@ -177,6 +177,7 @@ async function start() {
     };
     setVideo(false)
     recorder = $recordrtc(stream, options);
+    //@ts-ignore
     videoNode.value.srcObject = stream;
     recorder.startRecording();
 }
@@ -212,36 +213,37 @@ function stop() {
     recorder.stopRecording(function () {
         setVideo(true)
         blob = recorder.getBlob();
-        videoNode.value.srcObject = null
-        videoNode.value.src = URL.createObjectURL(blob);
+        videoNode.value!.srcObject = null
+        videoNode.value!.src = URL.createObjectURL(blob);
     });
     if (stream) {
+        //@ts-ignore
         stream.stop();
     }
 }
 
 function setVideo(flag: boolean) {
-    videoNode.value.controls = flag;
-    videoNode.value.autoplay = true;
-    videoNode.value.muted = !flag;
+    videoNode.value!.controls = flag;
+    videoNode.value!.autoplay = true;
+    videoNode.value!.muted = !flag;
 }
 
 function save() {
     $recordrtc.invokeSaveAsDialog(blob, getFileName(getFileExtension()))
 }
 
-function selectRecordMedia(value) {
+function selectRecordMedia(value: string) {
     recordMedia.value = value
 }
-function selectRecordFormat(value) {
+function selectRecordFormat(value: string) {
     recordFormat.value = value
 }
-function selectRecordResolutions(value) {
+function selectRecordResolutions(value: string) {
     recordResolutions.value = value
 }
 
 
-function getFileName(fileExtension) {
+function getFileName(fileExtension: string | String) {
     var d = new Date();
     var year = d.getUTCFullYear();
     var month = d.getUTCMonth();
@@ -274,10 +276,10 @@ function getFileExtension(): String {
     if (recordFormat.value === 'video/webm') {
         fileExtension = 'webm';
     }
-    return fileExtension;
+    return fileExtension!;
 }
 
-function isMimeTypeSupported(mimeType): boolean {
+function isMimeTypeSupported(mimeType: string): boolean {
     if (typeof MediaRecorder === 'undefined') {
         return false;
     }
@@ -294,8 +296,6 @@ function isMimeTypeSupported(mimeType): boolean {
 useHead({
     title: "在线屏幕录制",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '在线录屏,在线屏幕录制工具,免下载录制屏幕,不用下载就可以录屏的工具,RecordRTC,webrtc录屏' },
         { name: 'description', content: '在线录屏工具，无需下载即可录制屏幕内容和麦克风的声音。4K免费在线录屏工具，不花钱不下载就能用的在线录屏工具。' }

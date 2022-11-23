@@ -28,7 +28,7 @@
                             <span>拖拽文件到这里或者点击选择文件</span>
                             <input type="file" id="file" accept="image/*"
                                 style="opacity: 0;position: absolute;cursor: pointer;width: 100%;height: 100%;left: 0;top: 0;"
-                                @change="getAvatar">
+                                @change="getAvatar!">
                         </div>
                     </div>
                     <div>
@@ -144,8 +144,9 @@
         </section>
     </div>
 </template>
-<script setup lang="ts">
-let nodeCore = ref<HTMLDivElement>(null);
+<script setup lang="ts">import DomToImage from 'dom-to-image';
+
+let nodeCore = ref<HTMLDivElement>();
 const vip = ref('icon_member7');
 const daren = ref(true);
 const renzheng = ref(true);
@@ -166,7 +167,7 @@ const dataUrl = ref('');;
 const rdata = ref('');;
 const avatar = ref('/img/avatar.jpg');
 const { $toast } = useNuxtApp()
-let domtoimage;
+let domtoimage: { toPng?: any; DomToImage?: DomToImage; default?: any; };
 
 onMounted(async () => {
     domtoimage = await import('dom-to-image')
@@ -177,15 +178,15 @@ function conversion() {
     loading.value = true;
     domtoimage
         .toPng(nodeCore.value)
-        .then(e => {
+        .then((e: string) => {
             img.value = e;
             loading.value = false;
         })
-        .catch(err => {
+        .catch((err: any) => {
             loading.value = false;
         });
 };
-function getAvatar(e) {
+function getAvatar(e: { target: { files: any; }; }) {
     dataUrl.value = '';
     rdata.value = '';
     let files = e.target.files;
@@ -193,7 +194,7 @@ function getAvatar(e) {
     const blobUrl = URL.createObjectURL(files[0]);
     avatar.value = blobUrl;
 }
-function setVip(index) {
+function setVip(index: string) {
     vip.value = index
 }
 
@@ -201,8 +202,6 @@ function setVip(index) {
 useHead({
     title: "微博图片生成器",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '微博图片生成,名人微博图片生成,生成微博图片。' },
         { name: 'description', content: '可以在线生成任意微博信息，恶搞微博图片生成。' }

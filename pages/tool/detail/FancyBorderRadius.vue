@@ -80,11 +80,11 @@
 </template>
 <script setup lang="ts">
 const { $toast } = useNuxtApp()
-const coreBox = ref<HTMLDivElement>(null)
-const btnTop = ref<HTMLSpanElement>(null)
-const btnLeft = ref<HTMLSpanElement>(null)
-const btnBottom = ref<HTMLSpanElement>(null)
-const btnRight = ref<HTMLSpanElement>(null)
+const coreBox = ref<HTMLDivElement>()
+const btnTop = ref<HTMLSpanElement>()
+const btnLeft = ref<HTMLSpanElement>()
+const btnBottom = ref<HTMLSpanElement>()
+const btnRight = ref<HTMLSpanElement>()
 const bgColor = ref("")
 const config = ref({
     left: 30,
@@ -102,89 +102,89 @@ const dragConfig = ref({
 })
 
 onMounted(() => {
-    btnTop.value.addEventListener("mousedown", (event) => {
+    btnTop.value!.addEventListener("mousedown", (event) => {
         if (event.button == 0) {
             dragConfig.value.v = false;
             dragConfig.value.type = 't';
             dragConfig.value.lastXY = event.clientX;
-            let l = coreBox.value.clientWidth + 4
+            let l = coreBox.value!.clientWidth + 4
             dragConfig.value.base = 100 / l;
             dragConfig.value.baseP = config.value.top
             window.addEventListener("mousemove", moved);
             event.preventDefault();
         }
     });
-    btnTop.value.addEventListener("touchstart", (event: any) => {
+    btnTop.value!.addEventListener("touchstart", (event: any) => {
         dragConfig.value.v = false;
         dragConfig.value.type = 't';
         dragConfig.value.lastXY = event.changedTouches[0].clientX;
-        let l = coreBox.value.clientWidth + 4
+        let l = coreBox.value!.clientWidth + 4
         dragConfig.value.base = 100 / l;
         dragConfig.value.baseP = config.value.top
         window.addEventListener("touchmove", moved);
         event.preventDefault();
     });
-    btnBottom.value.addEventListener("mousedown", (event) => {
+    btnBottom.value!.addEventListener("mousedown", (event) => {
         if (event.button == 0) {
             dragConfig.value.v = false;
             dragConfig.value.type = 'b';
             dragConfig.value.lastXY = event.clientX;
-            let l = coreBox.value.clientWidth + 4
+            let l = coreBox.value!.clientWidth + 4
             dragConfig.value.base = 100 / l;
             dragConfig.value.baseP = config.value.bottom
             window.addEventListener("mousemove", moved);
             event.preventDefault();
         }
     });
-    btnBottom.value.addEventListener("touchstart", (event: any) => {
+    btnBottom.value!.addEventListener("touchstart", (event: any) => {
         dragConfig.value.v = false;
         dragConfig.value.type = 'b';
         dragConfig.value.lastXY = event.changedTouches[0].clientX;
-        let l = coreBox.value.clientWidth + 4
+        let l = coreBox.value!.clientWidth + 4
         dragConfig.value.base = 100 / l;
         dragConfig.value.baseP = config.value.bottom
         window.addEventListener("touchmove", moved);
         event.preventDefault();
     });
-    btnLeft.value.addEventListener("mousedown", (event) => {
+    btnLeft.value!.addEventListener("mousedown", (event) => {
         if (event.button == 0) {
             dragConfig.value.v = true;
             dragConfig.value.type = 'l';
             dragConfig.value.lastXY = event.clientY;
-            let l = coreBox.value.clientHeight + 4
+            let l = coreBox.value!.clientHeight + 4
             dragConfig.value.base = 100 / l;
             dragConfig.value.baseP = config.value.left
             window.addEventListener("mousemove", moved);
             event.preventDefault();
         }
     });
-    btnLeft.value.addEventListener("touchstart", (event: any) => {
+    btnLeft.value!.addEventListener("touchstart", (event: any) => {
         dragConfig.value.v = true;
         dragConfig.value.type = 'l';
         dragConfig.value.lastXY = event.changedTouches[0].clientY;
-        let l = coreBox.value.clientHeight + 4
+        let l = coreBox.value!.clientHeight + 4
         dragConfig.value.base = 100 / l;
         dragConfig.value.baseP = config.value.left
         window.addEventListener("touchmove", moved);
         event.preventDefault();
     });
-    btnRight.value.addEventListener("mousedown", (event) => {
+    btnRight.value!.addEventListener("mousedown", (event) => {
         if (event.button == 0) {
             dragConfig.value.v = true;
             dragConfig.value.type = 'r';
             dragConfig.value.lastXY = event.clientY;
-            let l = coreBox.value.clientHeight + 4
+            let l = coreBox.value!.clientHeight + 4
             dragConfig.value.base = 100 / l;
             dragConfig.value.baseP = config.value.right
             window.addEventListener("mousemove", moved);
             event.preventDefault();
         }
     });
-    btnRight.value.addEventListener("touchstart", (event: any) => {
+    btnRight.value!.addEventListener("touchstart", (event: any) => {
         dragConfig.value.v = true;
         dragConfig.value.type = 'r';
         dragConfig.value.lastXY = event.changedTouches[0].clientY;
-        let l = coreBox.value.clientHeight + 4
+        let l = coreBox.value!.clientHeight + 4
         dragConfig.value.base = 100 / l;
         dragConfig.value.baseP = config.value.right
         window.addEventListener("touchmove", moved);
@@ -192,7 +192,7 @@ onMounted(() => {
     });
 })
 
-function moved(event) {
+function moved(event: any) {
     let dist = 0.0;
     if (event.buttons == 0) {
         window.removeEventListener("mousemove", moved);
@@ -226,7 +226,7 @@ function moved(event) {
     }
 }
 
-function setBackground(e) {
+function setBackground(e: any) {
     bgColor.value = e.srcElement.style.backgroundImage
 }
 
@@ -240,8 +240,6 @@ function toCopy() {
 useHead({
     title: "CSS边框可视化",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'CSS边框可视化,CSS花式边框,CSS花式背景,css不规则背景,CSS边框可视化,自定义css边框样式' },
         { name: 'description', content: '拖拽式可视化调整CSS边框样式，前端程序员必备的工具之一。css扇形背景、css圆角边框、css雨滴形状等自定义样式一键生成。' }

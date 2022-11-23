@@ -83,9 +83,9 @@
                         </nuxt-link>
 
                         <ins class="adsbygoogle mt-6" style="display:block" data-ad-client="ca-pub-6667301035180632"
-                        data-ad-slot="8157000731" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                            data-ad-slot="8157000731" data-ad-format="auto" data-full-width-responsive="true"></ins>
                     </div>
-                    
+
                     <div v-bind:style="{
                         width: rightFixedContainerWidth,
                     }" class="h-20 pl-6 my-4 hidden lg:block w-full" ref="rightFixedContainer">
@@ -128,7 +128,9 @@ import { api } from "../../../api/api";
 
 import "highlight.js/styles/atom-one-dark.css";
 //import "~/assets/fonts/katex.min.css";
+
 const { Viewer } = await import("@bytemd/vue-next");
+
 
 // import { Viewer } from '@bytemd/vue-next';
 const breaks = (await import('@bytemd/plugin-breaks')).default;
@@ -139,32 +141,31 @@ const math = (await import('@bytemd/plugin-math-ssr')).default;
 const medium = (await import('@bytemd/plugin-medium-zoom')).default;
 const mermaid = (await import('@bytemd/plugin-mermaid')).default;
 const frontmatter = (await import('@bytemd/plugin-frontmatter')).default;
-const marked = (await import('marked'));
+const { marked } = await import('marked');
 
 const themes = (await import('~/assets/theme')).themes;
 
 const isSuccess = ref(false)
 const isSuccessViewer = ref(false)
-
 const isRender = ref(false)
 const scrollToTop = ref(true);
 const rightFixedContainerWidth = ref("100%");
-const docMenu = ref([]);
+const docMenu = ref<any[]>([]);
 const tocActive = ref(0);
 const route = useRoute()
-let rightNormalContainer = ref<HTMLInputElement>(null);
-let rightFixedContainer = ref<HTMLInputElement>(null)
-let articleContents = ref<HTMLInputElement>(null)
+let rightNormalContainer = ref<HTMLInputElement>();
+let rightFixedContainer = ref<HTMLInputElement>()
+let articleContents = ref<HTMLInputElement>()
 const isSpeader = ref(false)
 const headers = useRequestHeaders();
 const userAgent = headers?.["user-agent"] ?? navigator.userAgent;
-
 
 const article = ref()
 const plugins = [
     breaks(),
     frontmatter(),
     {
+
         viewerEffect({ file }) {
             if (typeof (file.value) != "object") {
                 return
@@ -173,8 +174,7 @@ const plugins = [
             const $style = document.createElement('style');
 
             try {
-                $style.innerHTML =
-                    themes[file.value.frontmatter.theme]?.style ?? themes.juejin.style;
+                $style.innerHTML = themes[file.value.frontmatter.theme]?.style ?? themes.juejin.style;
             } catch (e) {
                 $style.innerHTML = themes.juejin.style;
             }
@@ -195,9 +195,9 @@ const plugins = [
 const articleHtmlContent = ref()
 let mdHTMl = ""
 const { data: articleData, pending, refresh, error } = await useAsyncData("read_Detail", () => api.article.getDetail((route.params.id).toString()));
-if (articleData.value.success) {
-    mdHTMl = marked.parse(articleData.value.data.content);
-    article.value = articleData.value.data
+if (articleData.value!.success) {
+    mdHTMl = marked.parse(articleData.value!.data.content);
+    article.value = articleData.value!.data
     isSuccess.value = true;
     if (userAgent.indexOf("Baiduspider") != -1) {
         isSpeader.value = true
@@ -205,7 +205,7 @@ if (articleData.value.success) {
 }
 onMounted(() => {
 
-    if (articleData.value.success) {
+    if (articleData.value?.success) {
         handleChange(article.value.content)
         isRender.value = true;
         isSuccessViewer.value = true;
@@ -253,14 +253,14 @@ function initTop() {
 
 
 function setFloatContainer() {
-    if (rightNormalContainer.value.getBoundingClientRect().bottom <= 0) {
-        rightFixedContainer.value.style.position = "fixed";
-        rightFixedContainer.value.style.top = "0.5rem";
-        rightFixedContainerWidth.value = rightNormalContainer.value.offsetWidth + "px";
-    } else if (rightNormalContainer.value.getBoundingClientRect().bottom > 0) {
+    if (rightNormalContainer.value!.getBoundingClientRect().bottom <= 0) {
+        rightFixedContainer.value!.style.position = "fixed";
+        rightFixedContainer.value!.style.top = "0.5rem";
+        rightFixedContainerWidth.value = rightNormalContainer.value!.offsetWidth + "px";
+    } else if (rightNormalContainer.value!.getBoundingClientRect().bottom > 0) {
         rightFixedContainerWidth.value = "100%";
-        rightFixedContainer.value.style.top = "";
-        rightFixedContainer.value.style.position = "absolute";
+        rightFixedContainer.value!.style.top = "";
+        rightFixedContainer.value!.style.position = "absolute";
     }
 }
 function handleScroll() {
@@ -274,7 +274,7 @@ function handleScroll() {
         setContentsActive();
     }
 }
-function handleChange(v) {
+function handleChange(v: any) {
     articleHtmlContent.value = v;
 }
 
@@ -285,7 +285,7 @@ function setContentsActive() {
     );
 
     // 计算所有锚点元素的 offsetTop 的高度
-    const offsetTopList = [];
+    const offsetTopList: any[] = [];
     titleNavList.forEach((item) => {
         offsetTopList.push((item as any).offsetTop);
     });
@@ -305,20 +305,20 @@ function setContentsActive() {
     tocActive.value = navIndex;
 
     let cateList = Array.prototype.slice.call(
-        articleContents.value.querySelectorAll("li")
+        articleContents.value!.querySelectorAll("li")
     );
     for (let i = 0; i < cateList.length; i++) {
         if (navIndex === i) {
             const top = getElementTop(
                 cateList[i],
-                articleContents.value
+                articleContents.value!
             );
-            articleContents.value.scrollTop =
-                top - articleContents.value.offsetHeight / 2;
+            articleContents.value!.scrollTop =
+                top - articleContents.value!.offsetHeight / 2;
         }
     }
 }
-function getElementTop(el, by = null) {
+function getElementTop(el: { offsetTop: any; }, by: HTMLInputElement) {
     let top = el.offsetTop;
     if (by) {
         top = top - by.offsetTop;
@@ -330,8 +330,6 @@ function getElementTop(el, by = null) {
 useHead({
     title: isSuccess.value ? article.value.title : "文章不存在",
     titleTemplate: (title) => `${title} - 文章 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: isSuccess.value ? article.value.summary : 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
@@ -341,7 +339,7 @@ useHead({
         { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
     script: [
-        { async: "async", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
+        { async: "true", src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6667301035180632', crossorigin: "anonymous" }
     ]
 })
 </script>

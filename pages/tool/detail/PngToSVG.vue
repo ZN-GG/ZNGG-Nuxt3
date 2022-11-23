@@ -16,7 +16,7 @@
                     <span>拖拽文件到这里或者点击选择文件</span>
                     <input type="file" id="file" accept="image/*"
                         style="opacity: 0;position: absolute;cursor: pointer;width: 100%;height: 100%;left: 0;top: 0;"
-                        @change="selectFile">
+                        @change="selectFile!">
                 </div>
             </div>
             <div class="flex items-center pl-3">
@@ -66,7 +66,8 @@
 // import init, { get_svg } from '~/utils/wasm/png-to-svg-wasm';
 const init = (await import("png-to-svg-wasm")).default;
 const get_svg = (await import("png-to-svg-wasm")).get_svg;
-const optimize = (await import('~/utils/svgo.browser.mjs')).optimize;
+// const optimize = (await import('~/utils/svgo.browser.js')).optimize;
+
 const copy = (await import('copy-to-clipboard')).default;
 const isZip = ref(false)
 onMounted(() => {
@@ -77,7 +78,7 @@ const { $toast } = useNuxtApp();
 const emptyData = "<p style=\"line-height:18rem;text-align:center;\">SVG展示区域</p>";
 const svgData = ref("");
 
-async function selectFile(e) {
+async function selectFile(e: { target: { files: string | any[]; }; }) {
     if (e.target.files.length > 0) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -89,22 +90,22 @@ async function selectFile(e) {
                 return
             }
             console.log(data)
-            const result = optimize(data, {
-                multipass: true,
-                plugins: [
-                    'minifyStyles',
-                    'convertShapeToPath',
-                    'convertEllipseToCircle',
-                    'convertPathData',
-                    'mergePaths',
-                ],
-                js2svg: {
-                    indent: 2,
-                    pretty: true,
-                },
-            }).data;
-            console.log(result)
-            svgData.value = result
+            // const result = optimize(data, {
+            //     multipass: true,
+            //     plugins: [
+            //         'minifyStyles',
+            //         'convertShapeToPath',
+            //         'convertEllipseToCircle',
+            //         'convertPathData',
+            //         'mergePaths',
+            //     ],
+            //     js2svg: {
+            //         indent: 2,
+            //         pretty: true,
+            //     },
+            // }).data;
+            // console.log(result)
+            // svgData.value = result
         };
         file && reader.readAsArrayBuffer(file);
 
@@ -116,8 +117,6 @@ async function selectFile(e) {
 useHead({
     title: "Png转SVG",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'Png转SVG,在线将PNG转换成SVG格式,免费PNG转换成SVG,Png to SVG,png conver to svg' },
         { name: 'description', content: '一个可以在线将PNG图片转换成SVG格式的工具。A tool that can convert PNG images to SVG format online.' }

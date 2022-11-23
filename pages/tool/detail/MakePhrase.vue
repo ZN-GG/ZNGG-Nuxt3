@@ -69,7 +69,7 @@
     </div>
 </template>
 <script setup lang="ts">
-let nodeCore = ref<HTMLDivElement>(null);
+let nodeCore = ref<HTMLDivElement>();
 
 const { $toast } = useNuxtApp()
 
@@ -80,7 +80,7 @@ const meta = ref("意思是指薪水、工资很合适，而让自己觉得很�
 const img = ref('');
 const loading = ref(false);
 
-const domtoimage = await import('dom-to-image');
+const { DomToImage } = await import('dom-to-image');
 const pinyinUtil = (await import('pinyin-pro/lib/pinyin')).pinyin;
 
 watch(() => word, (o, n) => {
@@ -93,12 +93,12 @@ watch(() => word, (o, n) => {
 function conversion() {
     img.value = '';
     loading.value = true;
-    domtoimage
-        .toPng(nodeCore.value, {})
-        .then(e => {
+    DomToImage
+        .toPng(nodeCore.value!, {})
+        .then((e: string) => {
             img.value = e;
             loading.value = false;
-            domtoimage.toBlob(nodeCore.value, {}).then(function (blob) {
+            DomToImage.toBlob(nodeCore.value!, {}).then(function (blob: Blob | MediaSource) {
                 var hyperlink = document.createElement("a");
                 hyperlink.href = URL.createObjectURL(blob);
                 hyperlink.download = word.value + '.png';
@@ -115,7 +115,7 @@ function conversion() {
                 URL.revokeObjectURL(hyperlink.href)
             });
         })
-        .catch(err => {
+        .catch((err: any) => {
             loading.value = false;
         });
 };
@@ -125,8 +125,6 @@ function conversion() {
 useHead({
     title: "造新词生成器",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '成语生成器,新词生成器,造新词生成器,田字格成语生成器,流行成语生成解释' },
         { name: 'description', content: '流行的新词生成器，用来造新词的工具，有田字格背景、拼音和释义。' }

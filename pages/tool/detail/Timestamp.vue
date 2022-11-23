@@ -132,8 +132,9 @@ const typeS2T = ref(1)
 const showTypeT2SFlag = ref(false)
 const typeT2S = ref(1)
 
-const dateFormat = (date, format = 'YYYY-MM-DD HH:mm:ss') => {
-    const config = {
+
+const dateFormat = (date: Date, format = 'YYYY-MM-DD HH:mm:ss') => {
+    const config: { [key: string]: number | string } = {
         YYYY: date.getFullYear(),
         MM: date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
         DD: date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
@@ -142,7 +143,7 @@ const dateFormat = (date, format = 'YYYY-MM-DD HH:mm:ss') => {
         ss: date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds(),
     }
     for (const key in config) {
-        format = format.replace(key, config[key])
+        format = format.replace(key, config[key].toString())
     }
     return format
 }
@@ -228,8 +229,6 @@ function toCopy(params: any) {
 useHead({
     title: "时间戳在线转换工具",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '时间戳工具,时间转换,时间戳转换,时间戳在线转换工具' },
         { name: 'description', content: '一个时间戳转换工具，用于将时间戳转换成时间或者将时间转换成时间。' }

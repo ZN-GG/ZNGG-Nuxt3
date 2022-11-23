@@ -12,7 +12,7 @@
                         <div class="app-gradient__color-background js-background"
                             :style="'background-image: linear-gradient(' + customColor.replace(/[0-9]\d*deg/g, '90deg').replace('circle', '90deg') + ');'">
                         </div>
-                        <div class="app-gradient__points js-drag" @click="addPoint">
+                        <div class="app-gradient__points js-drag" @click="addPoint!">
                             <div v-for="(item, index) in appGradientPointList" class="js-draggable app-gradient__point"
                                 :class="item.isActive ? 'is-active' : ''" touch-action="none" v-bind:data-x="item.tranX"
                                 v-bind:index="index" :style="'transform: translateX(' + item.tranX + 'px);'"
@@ -249,11 +249,11 @@ const appGradientPointList = ref([
     }
 ])
 const hsvaGroup = ref({
-    hue: (null as HTMLDivElement),
-    alpha: (null as HTMLDivElement),
-    bgAlpha: (null as HTMLDivElement),
-    sv: (null as HTMLDivElement),
-    svPointer: (null as HTMLDivElement),
+    hue: (null as unknown as HTMLDivElement),
+    alpha: (null as unknown as HTMLDivElement),
+    bgAlpha: (null as unknown as HTMLDivElement),
+    sv: (null as unknown as HTMLDivElement),
+    svPointer: (null as unknown as HTMLDivElement),
 })
 const styleConfig = ref({
     type: 'linear',//linear，radial
@@ -286,12 +286,12 @@ onMounted(async () => {
                 }
             },
             listeners: {
-                start(event) {
+                start(event: { target: { getAttribute: (arg0: string) => string; }; }) {
                     let index = parseInt(event.target.getAttribute("index"));
                     selectPoint(index);
                     updateCustomColor();
                 },
-                move(event) {
+                move(event: { target: { getAttribute: (arg0: string) => string; parentNode: { clientWidth: string; }; }; dx: number; }) {
                     let index = parseInt(event.target.getAttribute("index"))
                     let n = (appGradientPointList.value[index].tranX || 0) + event.dx;
                     appGradientPointList.value[index].tranX = n
@@ -310,6 +310,7 @@ onMounted(async () => {
         cbs: {
             begin: () => {
             },
+            //@ts-ignore
             change: ({ x, pointer }) => {
                 const newX = clamp(x * 100, 0, 100).toFixed(2) + "%";
                 if (pointer) {
@@ -339,6 +340,7 @@ onMounted(async () => {
         cbs: {
             begin: () => {
             },
+            //@ts-ignore
             change: ({ x, pointer }) => {
                 const newX = clamp(x * 100, 0, 100).toFixed(2) + "%";
                 if (pointer) {
@@ -354,7 +356,7 @@ onMounted(async () => {
     hsvaGroup.value.alpha = alphaP.pointer;
     let bgAlpha = document.createElement('div');
     bgAlpha.className = 'bg-color js-alpha-color';
-    (alphaP.background as HTMLDivElement).lastElementChild.appendChild(bgAlpha);
+    (alphaP.background as HTMLDivElement).lastElementChild!.appendChild(bgAlpha);
     hsvaGroup.value.bgAlpha = bgAlpha;
     // SV Pointer XY
     const twodContainer = document.getElementsByClassName("colorPicker")[0];
@@ -364,6 +366,7 @@ onMounted(async () => {
         cbs: {
             begin: () => {
             },
+            //@ts-ignore
             change: ({ x, y, pointer }) => {
                 const newX = clamp(x * 100, 0, 100).toFixed(2) + "%";
                 const newY = clamp(y * 100, 0, 100).toFixed(2) + "%";
@@ -386,13 +389,15 @@ onMounted(async () => {
     hsvaGroup.value.sv = svSlider.background
     hsvaGroup.value.svPointer = svSlider.pointer
 
+    //@ts-ignore
     document.querySelector('.app-option__angle').addEventListener('mousedown', (event: MouseEvent) => {
         let ele = (event.target as HTMLElement);
         ele.addEventListener('mousemove', angleMove)
     })
 
-
+    //@ts-ignore
     document.querySelector('.app-option__angle').addEventListener('mouseup', (event: MouseEvent) => {
+        //@ts-ignore
         document.querySelector('.app-option__angle').removeEventListener('mousemove', angleMove)
     })
 
@@ -426,7 +431,7 @@ function clamp(a: number, min: number, max: number) {
     return Math.min(Math.max(a, min), max);
 }
 
-const tempSortList = ref([]);
+const tempSortList = ref<any[]>([]);
 
 function updateCustomColor() {
     let deg = customDeg.value + 'deg';
@@ -456,7 +461,7 @@ function setPosition() {
 }
 
 function setInitColor() {
-    let w = document.querySelector('.app-gradient__points').clientWidth
+    let w = document.querySelector('.app-gradient__points')!.clientWidth
     appGradientPointList.value.forEach(item => {
         item.tranX = item.percent / 100 * w;
     })
@@ -471,7 +476,7 @@ function rgbChange() {
 }
 
 function degChange(e: any) {
-    let input: HTMLInputElement = document.querySelector('.js-angle-input')
+    let input: HTMLInputElement = document.querySelector('.js-angle-input')!
     customDeg.value = parseInt(input.value);
     updateCustomColor();
 }
@@ -480,8 +485,8 @@ function downloadImg() {
     let node = document.querySelector('.header-app__background-color')
     domtoimage
         .toPng(node)
-        .then(e => {
-            domtoimage.toBlob(node).then(function (blob) {
+        .then((e: any) => {
+            domtoimage.toBlob(node).then(function (blob: Blob | MediaSource) {
                 var hyperlink = document.createElement("a");
                 hyperlink.href = URL.createObjectURL(blob);
                 hyperlink.download = 'bg-gradient.png';
@@ -498,7 +503,7 @@ function downloadImg() {
                 URL.revokeObjectURL(hyperlink.href)
             });
         })
-        .catch(err => {
+        .catch((err: any) => {
 
         });
 
@@ -609,7 +614,7 @@ function clearPoint(percent: number, hex: string) {
     updateCustomColor();
 }
 
-function gradient(startColor, endColor, step) {
+function gradient(startColor: string, endColor: string, step: number) {
     // 将 hex 转换为rgb
     let sColor = colorUtil.hex2rgb(startColor),
         eColor = colorUtil.hex2rgb(endColor);
@@ -631,8 +636,6 @@ function gradient(startColor, endColor, step) {
 useHead({
     title: "CSS渐变背景工具",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'CSSGradient渐变背景,css渐变背景工具,在线制作css渐变背景,渐变工具在线版,渐变色取样,linear-gradient' },
         { name: 'description', content: '一个功能强大的css渐变背景在线生成工具，帮助你快速调试出漂亮的渐变色。' }

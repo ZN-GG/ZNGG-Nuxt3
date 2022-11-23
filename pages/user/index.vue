@@ -8,7 +8,7 @@
             </div>
             <div class="w-8/12">
                 <div class="w-full bg-white rounded mx-2 p-4">
-                    <NuxtChild />
+                    <NuxtPage />
                 </div>
             </div>
             <div class="w-2/12">
@@ -27,8 +27,6 @@ definePageMeta({
 useHead({
     title: "用户中心",
     titleTemplate: (title) => `${title} - 持续高质量内容输出`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }

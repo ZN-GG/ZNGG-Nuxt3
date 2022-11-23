@@ -130,27 +130,27 @@ import { api } from '~/api/api';
 
 
 let isRightFixedContainer = ref(false), rightFixedContainerRight = ref(0), rightFixedContainerWidth = ref("100%");
-let rightNormalContainer = ref<HTMLInputElement>(null);
-let rightFixedContainer = ref<HTMLInputElement>(null)
+let rightNormalContainer = ref<HTMLInputElement>();
+let rightFixedContainer = ref<HTMLInputElement>()
 
-const toolList = ref([])
-const articleList = ref([])
+const toolList = ref<any[]>([])
+const articleList = ref<any[]>([])
 
-const { data: toolData, pending: toolPending, refresh: ToolRefresh, error: toolError } = await useAsyncData("index_GetToolList", () => api.tool.getList(1, 12, null));
-if (toolData.value.success) {
-    toolList.value = toolList.value.concat(toolData.value.data.content)
+const { data: toolData, pending: toolPending, refresh: ToolRefresh, error: toolError } = await useAsyncData("index_GetToolList", () => api.tool.getList(1, 12, ""));
+if (toolData.value!.success) {
+    toolList.value = toolList.value.concat(toolData.value!.data.content)
 }
 
-const { data: articleData, pending: articlePending, refresh: ArticleRefresh, error: articleError } = await useAsyncData("index_GetArticleList", () => api.article.getList(1, 10, null));
-if (articleData.value.success) {
-    articleList.value = articleList.value.concat(articleData.value.data.content)
+const { data: articleData, pending: articlePending, refresh: ArticleRefresh, error: articleError } = await useAsyncData("index_GetArticleList", () => api.article.getList(1, 10, ""));
+if (articleData.value!.success) {
+    articleList.value = articleList.value.concat(articleData.value!.data.content)
 }
 
 onMounted(async () => {
     await ToolRefresh()
     await ArticleRefresh()
-    toolList.value = toolData.value.data.content
-    articleList.value = articleData.value.data.content
+    toolList.value = toolData.value!.data.content
+    articleList.value = articleData.value!.data.content
     window.addEventListener("scroll", handleScroll, false);
 })
 onBeforeUnmount(() => {
@@ -171,14 +171,14 @@ function handleScroll() {
 
 function setFloatContainer() {
 
-    if (rightNormalContainer.value.getBoundingClientRect().bottom <= 0) {
-        rightFixedContainer.value.style.position = "fixed";
-        rightFixedContainer.value.style.top = "0.5rem";
-        rightFixedContainerWidth.value = rightNormalContainer.value.offsetWidth + "px";
-    } else if (rightNormalContainer.value.getBoundingClientRect().bottom > 0) {
+    if (rightNormalContainer.value!.getBoundingClientRect().bottom <= 0) {
+        rightFixedContainer.value!.style.position = "fixed";
+        rightFixedContainer.value!.style.top = "0.5rem";
+        rightFixedContainerWidth.value = rightNormalContainer.value!.offsetWidth + "px";
+    } else if (rightNormalContainer.value!.getBoundingClientRect().bottom > 0) {
         rightFixedContainerWidth.value = "100%";
-        rightFixedContainer.value.style.top = "";
-        rightFixedContainer.value.style.position = "absolute";
+        rightFixedContainer.value!.style.top = "";
+        rightFixedContainer.value!.style.position = "absolute";
     }
 }
 
@@ -188,8 +188,6 @@ definePageMeta({
 useHead({
     title: "ZNGG在线工具",
     titleTemplate: (title) => `${title} - 持续高质量内容输出`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }

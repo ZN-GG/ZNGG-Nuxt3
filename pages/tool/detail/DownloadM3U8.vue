@@ -60,11 +60,11 @@
 // import m3u8tomp4, { setLogger } from '@zackdk/m3u8tomp4';
 import { reactive } from 'vue';
 
-const state = reactive({ videoUrl: '', logs: [] });
+const state = reactive({ videoUrl: '', logs: [""] });
 const text = ref('');
 const { $toast } = useNuxtApp();
 
-const downLoadUrl = (url) => {
+const downLoadUrl = (url: string) => {
     const a = document.createElement('a');
     a.href = url;
     a.download = 'output.mp4';
@@ -72,6 +72,7 @@ const downLoadUrl = (url) => {
 };
 
 const startDownload = async () => {
+    //@ts-ignore
     const m3u8tomp4 = await import('@zackdk/m3u8tomp4');
     const { default: merge, setLogger } = m3u8tomp4;
 
@@ -102,8 +103,6 @@ const startDownload = async () => {
 useHead({
     title: '在线下载 M3U8 视频',
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         {
             name: 'Keywords',

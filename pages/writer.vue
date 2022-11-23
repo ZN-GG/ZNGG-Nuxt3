@@ -67,7 +67,9 @@ import zhHans from 'bytemd/locales/zh_Hans.json';
 import { api } from '~/api/api';
 import router from "~~/plugins/router";
 import { dataToEsm } from "@rollup/pluginutils";
+
 const { Editor } = await import("@bytemd/vue-next");
+
 const breaks = (await import('@bytemd/plugin-breaks')).default;
 const gemoji = (await import('@bytemd/plugin-gemoji')).default;
 const gfm = (await import('@bytemd/plugin-gfm')).default;
@@ -79,7 +81,7 @@ const frontmatter = (await import('@bytemd/plugin-frontmatter')).default;
 const themes = (await import('~/assets/theme')).themes;
 const route = useRoute()
 const { $toast } = useNuxtApp();
-const categoryList = ref([])
+const categoryList = ref<any[]>([])
 const article = ref({
     id: "",
     title: "",
@@ -96,6 +98,7 @@ const plugins = [
     breaks(),
     frontmatter(),
     {
+        //@ts-ignore
         viewerEffect({ file }) {
             if (typeof (file.value) != "string") {
                 return
@@ -104,8 +107,8 @@ const plugins = [
             const $style = document.createElement('style');
 
             try {
-                $style.innerHTML =
-                    themes[file.frontmatter.theme]?.style ?? themes.juejin.style;
+                //@ts-ignore
+                $style.innerHTML = themes[file.frontmatter.theme]?.style ?? themes.juejin.style;
             } catch (e) {
                 $style.innerHTML = themes.juejin.style;
             }
@@ -128,16 +131,16 @@ const plugins = [
 
 
 if (route.query.id) {
-    const { data: articleData, pending, refresh, error } = await useAsyncData("editor_Detail", () => api.article.getDetail((route.query.id).toString()));
-    if (articleData.value.success) {
-        article.value.id = articleData.value.data.id
-        article.value.title = articleData.value.data.title
-        article.value.category_id = articleData.value.data.category_id
-        article.value.image = articleData.value.data.image
-        article.value.content = articleData.value.data.content
-        article.value.type = articleData.value.data.type
-        article.value.summary = articleData.value.data.summary
-        article.value.labels = articleData.value.data.labels
+    const { data: articleData, pending, refresh, error } = await useAsyncData("editor_Detail", () => api.article.getDetail((route.query.id!).toString()));
+    if (articleData.value!.success) {
+        article.value.id = articleData.value!.data.id
+        article.value.title = articleData.value!.data.title
+        article.value.category_id = articleData.value!.data.category_id
+        article.value.image = articleData.value!.data.image
+        article.value.content = articleData.value!.data.content
+        article.value.type = articleData.value!.data.type
+        article.value.summary = articleData.value!.data.summary
+        article.value.labels = articleData.value!.data.labels
         edit.value = true;
     }
 
@@ -154,8 +157,6 @@ definePageMeta({
 useHead({
     title: "写作",
     titleTemplate: (title) => `${title} - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '前端技术分享，后端技术分享，在线小工具，设计技巧' },
         { name: 'description', content: 'ZNGG在线工具是一个持续提供高质量内容输出平台，并将输出内容转变为成果，提供各种各样的在线工具。' }
@@ -169,7 +170,7 @@ useHead({
 let categoryResult = await api.article.getCategories();
 categoryList.value = categoryResult.data;
 
-function handleChange(v) {
+function handleChange(v: string) {
     article.value.content = v;
 }
 
@@ -215,7 +216,7 @@ function selectCategory(id: string) {
 
 
 
-async function uploadImage(file) {
+async function uploadImage(file: (string | Blob)[]) {
     const formData = new FormData();
     formData.append('file', file[0]);
     const result = await api.upload.uploadImage(formData)
@@ -229,7 +230,7 @@ async function uploadImage(file) {
     ]
 }
 
-async function uploadImageCover(event) {
+async function uploadImageCover(event: any) {
     const formData = new FormData();
     formData.append('file', event.target.files[0]);
     const result = await api.upload.uploadImageCover(formData)

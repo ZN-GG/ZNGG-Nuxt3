@@ -49,22 +49,22 @@
 <script setup lang="ts">
 import { api } from "~/api/api";
 const { $toast } = useNuxtApp()
-const inputBox = ref<HTMLInputElement>(null);
+const inputBox = ref<HTMLInputElement>();
 const showInfo = ref(false);
 const result = ref("");
 
 onMounted(() => {
-    inputBox.value.focus();
+    inputBox.value!.focus();
 })
 
 function search() {
-    if (inputBox.value.value.length < 3) {
+    if (inputBox.value!.value.length < 3) {
         $toast.error("请输入正确的域名")
         return
     }
     result.value = "查询中...";
     showInfo.value = true;
-    api.fun.getWhois(inputBox.value.value).then(res => {
+    api.fun.getWhois(inputBox.value!.value).then(res => {
         if (res.success) {
             let data: string = res.data
             if (data.indexOf("URL of the") != -1) {

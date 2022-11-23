@@ -1,14 +1,13 @@
 
-import { api } from '~/api/api';
 export default defineEventHandler(async () => {
   const toolList: ApiResponse = await $fetch<ApiResponse>('https://api.zngg.net/portal/tool/1/99').then(res => res)
   let body = "";
-  toolList.data.content.forEach(item => {
+  toolList.data.content.forEach((item: { content: string; updateTime: string; }) => {
     let url = "https://www.zngg.net/tool/detail/" + item.content
     body = body + "<url><loc>" + url + "</loc><lastmod>" + item.updateTime.substring(0, 10) + "</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>"
   });
   const articleList: ApiResponse = await $fetch<ApiResponse>('https://api.zngg.net/portal/article/1/999').then(res => res)
-  articleList.data.content.forEach(item => {
+  articleList.data.content.forEach((item: { id: string; updateTime: string; }) => {
     let url = "https://www.zngg.net/read/post/" + item.id
     body = body + "<url><loc>" + url + "</loc><lastmod>" + item.updateTime.substring(0, 10) + "</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>"
   });

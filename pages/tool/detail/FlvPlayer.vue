@@ -73,11 +73,12 @@
 
     </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts">import Mpegts from 'mpegts.js';
+
 const videoUrl = ref("")
-const videoElement = ref<HTMLElement>(null)
-let $mpegts;
-let player;
+const videoElement = ref<HTMLElement>()
+let $mpegts: { createPlayer: any; isSupported?: () => boolean; getFeatureList?: () => Mpegts.FeatureList; BaseLoader?: Mpegts.BaseLoaderConstructor; LoaderStatus?: Mpegts.LoaderStatus; LoaderErrors?: Mpegts.LoaderErrors; version?: string; Events?: Readonly<Mpegts.Events>; ErrorTypes?: Readonly<Mpegts.ErrorTypes>; ErrorDetails?: Readonly<Mpegts.ErrorDetails>; MSEPlayer?: Mpegts.PlayerConstructor; NativePlayer?: Mpegts.PlayerConstructor; LoggingControl?: Mpegts.LoggingControl; };
+let player: { unload: () => void; detachMediaElement: () => void; destroy: () => void; attachMediaElement: (arg0: HTMLElement | undefined) => void; load: () => void; play: () => void; pause: () => void; } | null;
 onMounted(async () => {
     $mpegts = (await import('mpegts.js')).default
 })
@@ -107,8 +108,8 @@ function load() {
         seekType: 'range',
         liveBufferLatencyChasing: true,
     });
-    player.attachMediaElement(videoElement.value);
-    player.load();
+    player!.attachMediaElement(videoElement.value);
+    player!.load();
 }
 
 function clear() {
@@ -146,8 +147,6 @@ function destroy() {
 useHead({
     title: "Flv在线播放器",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'Flv在线播放,flv直播播放器,flv直播测试,mp4播放器,mp4在线播放,在线播放器' },
         { name: 'description', content: '测试flv拉流专用的播放器，flv直播是一种稳定好用的直播拉流方案，所以专门做了这样一个播放器用于测试flv直播拉流。' }

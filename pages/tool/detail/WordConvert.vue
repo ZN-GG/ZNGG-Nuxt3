@@ -9,10 +9,10 @@
 </template>
 <script setup lang="ts">
 
-const iframe = ref<HTMLIFrameElement>(null)
+const iframe = ref<HTMLIFrameElement>()
 
 function convert() {
-    iframe.value.contentWindow.postMessage({
+    iframe.value!.contentWindow!.postMessage({
         cmd: 'download',
         params: {
             "url": "https://api.zngg.net/api/common/office/wordConvert",

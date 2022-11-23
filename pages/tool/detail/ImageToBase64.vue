@@ -61,11 +61,12 @@
 let CryptoJS = await import("crypto-js");
 const { $toast } = useNuxtApp();
 const base64Data = ref("");
-function encode(file) {
+function encode(file: any) {
     return new Promise((resolve, reject) => {
         try {
             let reader = new FileReader();
             reader.onload = (e) => {
+                //@ts-ignore
                 const wordArray = CryptoJS.lib.WordArray.create(reader.result);
                 let r = CryptoJS.enc.Base64.stringify(wordArray);
                 if (file.type.startsWith('image')) {
@@ -84,11 +85,11 @@ function encode(file) {
     })
 }
 
-async function selectFile(e) {
+async function selectFile(e: any) {
 
     if (e.target.files.length > 0) {
         encode(e.target.files[0]).then(res => {
-            base64Data.value = res.toString();
+            base64Data.value = res!.toString();
         }).catch(e => {
         })
     }
@@ -98,8 +99,6 @@ async function selectFile(e) {
 useHead({
     title: "图片转Base64",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: '在线Base64转图片,图片转Base64编码,在线图片转换' },
         { name: 'description', content: '一个可以将图片和Base64编码相互转换的工具，在图片格式转换时会用到。' }

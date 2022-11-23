@@ -97,7 +97,7 @@ function toUnicode() {
     result.value = value;
 }
 
-function left_zero_4(str) {
+function left_zero_4(str: string | any[] | null) {
     if (str != null && str != '' && str != 'undefined') {
         if (str.length == 2) {
             return '00' + str;
@@ -120,8 +120,6 @@ function toCopy() {
 useHead({
     title: "Unicode中文转换",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'Unicode转中文,中文转Unicode,Unicode与中文互转,在线Unicode转换工具' },
         { name: 'description', content: '在线一键Unicode转中文，一键中文转Unicode，一键Unicode与中文互转，程序员必备的转换神器。' }

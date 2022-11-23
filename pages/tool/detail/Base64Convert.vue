@@ -105,8 +105,6 @@ function toCopy() {
 useHead({
     title: "Base64编码解码",
     titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
     meta: [
         { name: 'Keywords', content: 'Base64,Base64编码,Base64解码,Base64加密,Base64解密' },
         { name: 'description', content: '在线Base64编码解码 在线Base64加密解密工具。' }
