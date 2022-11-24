@@ -24,7 +24,7 @@
                     id="fileInput" alt="上传头像">
                     <input type="file" id="file" accept="image/*"
                         style="opacity: 0;position: absolute;cursor: pointer;width: 100%;height: 100%;left: 0;top: 0;"
-                        @change="selectFile!">
+                        @change="selectFile($event)">
                 </div>
                 <div v-show="uploaded" class="text-center relative pt-6 pb-6 mb-4 custom-font-14 rounded w-44 mx-auto"
                     style="background: url(/img/NationalDayAvatar/save-btn.png);background-size: 11rem;" alt="保存头像"
@@ -80,7 +80,7 @@ onMounted(async () => {
 })
 
 
-async function selectFile(e: { target: { files: string | any[]; }; }) {
+async function selectFile(e: any) {
     if (e.target.files.length > 0) {
         let reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);

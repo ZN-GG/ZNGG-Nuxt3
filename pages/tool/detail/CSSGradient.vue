@@ -193,10 +193,10 @@
 
 <script setup lang="ts">
 const { $toast } = useNuxtApp()
+const DomToImage = (await import('dom-to-image')).default;
 let interact: any;
 let dragUtil: any;
 let colorUtil: any;
-let domtoimage: any;
 
 const selectPointConfig = ref({
     index: 0,
@@ -403,7 +403,6 @@ onMounted(async () => {
 
     selectPoint(0);
     updateCustomColor();
-    domtoimage = await import('dom-to-image')
 })
 
 function angleMove(event: MouseEvent) {
@@ -483,10 +482,10 @@ function degChange(e: any) {
 
 function downloadImg() {
     let node = document.querySelector('.header-app__background-color')
-    domtoimage
-        .toPng(node)
+    DomToImage
+        .toPng(node!)
         .then((e: any) => {
-            domtoimage.toBlob(node).then(function (blob: Blob | MediaSource) {
+            DomToImage.toBlob(node!).then(function (blob: Blob | MediaSource) {
                 var hyperlink = document.createElement("a");
                 hyperlink.href = URL.createObjectURL(blob);
                 hyperlink.download = 'bg-gradient.png';

@@ -144,7 +144,8 @@
         </section>
     </div>
 </template>
-<script setup lang="ts">import DomToImage from 'dom-to-image';
+<script setup lang="ts">
+const DomToImage = (await import('dom-to-image')).default;
 
 let nodeCore = ref<HTMLDivElement>();
 const vip = ref('icon_member7');
@@ -167,17 +168,13 @@ const dataUrl = ref('');;
 const rdata = ref('');;
 const avatar = ref('/img/avatar.jpg');
 const { $toast } = useNuxtApp()
-let domtoimage: { toPng?: any; DomToImage?: DomToImage; default?: any; };
 
-onMounted(async () => {
-    domtoimage = await import('dom-to-image')
-})
 
 function conversion() {
     img.value = '';
     loading.value = true;
-    domtoimage
-        .toPng(nodeCore.value)
+    DomToImage
+        .toPng(nodeCore.value!)
         .then((e: string) => {
             img.value = e;
             loading.value = false;

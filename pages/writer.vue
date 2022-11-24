@@ -248,7 +248,7 @@ function close() {
 }
 
 </script>
-<style>
+<style scoped>
 .bytemd {
     height: calc(100vh - 4rem);
 }

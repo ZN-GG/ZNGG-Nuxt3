@@ -80,7 +80,7 @@ const meta = ref("意思是指薪水、工资很合适，而让自己觉得很�
 const img = ref('');
 const loading = ref(false);
 
-const { DomToImage } = await import('dom-to-image');
+const DomToImage = (await import('dom-to-image')).default;
 const pinyinUtil = (await import('pinyin-pro/lib/pinyin')).pinyin;
 
 watch(() => word, (o, n) => {

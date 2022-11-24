@@ -16,7 +16,7 @@
                     <span>拖拽文件到这里或者点击选择文件</span>
                     <input type="file" id="file" accept="image/*"
                         style="opacity: 0;position: absolute;cursor: pointer;width: 100%;height: 100%;left: 0;top: 0;"
-                        @change="selectFile!">
+                        @change="selectFile($event as any)">
                 </div>
             </div>
             <div class="flex items-center pl-3">
@@ -67,6 +67,7 @@
 const init = (await import("png-to-svg-wasm")).default;
 const get_svg = (await import("png-to-svg-wasm")).get_svg;
 // const optimize = (await import('~/utils/svgo.browser.js')).optimize;
+const { optimize } = (await import('svgo')).default;
 
 const copy = (await import('copy-to-clipboard')).default;
 const isZip = ref(false)
@@ -90,22 +91,22 @@ async function selectFile(e: { target: { files: string | any[]; }; }) {
                 return
             }
             console.log(data)
-            // const result = optimize(data, {
-            //     multipass: true,
-            //     plugins: [
-            //         'minifyStyles',
-            //         'convertShapeToPath',
-            //         'convertEllipseToCircle',
-            //         'convertPathData',
-            //         'mergePaths',
-            //     ],
-            //     js2svg: {
-            //         indent: 2,
-            //         pretty: true,
-            //     },
-            // }).data;
-            // console.log(result)
-            // svgData.value = result
+            const result = optimize(data, {
+                multipass: true,
+                plugins: [
+                    'minifyStyles',
+                    'convertShapeToPath',
+                    'convertEllipseToCircle',
+                    'convertPathData',
+                    'mergePaths',
+                ],
+                js2svg: {
+                    indent: 2,
+                    pretty: true,
+                },
+            }).data;
+            console.log(result)
+            svgData.value = result
         };
         file && reader.readAsArrayBuffer(file);
 
