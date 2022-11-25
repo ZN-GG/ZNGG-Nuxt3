@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15006056",
+      "name": "ok",
+      "font_class": "ok",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "18072109",
+      "name": "upload",
+      "font_class": "upload",
+      "unicode": "e7ed",
+      "unicode_decimal": 59373
+    },
+    {
       "icon_id": "1727459",
       "name": "224用户",
       "font_class": "yonghu",

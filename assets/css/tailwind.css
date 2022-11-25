@@ -19,6 +19,10 @@
     @apply bg-gray-100 custom-font-12 leading-5 py-1 px-4 rounded-md whitespace-nowrap cursor-pointer hover:bg-blue-600 hover:text-white mx-1;
   }
 
+  .btn-3{
+    
+  }
+
   .li-1 {
     @apply hover:bg-gray-100 px-2 py-1;
   }

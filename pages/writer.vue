@@ -165,6 +165,8 @@ useHead({
         { rel: 'stylesheet', href: '/fonts/katex.min.css' },
         { rel: 'stylesheet', href: '/css/bytemd.css' }
     ],
+    style: [{ children: '.bytemd { height: calc(100vh - 4rem); }' }]
+
 })
 
 let categoryResult = await api.article.getCategories();
@@ -248,11 +250,7 @@ function close() {
 }
 
 </script>
-<style scoped>
-.bytemd {
-    height: calc(100vh - 4rem);
-}
-
+<style>
 .relaseCard {
     background: rgba(0, 0, 0, 0.25);
 }
