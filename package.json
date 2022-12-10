@@ -40,6 +40,7 @@
     "interactjs": "^1.10.17",
     "marked": "^4.2.3",
     "mpegts.js": "^1.6.10",
+    "mux.js": "^6.2.0",
     "nplayer": "^1.0.13",
     "pinia": "2.0.22",
     "pinyin-pro": "^3.11.0",
