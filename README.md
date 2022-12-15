@@ -9,8 +9,8 @@
   <p align="center">
     这是一个基于Nuxt3的在线工具项目。
     <br />
-![](https://img.shields.io/github/languages/count/ZN-GG/ZNGG-Nuxt3)
-![](https://img.shields.io/github/languages/top/ZN-GG/ZNGG-Nuxt3)
+    <img scr="https://img.shields.io/github/languages/count/ZN-GG/ZNGG-Nuxt3">
+    <img src="https://img.shields.io/github/languages/top/ZN-GG/ZNGG-Nuxt3">
     <br />
     <a href="https://www.zngg.net/">View Demo</a>
     ·
