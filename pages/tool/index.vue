@@ -72,8 +72,8 @@ if (toolData.value!.success) {
 }
 
 onMounted(async () => {
-    await ToolRefresh()
-    toolList.value = toolData.value!.data.content
+    // await ToolRefresh()
+    // toolList.value = toolData.value!.data.content
 })
 
 

@@ -147,8 +147,8 @@ if (articleData.value!.success) {
 }
 
 onMounted(async () => {
-    await refresh()
-    articleList.value = articleData.value!.data.content
+    // await refresh()
+    // articleList.value = articleData.value!.data.content
     window.addEventListener("scroll", handleScroll, false);
 
     //@ts-ignore

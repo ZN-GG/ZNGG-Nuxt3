@@ -147,10 +147,10 @@ if (articleData.value!.success) {
 }
 
 onMounted(async () => {
-    await ToolRefresh()
-    await ArticleRefresh()
-    toolList.value = toolData.value!.data.content
-    articleList.value = articleData.value!.data.content
+    // await ToolRefresh()
+    // await ArticleRefresh()
+    // toolList.value = toolData.value!.data.content
+    // articleList.value = articleData.value!.data.content
     window.addEventListener("scroll", handleScroll, false);
 })
 onBeforeUnmount(() => {
