@@ -12,13 +12,15 @@
     </div>
 </template>
 <script setup lang="ts">
+import { resolveURL } from "ufo";
+
 const { isUrl } = await import("~/utils/validate");
 const { $toast } = useNuxtApp();
 //@ts-ignore
 const AESDecryptor = (await import("~/utils/aes-decryptor")).default;
 
 const tsList = ref<ITsItem[]>([]);
-const url = ref("")
+const url = ref("https://dy1.yle888.vip/20220303/JatVWB9L/index.m3u8")
 // AES 视频解密配置
 const aesConf = ref<AesConf>({
     status: false,
@@ -49,6 +51,7 @@ const enum DownloadStatus {
 }
 interface ITsItem {
     status: DownloadStatus;
+    times: number;
     src: string;
     m3u8Src: string;
     name: string;
@@ -117,6 +120,13 @@ async function downloadM3U8() {
         aesConf.value.uri = applyURL(aesConf.value.uri, url.value)
         await getAES();
     }
+    if (data.indexOf("#EXT-X-STREAM-INF") > -1) {
+        console.log("origin", origin);
+        let resUrl = (data.match(/(.+?m3u8)/) || ['', '', ''])[0];
+        url.value = applyURL(resUrl, origin)
+        downloadM3U8()
+        return
+    }
     const lines = data.split(/\s/);
     const tempArr: ITsItem[] = [];
     lines.forEach((item, index) => {
@@ -131,6 +141,7 @@ async function downloadM3U8() {
             const src = getFullUrl(origin, item);
             tempArr.push({
                 status: DownloadStatus.WAITING,
+                times: 0,
                 name: "video",
                 m3u8Src: url.value,
                 filePath: "",
@@ -158,7 +169,7 @@ function downloadTsList() {
 }
 
 async function downloadTs() {
-    const index = tsList.value.findIndex(v => v.status === DownloadStatus.WAITING);
+    const index = tsList.value.findIndex(v => v.status === DownloadStatus.WAITING && v.times < 12);
     if (index === -1) {
         return;
     }
@@ -202,7 +213,12 @@ async function downloadTs() {
         }
     } catch (e) {
         console.log(e);
-        tsList.value[index].status = DownloadStatus.ERROR;
+        if (tsList.value[index].times >= 10) {
+            tsList.value[index].status = DownloadStatus.ERROR;
+        } else {
+            tsList.value[index].times = tsList.value[index].times + 1
+            tsList.value[index].status = DownloadStatus.WAITING;
+        }
     } finally {
         downloadTs();
     }
