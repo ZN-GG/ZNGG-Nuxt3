@@ -1,26 +1,75 @@
 <template>
-    <div>
-        <textarea v-model="url" rows="2" cols="40" type="text"></textarea>
-        <br>
-        <button @click="downloadM3U8">download</button>
-        <table>
-            <tr v-for="(item, index) in tsList">
-                <td>{{ item.name }}</td>
-                <td>{{ item.status }}</td>
-            </tr>
-        </table>
+    <div class="bg-white">
+        <div class="container mx-auto flex py-6">
+            <div class="w-full md:w-8/12">
+                <h1 class="font-bold text-3xl my-3">M3U8在线下载工具</h1>
+                <textarea v-model="url" autofocus
+                    class="text-gray-600 w-full bg-gray-100 boder-left boder-bottom outline-none p-3 my-3" rows="4"
+                    placeholder="输入有效的M3U8地址"></textarea>
+                <div class="flex justify-between items-center">
+                    <div class=""><span class="font-bold text-lg text-gray-600"><span v-text="message"></span></span>
+                    </div>
+                    <div>
+                        <button v-show="status == DownloadStatus.WAITING"
+                            class="bg-blue-600 text-white py-2 text-center hover:bg-blue-800 cursor-pointer px-8 select-none"
+                            @click="downloadM3U8">开始下载</button>
+                        <button v-show="status == DownloadStatus.DOWNLOADING"
+                            class="bg-red-600 text-white py-2 text-center hover:bg-red-800 cursor-pointer px-8 select-none"
+                            @click="stop">停止</button>
+                        <button v-show="status == DownloadStatus.FINISHED"
+                            class="btn-bg-save text-white py-2 text-center hover:bg-blue-800 cursor-pointer px-8 select-none"
+                            @click="save">保存</button>
+                    </div>
+
+                </div>
+                <div class="item-box flex flex-wrap my-4 overflow-y-scroll pt-6">
+                    <div v-show="tsList.length <= 0" class="flex w-full justify-center items-center">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-400">还未开始下载 😉</h1>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <div v-for="(item, index) in tsList" @click="reTry(index)"
+                        class="cursor-pointer select-none w-12 h-8 m-1 leading-8 text-center text-white" :class="((item.status == DownloadStatus.WAITING || item.status == DownloadStatus.DOWNLOADING) ? 'bg-gray-500' : '') +
+                            (item.status == DownloadStatus.FINISHED ? 'bg-green-500' : '') +
+                            (item.status == DownloadStatus.ERROR ? 'bg-red-700' : '')
+                        ">
+                        {{ index + 1 }}
+                    </div>
+                </div>
+                <div class="py-2">
+                    <br>
+                    <hr>
+                    <br>
+                    <p>温馨提示：</p>
+                    <span class="leading-4 inline-block"><span
+                            class="inline-block select-none w-8 h-4 m-1 align-middle leading-8 text-center text-white bg-gray-500">
+                        </span><span class="align-middle">表示下载中</span></span>
+                    <span class="leading-4 inline-block"><span
+                            class="inline-block select-none w-8 h-4 m-1 align-middle leading-8 text-center text-white bg-green-500">
+                        </span><span class="align-middle">表示完成</span></span>
+                    <span class="leading-4 inline-block"><span
+                            class="inline-block select-none w-8 h-4 m-1 align-middle leading-8 text-center text-white bg-red-700">
+                        </span><span class="align-middle">表示失败</span></span>
+                    <p>点击<span class="leading-4 inline-block"><span
+                                class="inline-block select-none w-8 h-4 m-1 align-middle leading-8 text-center text-white bg-red-700">
+                            </span></span>可以重新下载该块内容。</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
-import { resolveURL } from "ufo";
-
 const { isUrl } = await import("~/utils/validate");
 const { $toast } = useNuxtApp();
 //@ts-ignore
 const AESDecryptor = (await import("~/utils/aes-decryptor")).default;
 
 const tsList = ref<ITsItem[]>([]);
-const url = ref("https://dy1.yle888.vip/20220303/JatVWB9L/index.m3u8")
+const url = ref("")
+const message = ref("空闲")
+const status = ref(DownloadStatus.WAITING)
 // AES 视频解密配置
 const aesConf = ref<AesConf>({
     status: false,
@@ -109,6 +158,9 @@ onMounted(() => {
 })
 
 async function downloadM3U8() {
+    tsList.value = ([]);
+    status.value = DownloadStatus.DOWNLOADING;
+    message.value = "正在解析URL";
     const { origin } = new URL(url.value);
     let data = await ajax(url.value);
     if (data.indexOf('#EXT-X-KEY') > -1) {
@@ -142,7 +194,7 @@ async function downloadM3U8() {
             tempArr.push({
                 status: DownloadStatus.WAITING,
                 times: 0,
-                name: "video",
+                name: "ZNGG.NET_" + new Date().getTime(),
                 m3u8Src: url.value,
                 filePath: "",
                 src,
@@ -152,10 +204,12 @@ async function downloadM3U8() {
         }
     })
     if (!tempArr.length) {
+        message.value = "未解析到相关内容"
         $toast.error("未解析到相关内容");
         return;
     }
     tsList.value.push(...tempArr);
+    message.value = "正在下载 🚀"
     // 批量下载
     downloadTsList();
 
@@ -169,6 +223,9 @@ function downloadTsList() {
 }
 
 async function downloadTs() {
+    if (tsList.value.length <= 0) {
+        return
+    }
     const index = tsList.value.findIndex(v => v.status === DownloadStatus.WAITING && v.times < 12);
     if (index === -1) {
         return;
@@ -176,34 +233,50 @@ async function downloadTs() {
     const item = tsList.value[index];
     tsList.value[index].status = DownloadStatus.DOWNLOADING;
     try {
-        let data = await ajax<Buffer>(item.src, "arraybuffer");
+        let r = '?r=' + new Date().getTime() + Math.random() + Math.random();
+        let data = await ajax<Buffer>(item.src + r, "arraybuffer");
+        if (tsList.value.length <= 0) {
+            return
+        }
         if (aesConf.value.status) {
             data = decodeAES(data, index)
         }
         // 转码mp4
         const file: Uint8Array = await new Promise(resolve => {
             let { duration } = m3u8List.value.find(v => v.src === item.m3u8Src)!;
-            const opts = duration
-                ? {
-                    keepOriginalTimestamps: true,
-                    duration: duration,
-                    remux: true
-                }
-                : undefined;
-
             //@ts-ignore
-            const transmuxer = new muxjs.Transmuxer(opts);
-            transmuxer.on("data", (segment: any) => {
+            const transmuxerAudio = new muxjs.Transmuxer({
+                keepOriginalTimestamps: true,
+                duration: duration,
+                remux: false
+            });
+            //@ts-ignore
+            const transmuxerVideo = new muxjs.Transmuxer({
+                keepOriginalTimestamps: true,
+                duration: duration,
+            });
+            let isAudio = true;
+            transmuxerVideo.on("data", (segment: any) => {
+                isAudio = false;
                 const data = new Uint8Array(segment.initSegment.byteLength + segment.data.byteLength);
                 data.set(segment.initSegment, 0);
                 data.set(segment.data, segment.initSegment.byteLength);
                 resolve(data)
-
             });
-            transmuxer.push(new Uint8Array(data));
-            transmuxer.flush();
+            transmuxerVideo.push(new Uint8Array(data));
+            transmuxerVideo.flush();
+            if (isAudio) {
+                transmuxerAudio.on("data", (segment: any) => {
+                    isAudio = true;
+                    const data = new Uint8Array(segment.initSegment.byteLength + segment.data.byteLength);
+                    data.set(segment.initSegment, 0);
+                    data.set(segment.data, segment.initSegment.byteLength);
+                    resolve(data)
+                });
+                transmuxerAudio.push(new Uint8Array(data));
+                transmuxerAudio.flush();
+            }
         });
-
         tsList.value[index].status = DownloadStatus.FINISHED;
         tsList.value[index].file = file;
 
@@ -213,6 +286,9 @@ async function downloadTs() {
         }
     } catch (e) {
         console.log(e);
+        if (tsList.value.length <= 0) {
+            return
+        }
         if (tsList.value[index].times >= 10) {
             tsList.value[index].status = DownloadStatus.ERROR;
         } else {
@@ -223,6 +299,12 @@ async function downloadTs() {
         downloadTs();
     }
 }
+
+function reTry(index: number) {
+    tsList.value[index].status = DownloadStatus.WAITING;
+    downloadTs();
+}
+
 // 文件下载
 async function downloadFile(m3u8: IM3u8Item) {
     const fileDataList = tsList.value
@@ -231,7 +313,8 @@ async function downloadFile(m3u8: IM3u8Item) {
         .filter(v => !!v);
     const fileBlob = new Blob(fileDataList, { type: "video/mp4" });
     const url = URL.createObjectURL(fileBlob);
-
+    message.value = "下载完成，请保存 🤪"
+    status.value = DownloadStatus.FINISHED;
     downLoad(url, `${m3u8.name}.mp4`);
 
 }
@@ -306,6 +389,19 @@ function ajax<T = string>(url: string, type: XMLHttpRequestResponseType = "") {
     });
 }
 
+function stop() {
+    message.value = "空闲";
+    status.value = DownloadStatus.WAITING;
+    tsList.value = ([]);
+}
+
+function save() {
+    const m3u8 = m3u8List.value.find(v => v.status === DownloadStatus.FINISHED);
+    if (m3u8?.status === DownloadStatus.FINISHED) {
+        downloadFile(m3u8);
+    }
+}
+
 const getFullUrl = (...urls: string[]): string => {
     urls.slice(1).forEach((value, index) => {
         if (isUrl(value)) {
@@ -319,10 +415,52 @@ const getFullUrl = (...urls: string[]): string => {
 }
 
 definePageMeta({
-    layout: 'empty'
+    //layout: 'empty'
 })
 
-
-
-
 </script>
+<style scoped>
+.item-box {
+    max-height: 24rem;
+}
+
+/* 整个滚动条 */
+.item-box::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* 滚动条上的滚动滑块 */
+.item-box::-webkit-scrollbar-thumb {
+    background-color: #49b1f5;
+    /* 关键代码 */
+    background-image: -webkit-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.4) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            transparent 75%,
+            transparent);
+    border-radius: 32px;
+}
+
+/* 滚动条轨道 */
+.item-box::-webkit-scrollbar-track {
+    background-color: #dbeffd;
+    border-radius: 32px;
+}
+
+.btn-bg-save {
+    background-color: #49b1f5;
+    /* 关键代码 */
+    background-image: -webkit-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.4) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            transparent 75%,
+            transparent);
+}
+</style>

@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://www.zngg.net/">
    <img src="./public/ad/rdmeLogo.jpg">
   </a>
 
@@ -52,6 +52,7 @@
 - 文字里的秘密
 - PNG 转 SVG
 - Word 转 PDF
+- M3U8 视频在线下载 V2
 - ...
 
 ## 安装
