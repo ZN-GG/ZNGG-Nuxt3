@@ -58,7 +58,7 @@
                     <br>
                     <p>将下载链接填入后，点击开始下载，开始解析视频内容，之后出现很多颜色块，等到所有色块均变成后绿色后表示下载完成，此时会自动弹出下载框，并且显示保存按钮，您也可以点击保存按钮进行下载（下载后的视频格式为mp4）。
                     </p>
-                    
+
                 </div>
                 <div class="mt-14 pb-10">
                     <br>
@@ -84,6 +84,7 @@
 <script setup lang="ts">
 const { isUrl } = await import("~/utils/validate");
 const { $toast } = useNuxtApp();
+const route = useRoute()
 //@ts-ignore
 const AESDecryptor = (await import("~/utils/aes-decryptor")).default;
 
@@ -172,6 +173,11 @@ const m3u8List = computed<IM3u8Item[]>(() => {
 
 
 onMounted(() => {
+    let urlParam = route.query.url
+    if (urlParam) {
+        url.value = urlParam as string;
+    }
+
     let script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = '/js/mux-mp4.min.js';
