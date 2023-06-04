@@ -1,4 +1,5 @@
 const baseUrl = "https://api.zngg.net"
+const version = "19"
 
 const errorResponse: ApiResponse = {
     success: false,
@@ -12,7 +13,8 @@ const get = async (url: string, params = {}): Promise<ApiResponse> => {
         const token = useCookie("token")
         const res = await $fetch<ApiResponse>(baseUrl + url, {
             headers: {
-                "Authorization": token.value
+                "Authorization": token.value,
+                "version": version
             },
             method: 'GET',
             params: params
@@ -38,7 +40,7 @@ const post = async (url: string, params = {}): Promise<ApiResponse> => {
         });
         return res;
     } catch (error) {
-        errorResponse.message = error
+        errorResponse.message = "" + error
         return errorResponse;
     }
 }
