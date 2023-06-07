@@ -222,10 +222,6 @@ async function deleteFile(index: number) {
     fileList.value.splice(index, 1)
 }
 
-definePageMeta({
-    layout: "empty"
-})
-
 </script>
 <style scoped>
 .convert-bg {

@@ -8,6 +8,7 @@ const errorResponse: ApiResponse = {
     data: null
 }
 
+
 const get = async (url: string, params = {}): Promise<ApiResponse> => {
     try {
         const token = useCookie("token")
@@ -64,4 +65,4 @@ const put = async (url: string, params = {}): Promise<ApiResponse> => {
     }
 }
 
-export default { get, post, put }
+export default { get, post, put, baseUrl }
