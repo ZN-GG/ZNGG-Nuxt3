@@ -79,6 +79,15 @@ function search() {
     })
 }
 
+
+useHead({
+    title: "Whois查询",
+    titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
+    meta: [
+        { name: 'Keywords', content: 'whois查询工具' },
+        { name: 'description', content: '站长都爱用的whois查询工具，查询域名相关信息' }
+    ],
+})
 </script>
 
 <style scoped>

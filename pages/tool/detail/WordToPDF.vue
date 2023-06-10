@@ -222,6 +222,17 @@ async function deleteFile(index: number) {
     fileList.value.splice(index, 1)
 }
 
+
+useHead({
+    title: "Word转PDF",
+    titleTemplate: (title) => `${title} - 工具 - ZNGG在线工具`,
+    meta: [
+        { name: 'Keywords', content: 'word转pdf,word to pdf' },
+        { name: 'description', content: '在线Word转PDF工具，一个免费且无需登录的网页版word转pdf工具' }
+    ],
+})
+
+
 </script>
 <style scoped>
 .convert-bg {
