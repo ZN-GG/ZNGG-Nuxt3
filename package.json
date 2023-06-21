@@ -50,6 +50,7 @@
     "svgo": "^3.0.2",
     "vite-plugin-top-level-await": "^1.2.1",
     "vite-plugin-wasm": "^3.1.0",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "whoiser": "^1.17.1"
   }
 }

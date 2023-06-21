@@ -9695,6 +9695,13 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
+whoiser@^1.17.1:
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/whoiser/-/whoiser-1.17.1.tgz#07ba2924283717b9f0c4830bbe73819dda7f45d1"
+  integrity sha512-dyIwadr1nYHPbz/rqoUTJvIarA2ZzBozi34etDff4Z3o5aj9Z3HPG9AULBRk3D0Vz/xtVAZwez6QaRoeV9GJPg==
+  dependencies:
+    punycode "^2.1.1"
+
 wide-align@^1.1.2:
   version "1.1.5"
   resolved "https://registry.npmmirror.com/wide-align/-/wide-align-1.1.5.tgz#df1d4c206854369ecf3c9a4898f1b23fbd9d15d3"
