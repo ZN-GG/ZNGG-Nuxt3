@@ -1,4 +1,5 @@
-const baseUrl = "https://api.zngg.net"
+// const baseUrl = "https://api.zngg.net"
+const baseUrl = "http://localhost:8899"
 const version = "19"
 
 const errorResponse: ApiResponse = {
