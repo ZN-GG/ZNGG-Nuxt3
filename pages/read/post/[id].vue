@@ -78,9 +78,12 @@
                 </div>
                 <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
                     <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto"
-                                alt="" srcset="">
+                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto" alt=""
+                                srcset="">
                         </nuxt-link>
+                        <div class="blick mt-4">
+                            <adsbygoogle />
+                        </div>
                     </div>
 
                     <div v-bind:style="{
@@ -106,8 +109,8 @@
                                 <ul class="article-contents overflow-y-auto py-2 px-6" ref="articleContents">
                                     <li v-for="(item, index) in docMenu" :key="item.id" :class="`level_${item.level}`"
                                         class="leading-9 relative">
-                                        <a :href="'#' + item.id"
-                                            :class="{ 'text-blue-600 active': tocActive === index }">{{ item.text }}</a>
+                                        <a :href="'#' + item.id" :class="{ 'text-blue-600 active': tocActive === index }">{{
+                                            item.text }}</a>
                                     </li>
                                 </ul>
                             </div>

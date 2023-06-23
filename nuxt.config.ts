@@ -13,12 +13,21 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/google-adsense'],
   css: ['~/assets/css/tailwind.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+    },
+  },
+  'google-adsense': {
+    id: 'ca-pub-6667301035180632',
+  },
+  publicRuntimeConfig: {
+    'google-adsense': {
+      id: process.env.GOOGLE_ADSENSE_ID,
+      test: process.env.GOOGLE_ADSENSE_TEST_MODE === 'true',
     },
   },
   build: {

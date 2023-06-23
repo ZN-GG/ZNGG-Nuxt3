@@ -78,6 +78,9 @@
                     </div>
                 </div>
             </div>
+            <div class="w-full md:w-4/12 px-5 py-20">
+                <adsbygoogle/>
+            </div>
         </div>
     </div>
 </template>

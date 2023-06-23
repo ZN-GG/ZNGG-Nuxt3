@@ -54,8 +54,8 @@
                                         </ul>
                                     </div>
                                     <!-- <div v-if="item.image == ''" class="flex-none w-32 h-24"></div> -->
-                                    <img v-if="item.image != ''" class="w-32 h-24 right-0 object-contain"
-                                        :src="item.image" alt="" srcset="" />
+                                    <img v-if="item.image != ''" class="w-32 h-24 right-0 object-contain" :src="item.image"
+                                        alt="" srcset="" />
                                 </div>
                             </div>
                         </li>
@@ -95,6 +95,9 @@
                         </nuxt-link>
                         <nuxt-link to="/tool/detail/Nplayer" class="block mt-4"><img src="/ad/NplayerAD.jpg" alt=""
                                 srcset=""></nuxt-link>
+                        <div class="blick mt-4">
+                            <adsbygoogle />
+                        </div>
                     </div>
                     <div v-bind:style="{
                         width: rightFixedContainerWidth,
