@@ -18,17 +18,7 @@
                 </div>
                 <div class="hidden md:flex flex-wrap items-start md:w-3/12 bg-black">
                     <div class="w-full">
-                        <p class="p-2 text-lg text-white font-bold hover:filter">更多推荐：</p>
-                        <div class="px-2 py-4 cursor-pointer">
-                            <img src="/img/XGPlayer.png">
-                        </div>
-                        <div class="px-2 py-4 cursor-pointer">
-                            <nuxt-link to="/tool/detail/NPlayer">
-                                <p class="text-2xl text-white font-bold">
-                                    NPlayer
-                                </p>
-                            </nuxt-link>
-                        </div>
+                        <adsbygoogle />
                     </div>
                 </div>
             </div>
@@ -73,7 +63,8 @@
 
     </div>
 </template>
-<script setup lang="ts">import Mpegts from 'mpegts.js';
+<script setup lang="ts">
+import Mpegts from 'mpegts.js';
 
 const videoUrl = ref("")
 const videoElement = ref<HTMLElement>()
@@ -159,7 +150,7 @@ useHead({
 <style>
 .video-player-box {
     position: relative;
-    padding-bottom: 66.666666%;
+    padding-bottom: 70%;
 
 }
 </style>

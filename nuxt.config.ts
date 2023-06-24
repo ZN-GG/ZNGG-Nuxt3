@@ -24,12 +24,6 @@ export default defineNuxtConfig({
   'google-adsense': {
     id: 'ca-pub-6667301035180632',
   },
-  publicRuntimeConfig: {
-    'google-adsense': {
-      id: process.env.GOOGLE_ADSENSE_ID,
-      test: process.env.GOOGLE_ADSENSE_TEST_MODE === 'true',
-    },
-  },
   build: {
     transpile: [
       'png-to-svg-wasm'
