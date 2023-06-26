@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white">
-        <div class="container mx-auto flex py-6">
+        <div class="container mx-auto flex flex-wrap py-6">
             <div class="w-full md:w-8/12">
                 <h1 class="font-bold text-3xl my-3">M3U8在线下载工具</h1>
                 <textarea v-model="url" autofocus
