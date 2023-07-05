@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { userStore } from '~~/stores/user';
-
+const { $toast } = useNuxtApp()
 
 const store = userStore()
 const token = useCookie("token")
@@ -33,7 +33,11 @@ function logout() {
         isLogin: false
     })
     token.value = null
-    navigateTo('/')
+    $toast.success("您已退出登录");
+    setTimeout(() => {
+        navigateTo('/')
+    }, 2);
+
 }
 </script>
 
