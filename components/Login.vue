@@ -13,7 +13,7 @@
               opacity-100
               justify-center
             ">
-        <div v-show="!isRegister" class="modal-content bg-white w-80 pt-12 p-4 relative rounded-md">
+        <div v-show="!isRegister" @keyup.enter="login()" class="modal-content bg-white w-80 pt-12 p-4 relative rounded-md">
             <span class="right-0 top-0 absolute m-2 w-5 h-5 iconfont icon-close" @click="close()" />
             <img class="left-0 top-0 w-20 absolute m-2" src="/logo-black.png" alt="" />
             <p class="text-2xl font-semibold my-2">登陆</p>
@@ -65,7 +65,7 @@
                 </p>
             </div>
         </div>
-        <div v-show="isRegister" class="modal-content bg-white w-80 pt-12 p-4 relative rounded-md">
+        <div v-show="isRegister" @keyup.enter="register()" class="modal-content bg-white w-80 pt-12 p-4 relative rounded-md">
             <span class="right-0 top-0 absolute m-2 w-5 h-5 iconfont icon-close" @click="close()" />
             <img class="left-0 top-0 w-20 absolute m-2" src="/logo-black.png" alt="" />
             <p class="text-2xl font-semibold my-2">注册账号</p>
