@@ -345,10 +345,6 @@ watch(() => store.showLogin, (newStatus, oldStatus) => {
 
 </script>
 
-<style scoped>
-.modal-show {
-    background: rgba(0, 0, 0, 0.35);
-    -webkit-backdrop-filter: saturate(180%) blur(25px);
-    backdrop-filter: saturate(180%) blur(25px);
-}
+<style>
+
 </style>
