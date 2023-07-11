@@ -19,8 +19,7 @@
     @apply bg-gray-100 custom-font-12 leading-5 py-1 px-4 rounded-md whitespace-nowrap cursor-pointer hover:bg-blue-600 hover:text-white mx-1;
   }
 
-  .btn-3{
-    
+  .btn-3 {
   }
 
   .li-1 {
@@ -60,10 +59,10 @@
 }
 
 html {
-  background: #F3F4F6;
+  background: #f3f4f6;
 }
 
-body{
+body {
   overflow-y: scroll;
 }
 
@@ -109,6 +108,57 @@ svg {
   padding-bottom: 92%;
 }
 
+.modal-show {
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: saturate(180%) blur(25px);
+  backdrop-filter: saturate(180%) blur(25px);
+}
+
+
+@keyframes right-to-left {
+  0% {
+      transform: translateX(120vw)
+  }
+
+  100% {
+      transform: translateX(0px)
+  }
+}
+@keyframes to-show {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+     opacity: 1;
+  }
+}
+@keyframes to-hidden {
+  0% {
+      opacity: 1;
+  }
+
+  100% {
+     opacity: 0;
+  }
+}
+.animation-mobile-show {
+  animation-name: right-to-left;
+  animation-duration: 0.4s;
+}
+.animation-mobile-hidden {
+  transform: translate3d(100%,0,0);
+  transition: transform .3s ease-in-out;
+}
+.animation-mobile-bg-show {
+  animation-name: to-show;
+  animation-duration: 0.4s;
+}
+.animation-mobile-bg-hidden {
+  opacity: 0;
+  transition: opacity .2s cubic-bezier(0,0,.2,1) 0ms;
+}
+
 @media screen and (max-width: 640px) {
   .tool-border {
     padding-bottom: 120%;
@@ -126,17 +176,16 @@ svg {
   list-style: decimal;
 }
 
-
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
-::-webkit-scrollbar-track{
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;
-  background-color: #F5F5F5;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
+  background-color: #f5f5f5;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   border-radius: 3px;
   -webkit-box-shadow: none !important;
 }
@@ -145,20 +194,20 @@ svg {
   background-image: none !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #DD5E89 !important;
+  background-color: #dd5e89 !important;
 }
 
 ::selection {
-  background:#d3d3d3; 
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
 }
 
 ::-moz-selection {
-  background:#d3d3d3; 
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
 }
 
 ::-webkit-selection {
-  background:#d3d3d3; 
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
 }

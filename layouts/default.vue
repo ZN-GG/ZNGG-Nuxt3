@@ -2,6 +2,6 @@
     <div>
         <Toolbar />
         <NuxtLoadingIndicator />
-        <NuxtPage />
+        <NuxtPage class="mt-20" />
     </div>
 </template>

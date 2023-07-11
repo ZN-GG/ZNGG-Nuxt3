@@ -6,11 +6,18 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "15006056",
+      "icon_id": "879161",
+      "name": "菜单",
+      "font_class": "ego-menu",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "1421450",
       "name": "ok",
       "font_class": "ok",
-      "unicode": "e629",
-      "unicode_decimal": 58921
+      "unicode": "e613",
+      "unicode_decimal": 58899
     },
     {
       "icon_id": "18072109",

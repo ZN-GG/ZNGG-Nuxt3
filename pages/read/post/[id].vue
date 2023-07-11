@@ -252,7 +252,7 @@ function initTop() {
 function setFloatContainer() {
     if (rightNormalContainer.value!.getBoundingClientRect().bottom <= 0) {
         rightFixedContainer.value!.style.position = "fixed";
-        rightFixedContainer.value!.style.top = "0.5rem";
+        rightFixedContainer.value!.style.top = "5.5rem";
         rightFixedContainerWidth.value = rightNormalContainer.value!.offsetWidth + "px";
     } else if (rightNormalContainer.value!.getBoundingClientRect().bottom > 0) {
         rightFixedContainerWidth.value = "100%";
