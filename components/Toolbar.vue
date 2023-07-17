@@ -85,6 +85,10 @@ const dataList = ref([
         name: "文章",
     },
     {
+        link: "nav",
+        name: "导航",
+    },
+    {
         link: "link",
         name: "友链",
     },
@@ -125,4 +129,5 @@ header {
 
 .icon-category {
     font-size: 24px;
-}</style>
+}
+</style>
