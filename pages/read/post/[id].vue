@@ -78,9 +78,27 @@
                 </div>
                 <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
                     <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" class="w-full h-auto" alt=""
-                                srcset="">
-                        </nuxt-link>
+                        <div class="w-full py-6 rounded text-center bg-gradient-to-r from-cyan-500 to-blue-500">
+                            <nuxt-link to="/nav">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">优质网址导航</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
+                        <div class="w-full my-2 py-6 rounded text-center bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                            <nuxt-link to="/tool/detail/FlvPlayer">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">FLV播放器</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
+                        <div class="w-full my-2 py-6 rounded text-center bg-gradient-to-r from-orange-500 to-fuchsia-700">
+                            <nuxt-link to="/tool/detail/ScreenRec">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">PC在线录屏</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
                         <div class="blick mt-4">
                             <adsbygoogle />
                         </div>

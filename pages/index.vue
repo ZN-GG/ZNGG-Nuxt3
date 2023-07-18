@@ -1,6 +1,6 @@
 <template>
     <div ref="html">
-        <div class="mx-auto container my-8 min-h-screen">
+        <div class="mx-auto container px-4 my-8 min-h-screen">
             <!-- 今日推荐 -->
             <!-- <div ref="container" class="bg-white p-6 rounded-md my-4">
                 <div class="flex justify-between items-center">
@@ -79,8 +79,8 @@
                                         </ul>
                                     </div>
                                     <!-- <div v-if="item.image == ''" class="flex-none w-32 h-24"></div> -->
-                                    <img v-if="item.image != ''" class="w-32 h-24 right-0 object-contain"
-                                        :src="item.image" alt="" srcset="" />
+                                    <img v-if="item.image != ''" class="w-32 h-24 right-0 object-contain" :src="item.image"
+                                        alt="" srcset="" />
                                 </div>
                             </div>
                         </li>
@@ -88,22 +88,39 @@
                 </div>
 
                 <!-- 广而告之 -->
-                <div class="mt-4 hidden lg:block w-full lg:w-4/12 absolute right-0">
-                    <div class="pl-6 w-full" ref="rightNormalContainer">
-                        <nuxt-link to="/tool/detail/ScreenRec"><img src="/ad/ScreenRecAD.jpg" alt="" srcset="">
-                        </nuxt-link>
-                        <nuxt-link to="/tool/detail/Nplayer" class="block mt-4"><img src="/ad/NplayerAD.jpg" alt=""
-                                srcset=""></nuxt-link>
+                <div class="mt-4 w-full lg:w-4/12 lg:absolute lg:right-0">
+                    <div class="lg:pl-6 w-full" ref="rightNormalContainer">
+                        <div class="w-full py-6 rounded text-center bg-gradient-to-r from-cyan-500 to-blue-500">
+                            <nuxt-link to="/nav">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">优质网址导航</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
+                        <div class="w-full my-2 py-6 rounded text-center bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                            <nuxt-link to="/tool/detail/FlvPlayer">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">FLV播放器</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
+                        <div class="w-full my-2 py-6 rounded text-center bg-gradient-to-r from-orange-500 to-fuchsia-700">
+                            <nuxt-link to="/tool/detail/ScreenRec">
+                                <div class="mx-auto">
+                                    <p class="text-2xl font-bold text-white">PC在线录屏</p>
+                                </div>
+                            </nuxt-link>
+                        </div>
                     </div>
 
-                    <div class="pl-6 w-full" ref="rightNormalContainer">
+                    <div class="lg:pl-6 w-full" ref="rightNormalContainer">
                         <div class="w-full my-4 p-4 bg-white">
                             <p class="text-xl font-bold mb-4">关于我们</p>
                             <a href="http://beian.miit.gov.cn/">豫ICP备17050064号-4</a>
                         </div>
                     </div>
-                    <div v-bind:style="{ width: rightFixedContainerWidth }"
-                        class="h-20 pl-6 my-4 hidden lg:block w-full" ref="rightFixedContainer">
+                    <div v-bind:style="{ width: rightFixedContainerWidth }" class="h-20 pl-6 my-4 hidden lg:block w-full"
+                        ref="rightFixedContainer">
                         <div class="bg-white rounded-md p-6">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">

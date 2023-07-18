@@ -28,7 +28,7 @@
                         <li v-for="item in navLinks?.data[categoryId].itemList" class="w-full md:w-4/12">
                             <div class="transition duration-300 ease-in-out p-2">
                                 <a :href="item.url" target="_blank">
-                                    <div class="bg-white rounded px-3 py-4">
+                                    <div class="bg-white rounded px-3 py-4 nav-item-anim">
                                         <div class="flex">
                                             <div class="w-2/12 flex items-center">
                                                 <img class="w-8 h-8 mx-auto" :src="item.img" alt="" srcset="">

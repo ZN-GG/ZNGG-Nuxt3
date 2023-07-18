@@ -40,22 +40,31 @@
     @apply hidden mt-2 p-2 text-center text-white custom-font-14 leading-6;
   }
 
-  .tool-box:hover {
-    @apply bg-blue-600 duration-200 shadow-2xl;
-    transform: translateY(-6px);
+  @media screen and (min-width: 1024px) {
+    .tool-box:hover {
+      @apply bg-blue-600 duration-200 shadow-2xl;
+      transform: translateY(-6px);
+    }
+  
+    .tool-box:hover .tool-icon {
+      @apply hidden;
+    }
+  
+    .tool-box:hover .tool-title {
+      @apply text-white custom-font-16;
+    }
+  
+    .tool-box:hover .tool-des {
+      @apply text-white custom-font-12 block;
+    }
+
+    .nav-item-anim:hover{
+      @apply shadow-xl duration-200;
+      transform: translateY(-4px);
+    }
   }
 
-  .tool-box:hover .tool-icon {
-    @apply hidden;
-  }
 
-  .tool-box:hover .tool-title {
-    @apply text-white custom-font-16;
-  }
-
-  .tool-box:hover .tool-des {
-    @apply text-white custom-font-12 block;
-  }
 }
 
 html {
