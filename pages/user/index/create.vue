@@ -17,8 +17,8 @@
                             <p class=" custom-font-14 leading-8 overflow-hidden h-6 text-gray-400 mb-2"
                                 v-text="item.summary"></p>
                         </div>
-                        <nuxt-link :to="'/writer?id=' + item.id" class="font-bold text-xl">编辑
-                        </nuxt-link>
+                        <a :href="'/writer?id=' + item.id" class="font-bold text-xl">编辑
+                        </a>
                     </div>
                 </li>
             </ul>
