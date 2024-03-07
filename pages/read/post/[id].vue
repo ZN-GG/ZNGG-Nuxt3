@@ -1,6 +1,29 @@
 <template>
     <div ref="html">
         <div class="mx-auto container my-8">
+            <div class="relative  lg:block left-button-box">
+                <div class="absolute pt-10" style="left: -62px; top: 0;">
+                    <div class="h-96 w-18 fixed">
+                        <ul class="mx-auto">
+                            <li @click="clickLike"
+                                class="relative bg-white text-center rounded-full p-1 w-11 h-11 shadow-xl hover:text-blue-600"
+                                :class="userInteract?.like ? 'text-blue-600' : 'text-gray-500'" alt="点赞"><i
+                                    class="iconfont icon-Likevotethumbup mx-auto"></i>
+                                <p class="mt-2 text-sm">{{ userInteract?.likeCount }}</p>
+                            </li>
+                            <li
+                                class="bg-white text-center rounded-full p-1 w-11 h-11 shadow-xl text-gray-500 hover:text-black">
+                                <i class="iconfont icon-favorites-fill mx-auto "></i>
+                                <p class="mt-2 text-sm">{{ userInteract?.collectCount }}</p>
+                            </li>
+                            <!-- <li @click="showPoster(true)"
+                                class="bg-white text-center rounded-full p-1 w-11 h-11 shadow-xl text-gray-500 hover:text-black">
+                                <i class="iconfont icon-pic-fill mx-auto "></i>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="flex flex-wrap relative">
                 <div class="bg-white p-6 rounded-md mt-4 w-full lg:w-8/12">
                     <div v-if="isSuccess" class="">
@@ -40,13 +63,13 @@
                                 <div class="w-8/12 h-6 bg-gray-200 my-6">
                                 </div>
                             </div>
-                            <div v-if="isSpeader" v-is="'style'">{{ themes.juejin.style }}</div>
+                            <div v-if="isSpeader" is="'style'">{{ themes.juejin.style }}</div>
                             <div v-show="isSpeader" class="markdown-body overflow-auto"
                                 v-bind:class="isSpeader ? '' : 'opacity-0'" v-html="mdHTMl"></div>
-
-                            <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
-                                :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
-
+                            <div ref="posterDocument">
+                                <Viewer v-show="isSuccessViewer" v-if="isRender && !isSpeader" id="markdown-body"
+                                    :value="articleHtmlContent" :plugins="plugins" @change="handleChange" />
+                            </div>
                         </div>
                     </div>
                     <div class="h-80 relative" v-else>
@@ -136,13 +159,57 @@
                     </div>
                 </div>
             </div>
+            <div v-show="isShowPoster" class="
+              modal-show
+              flex
+              items-center
+              w-full
+              h-full
+              fixed
+              top-0
+              left-0
+              z-40
+              bg-gray-500
+              opacity-100
+              justify-center
+            ">
+                <div class="modal-content bg-white w-96 p-4 relative rounded-md">
+                    <div><span class=" hover:cursor-pointer right-0 top-0 absolute m-2 w-5 h-5 iconfont icon-close"
+                            @click="closePoster()" />
+                    </div>
+                    <div class="relative mt-4">
+                        <div class="overflow-hidden poster-content">
+                            <div class=" overflow-hidden h-80">
+                                <img style="width: 100%;" :src="posterImage">
+                            </div>
+                            <div class="poster-content-mask"></div>
+                            <div class=" absolute w-full" style="top: 320px;">
+                                <hr class="mb-2">
+                                <div class="flex">
+                                    <div><img class=" w-20"
+                                            :src="http.baseUrl + '/api/common/createQRCode?url=https://www.zngg.net/read/post/' + article?.id + '&width=160&height=160'"
+                                            + alt="" srcset="">
+                                    </div>
+                                    <div class="pl-4">
+                                        <p class="text-gray-500">扫描二维码获取文章详情</p>
+                                        <p class="text-gray-500 text-xs mt-3">更多精彩内容尽在：WWW.ZNGG.NET</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { api } from "../../../api/api";
-
+import http from '~/api/request';
+import { userStore } from '~/stores/user';
 
 import "highlight.js/styles/atom-one-dark.css";
 //import "~/assets/fonts/katex.min.css";
@@ -177,8 +244,18 @@ let articleContents = ref<HTMLInputElement>()
 const isSpeader = ref(false)
 const headers = useRequestHeaders();
 const userAgent = headers?.["user-agent"] ?? navigator.userAgent;
-
+const DomToImage = (await import('dom-to-image')).default;
+let posterDocument = ref<HTMLDivElement>();
+let posterImage = ref("")
 const article = ref()
+const articleSimple = ref("")
+const isShowPoster = ref(false)
+const loginStatus = ref(false)
+const token = useCookie("token")
+const store = userStore();
+if (typeof (token.value) != 'undefined') {
+    loginStatus.value = true;
+}
 const plugins = [
     breaks(),
     frontmatter(),
@@ -212,10 +289,12 @@ const plugins = [
 ];
 const articleHtmlContent = ref()
 let mdHTMl = ""
+const userInteract = ref()
 const { data: articleData, pending, refresh, error } = await useAsyncData("read_Detail", () => api.article.getDetail((route.params.id).toString()));
 if (articleData.value!.success) {
     mdHTMl = marked.parse(articleData.value!.data.content);
     article.value = articleData.value!.data
+    articleSimple.value = article.value.content.substr(0, 240)
     isSuccess.value = true;
     if (userAgent.indexOf("Baiduspider") != -1) {
         isSpeader.value = true
@@ -232,6 +311,11 @@ onMounted(() => {
     setTimeout(() => {
         initTop();
     }, 1);
+
+    api.article.getUserInteract((route.params.id).toString()).then(res => {
+        userInteract.value = res?.data
+        console.log(res);
+    })
 
 })
 onUnmounted(() => {
@@ -265,7 +349,62 @@ function initTop() {
     docMenu.value = markMenu;
 }
 
+// 点赞
+function clickLike() {
+    if (!loginStatus.value) {
+        store.$patch({
+            showLogin: true
+        })
+        return
+    }
+    console.log(userInteract.value);
+    
+    if (userInteract.value.like) {
+        api.article.getDeleteLike((route.params.id).toString()).then(res => {
+            if (res.success) {
+                userInteract.value.like = false
+                userInteract.value.likeCount = userInteract.value.likeCount - 1
+            }
+        })
+    } else {
+        api.article.getAddLike((route.params.id).toString()).then(res => {
+            if (res.success) {
+                userInteract.value.like = true
+                userInteract.value.likeCount = userInteract.value.likeCount + 1
+            }
+        })
+    }
 
+
+}
+
+// 收藏
+function clickCollect() {
+
+
+}
+
+function showPoster(status: boolean) {
+    isShowPoster.value = status
+
+    // let images = posterDocument.value!.getElementsByTagName("img");
+    // for (let index = 0; index < images.length; index++) {
+    //     images[index].setAttribute('crossOrigin', 'anonymous');
+    // }
+    DomToImage
+        .toPng(posterDocument.value!)
+        .then((e: string) => {
+            posterImage.value = e;
+        })
+        .catch((err: any) => {
+            console.log(err);
+
+        });
+}
+
+function closePoster() {
+    isShowPoster.value = false
+}
 
 function setFloatContainer() {
     if (rightNormalContainer.value!.getBoundingClientRect().bottom <= 0) {
@@ -464,5 +603,27 @@ useHead({
     height: 16px;
     background: #1e80ff;
     border-radius: 0 4px 4px 0;
+}
+
+.left-button-box i {
+    font-size: 24px;
+}
+
+.left-button-box ul>li {
+    margin-bottom: 32px;
+}
+
+.poster-content {
+    position: relative;
+    height: 400px;
+
+}
+
+.poster-content-mask {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #00000000, #50000000, #70000000, #ffffff, #ffffff);
 }
 </style>

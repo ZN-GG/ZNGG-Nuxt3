@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto container px-4 my-8 min-h-screen">
+    <div class="mx-auto container px-4 my-8 min-h-screen mt-20">
         <div class="bg-white p-6 rounded-md mt-8 mb-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">

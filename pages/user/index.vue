@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-20">
         <div class="flex container mx-auto my-6 px-4">
             <div class="w-2/12">
                 <div class="w-full bg-white rounded p-4">

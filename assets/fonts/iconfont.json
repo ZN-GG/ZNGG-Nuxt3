@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11982744",
+      "name": "Like, vote, thumb up",
+      "font_class": "Likevotethumbup",
+      "unicode": "e9dc",
+      "unicode_decimal": 59868
+    },
+    {
       "icon_id": "879161",
       "name": "菜单",
       "font_class": "ego-menu",

@@ -1,6 +1,6 @@
 <template>
     <div ref="html">
-        <div class="mx-auto container px-4 my-8 min-h-screen">
+        <div class="mx-auto container px-4 my-8 min-h-screen mt-20">
             <!-- 今日推荐 -->
             <!-- <div ref="container" class="bg-white p-6 rounded-md my-4">
                 <div class="flex justify-between items-center">

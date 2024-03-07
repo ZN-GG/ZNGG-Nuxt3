@@ -6,6 +6,10 @@ export const article = {
         return http.get("/portal/article/" + id)
     },
 
+    getUserInteract(id: String): Promise<ApiResponse> {
+        return http.get("/portal/article/user_interact/" + id)
+    },
+
     getList(page: number, size: number, category: string): Promise<ApiResponse> {
         let c = category ? category + "/" : "";
         return http.get("/portal/article/" + c + page + "/" + size)
@@ -26,6 +30,12 @@ export const article = {
     getUserList(page: number, size: number, category: string): Promise<ApiResponse> {
         let c = category ? category + "/" : "";
         return http.get("/user/article/list/" + c + page + "/" + size)
+    },
+    getAddLike(id: String): Promise<ApiResponse> {
+        return http.get("/user/article/addLike/" + id)
+    },
+    getDeleteLike(id: String): Promise<ApiResponse> {
+        return http.get("/user/article/deleteLike/" + id)
     },
 
 }

@@ -228,7 +228,7 @@ async function loadMore() {
         return;
     }
     loading.value = true;
-    const result = (await api.article.getList(page.value, 10, ""));
+    const result = (await api.article.getList(page.value, 10, articleParams.value));
     if (result.success) {
         if (result.data.content.length == 0) {
             empty.value = true;

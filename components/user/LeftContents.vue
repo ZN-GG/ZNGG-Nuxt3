@@ -25,7 +25,7 @@ const token = useCookie("token")
 const menu = ref([
     { path: "/user", name: "主页", icon: "false" },
     { path: "/user/create", name: "创作中心", icon: "icon-pencil-fill" },
-    { path: "/user/order", name: "订单管理", icon: "icon-favorites-fill" },
+    { path: "/user/favorites", name: "我的收藏", icon: "icon-favorites-fill" },
     { path: "/user/info", name: "用户信息", icon: "icon-yonghu" },
 ])
 function logout() {

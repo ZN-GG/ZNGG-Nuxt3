@@ -6,64 +6,52 @@
         </div>
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400"  style="height: 580px;">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            文章名称
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            阅读量
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            状态
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in articleList" :key="index"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-1" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white"
-                            style="max-width: 400px;">
-                            <nuxt-link target="_blank" :to="'/read/post/' + item.id">
-                                <p class="whitespace-nowrap text-ellipsis overflow-hidden">{{ item.title }}</p>
-                            </nuxt-link>
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ item.viewCount }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ getState(item.state) }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <nuxt-link target="_blank" :to="'/read/post/' + item.id"
-                                class="mr-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">编辑</nuxt-link>
-                            <a href="#" class="mx-2 font-medium text-red-600 dark:text-blue-500 hover:underline">删除</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="height: 560px;">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                文章名称
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                阅读量
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                状态
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in articleList" :key="index"
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white"
+                                style="max-width: 400px;">
+                                <nuxt-link target="_blank" :to="'/read/post/' + item.id">
+                                    <p class="whitespace-nowrap text-ellipsis overflow-hidden">{{ item.title }}</p>
+                                </nuxt-link>
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ item.viewCount }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ getState(item.state) }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <nuxt-link target="_blank" :to="'/writer?id=' + item.id"
+                                    class="mr-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">编辑</nuxt-link>
+                                <a href="#" class="mx-2 font-medium text-red-600 dark:text-blue-500 hover:underline">删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <nav class="flex items-center justify-between p-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">共 <span
                         class="font-semibold text-gray-900 dark:text-white">{{ articleData?.data.totalElements }}</span>
-                    条内容</span>
+                    条内容，当前{{ page }}页，共{{ totalPages }}页</span>
                 <ul class="inline-flex -space-x-px text-sm h-8">
                     <li>
                         <div @click="pageFn(false)"

@@ -37,6 +37,16 @@
                         </div>
                         <textarea v-model="article.summary" class="w-64 h-16 border-2 outline-none p-2"></textarea>
                     </div>
+                    <div class="flex my-4">
+                        <div class="w-20 text-right mr-3">
+                            状态:
+                        </div>
+                        <div><select v-model="article.state"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="0">发布</option>
+                                <option value="1">草稿</option>
+                            </select></div>
+                    </div>
                     <hr>
                     <div class="flex justify-end">
                         <button @click="close()"
@@ -48,8 +58,8 @@
             </div>
         </div>
         <div class="flex border-solid border-b-2 px-4 bg-white py-3 items-center h-16">
-            <input v-model="article.title" class="flex-1 border-none outline-none text-2xl py-2 px-6 font-bold"
-                type="text" placeholder="输入文章标题...">
+            <input v-model="article.title" class="flex-1 border-none outline-none text-2xl py-2 px-6 font-bold" type="text"
+                placeholder="输入文章标题...">
             <button @click="open()" class="btn-normal bg-blue-500 px-5 mx-4 h-9">发布</button>
         </div>
         <div>
@@ -86,6 +96,7 @@ const article = ref({
     id: "",
     title: "",
     category_id: "",
+    state:"0",
     image: "",
     content: "",
     type: 1,
