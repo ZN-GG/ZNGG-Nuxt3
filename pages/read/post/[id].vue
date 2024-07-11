@@ -11,9 +11,10 @@
                                     class="iconfont icon-Likevotethumbup mx-auto"></i>
                                 <p class="mt-2 text-sm">{{ userInteract?.likeCount }}</p>
                             </li>
-                            <li
-                                class="bg-white text-center rounded-full p-1 w-11 h-11 shadow-xl text-gray-500 hover:text-black">
-                                <i class="iconfont icon-favorites-fill mx-auto "></i>
+                            <li @click="clickCollect"
+                                class="relative bg-white text-center rounded-full p-1 w-11 h-11 shadow-xl hover:text-blue-600"
+                                :class="userInteract?.collect ? 'text-blue-600' : 'text-gray-500'" alt="收藏"><i
+                                    class="iconfont icon-favorites-fill mx-auto"></i>
                                 <p class="mt-2 text-sm">{{ userInteract?.collectCount }}</p>
                             </li>
                             <!-- <li @click="showPoster(true)"
@@ -357,7 +358,6 @@ function clickLike() {
         })
         return
     }
-    console.log(userInteract.value);
     
     if (userInteract.value.like) {
         api.article.getDeleteLike((route.params.id).toString()).then(res => {
@@ -380,7 +380,28 @@ function clickLike() {
 
 // 收藏
 function clickCollect() {
-
+    if (!loginStatus.value) {
+        store.$patch({
+            showLogin: true
+        })
+        return
+    }
+    
+    if (userInteract.value.collect) {
+        api.article.getDeleteCollect((route.params.id).toString()).then(res => {
+            if (res.success) {
+                userInteract.value.collect = false
+                userInteract.value.collectCount = userInteract.value.collectCount - 1
+            }
+        })
+    } else {
+        api.article.getAddCollect((route.params.id).toString()).then(res => {
+            if (res.success) {
+                userInteract.value.collect = true
+                userInteract.value.collectCount = userInteract.value.collectCount + 1
+            }
+        })
+    }
 
 }
 

@@ -9,8 +9,11 @@
                 </div>
             </div>
         </section>
-        <section class="w-full container px-4 mx-auto py-12 h-96">
+        <section class="w-full container px-4 mx-auto py-12 h-32">
             当前动态码：<span class="font-bold" v-text="code"></span>
+        </section>
+        <section class="w-full container px-4 mx-auto">
+            <adsbygoogle/>
         </section>
         <section class="bg-white w-full container mx-auto  px-4 py-6">
 

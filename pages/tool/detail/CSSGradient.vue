@@ -12,7 +12,7 @@
                         <div class="app-gradient__color-background js-background"
                             :style="'background-image: linear-gradient(' + customColor.replace(/[0-9]\d*deg/g, '90deg').replace('circle', '90deg') + ');'">
                         </div>
-                        <div class="app-gradient__points js-drag" @click="addPoint!">
+                        <div class="app-gradient__points js-drag" @click="addPoint">
                             <div v-for="(item, index) in appGradientPointList" class="js-draggable app-gradient__point"
                                 :class="item.isActive ? 'is-active' : ''" touch-action="none" v-bind:data-x="item.tranX"
                                 v-bind:index="index" :style="'transform: translateX(' + item.tranX + 'px);'"
@@ -92,7 +92,7 @@
                                         <div class="app-color__stop-position"><input disabled :value="item.percent">
                                         </div>
                                         <div class="app-color__stop-action"><button
-                                                @click="clearPoint(item.percent, item.hex)"
+                                                @click="clearPoint(item.percent, item.hex, index, item.isActive)"
                                                 class="app-color__stop-action-button">×</button></div>
                                     </div>
                                 </div>
@@ -187,6 +187,9 @@
                     </div>
                 </div>
             </section>
+            <section class="w-full container px-4 mx-auto mt-4">
+                <adsbygoogle />
+            </section>
         </main>
     </div>
 </template>
@@ -261,6 +264,7 @@ const styleConfig = ref({
 })
 const customDeg = ref(90)
 const customColor = ref(customDeg.value + 'deg, rgb(0, 201, 255) 10%, rgb(146, 254, 157) 90%')
+const JsAlphaColor = ref('linear-gradient(to right, ' + appGradientPointList.value[selectPointConfig.value.index].hex + ' 0%, rgba(9, 9, 121, 0) 100%)')
 
 onMounted(async () => {
     dragUtil = (await import('~/utils/Drag'))
@@ -355,7 +359,9 @@ onMounted(async () => {
     });
     hsvaGroup.value.alpha = alphaP.pointer;
     let bgAlpha = document.createElement('div');
+    bgAlpha.id = "bgAlpha";
     bgAlpha.className = 'bg-color js-alpha-color';
+    bgAlpha.style.backgroundImage = JsAlphaColor.value;
     (alphaP.background as HTMLDivElement).lastElementChild!.appendChild(bgAlpha);
     hsvaGroup.value.bgAlpha = bgAlpha;
     // SV Pointer XY
@@ -433,6 +439,7 @@ function clamp(a: number, min: number, max: number) {
 const tempSortList = ref<any[]>([]);
 
 function updateCustomColor() {
+    (document.getElementById("bgAlpha") as HTMLElement).style.backgroundImage = 'linear-gradient(to right, ' + appGradientPointList.value[selectPointConfig.value.index].hex + ' 0%, rgba(9, 9, 121, 0) 100%)';
     let deg = customDeg.value + 'deg';
     if (styleConfig.value.type == 'radial') {
         deg = 'circle';
@@ -509,11 +516,11 @@ function downloadImg() {
 }
 
 // 添加滑块
-function addPoint(e: PointerEvent) {
+function addPoint(e: Event) {
     if (!(e.target as HTMLElement).classList.contains('app-gradient__points')) {
         return
     }
-    let percent = Math.round(e.offsetX / (e.target as HTMLElement).clientWidth * 100);
+    let percent = Math.round((e as PointerEvent).offsetX / (e.target as HTMLElement).clientWidth * 100);
     let hex = '';
     if (percent < tempSortList.value[0].percent) {
         hex = tempSortList.value[0].hex.toLowerCase()
@@ -545,7 +552,7 @@ function addPoint(e: PointerEvent) {
     let hsv = colorUtil.rgb2hsv(rgb.r, rgb.g, rgb.b)
     hsv.h = hsv.h / 360
     appGradientPointList.value.push({
-        "tranX": e.offsetX - 18,
+        "tranX": (e as PointerEvent).offsetX - 18,
         "percent": percent,
         rgb: rgb,
         hsv: hsv,
@@ -590,10 +597,20 @@ function hexChange() {
 
 }
 
-function clearPoint(percent: number, hex: string) {
+function clearPoint(percent: number, hex: string, indexNumber: number, isActive: boolean) {
+    console.log(indexNumber);
     if (appGradientPointList.value.length <= 2) {
         return
     }
+
+    if (indexNumber < selectPointConfig.value.index) {
+        if (indexNumber == 0) {
+            selectPointConfig.value.index = 0
+        } else {
+            selectPointConfig.value.index = selectPointConfig.value.index - 1
+        }
+    }
+
     let indexCut = 1;
     for (let index = 0; index <= appGradientPointList.value.length - 1; index++) {
         let temp = appGradientPointList.value[index];
@@ -603,8 +620,6 @@ function clearPoint(percent: number, hex: string) {
         if (temp.percent == percent && temp.hex.toLowerCase() == hex.toLowerCase()) {
             if (temp.isActive) {
                 selectPoint(0)
-            } else {
-                selectPoint(selectPointConfig.value.index -= (indexCut + 1))
             }
             appGradientPointList.value.splice(index, 1)
             break

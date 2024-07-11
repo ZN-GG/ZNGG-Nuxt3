@@ -33,7 +33,7 @@
   .tool-icon {
     @apply w-12 h-12;
   }
-  .tool-title {
+  .tool-title {    
     @apply text-center custom-font-14 leading-6 md:mt-2;
   }
   .tool-des {

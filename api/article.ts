@@ -38,4 +38,11 @@ export const article = {
         return http.get("/user/article/deleteLike/" + id)
     },
 
+    getAddCollect(id: String): Promise<ApiResponse> {
+        return http.get("/user/article/addCollect/" + id)
+    },
+    getDeleteCollect(id: String): Promise<ApiResponse> {
+        return http.get("/user/article/deleteCollect/" + id)
+    },
+
 }
