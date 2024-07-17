@@ -53,6 +53,7 @@
 - PNG 转 SVG
 - Word 转 PDF
 - M3U8 视频在线下载 V2
+- CSS毛玻璃效果
 - ...
 
 ## 安装
